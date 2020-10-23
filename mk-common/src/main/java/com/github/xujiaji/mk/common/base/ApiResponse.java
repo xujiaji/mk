@@ -113,10 +113,9 @@ public class ApiResponse<T> implements Serializable {
      * 构造一个异常的API返回
      *
      * @param t   异常
-     * @param <T> {@link BaseException} 的子类
      * @return ApiResponse
      */
-    public static <T extends BaseException> ApiResponse<?> ofException(T t) {
+    public static ApiResponse<?> ofException(BaseException t) {
         return of(t.getCode(), t.getMessage(), t.getData());
     }
 }

@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.security.config;
+package com.github.xujiaji.mk.common.config;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;

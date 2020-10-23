@@ -1,10 +1,10 @@
-package com.github.xujiaji.mk.log.admin;
+package com.github.xujiaji.mk.file.front;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MkLogApplicationTests {
+class MkFileFrontApplicationTests {
 
 	@Test
 	void contextLoads() {

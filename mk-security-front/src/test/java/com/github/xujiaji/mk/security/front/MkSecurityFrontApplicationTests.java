@@ -1,10 +1,10 @@
-package com.github.xujiaji.mk.community;
+package com.github.xujiaji.mk.security.front;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MkCommunityApplicationTests {
+class MkSecurityFrontApplicationTests {
 
 	@Test
 	void contextLoads() {

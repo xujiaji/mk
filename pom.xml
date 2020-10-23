@@ -5,20 +5,35 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>mk-common</module>
+
 		<module>mk-auth</module>
 		<module>mk-auth-admin</module>
+		<module>mk-auth-front</module>
+
 		<module>mk-pay</module>
 		<module>mk-pay-admin</module>
+		<module>mk-pay-front</module>
+
 		<module>mk-security</module>
 		<module>mk-security-admin</module>
+		<module>mk-security-front</module>
+
 		<module>mk-file</module>
 		<module>mk-file-admin</module>
+		<module>mk-file-front</module>
+
 		<module>mk-user</module>
 		<module>mk-user-admin</module>
+		<module>mk-user-front</module>
+
 		<module>mk-community</module>
 		<module>mk-community-admin</module>
+		<module>mk-community-front</module>
+
 		<module>mk-log</module>
 		<module>mk-log-admin</module>
+		<module>mk-log-front</module>
+
 	</modules>
 
 	<parent>
@@ -86,6 +101,13 @@
 				<artifactId>mk-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>com.github.xujiaji</groupId>
+				<artifactId>mk-security</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 
 		</dependencies>
 

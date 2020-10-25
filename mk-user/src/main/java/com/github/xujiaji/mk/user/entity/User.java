@@ -27,19 +27,9 @@ public class User extends BaseEntity {
     private String username;
 
     /**
-     * 手机号
-     */
-    private String phone;
-
-    /**
      * id编号
      */
     private String no;
-
-    /**
-     * 密码
-     */
-    private String password;
 
     /**
      * 昵称

@@ -47,11 +47,6 @@ public class User extends BaseEntity {
     private Integer sex;
 
     /**
-     * 邮箱
-     */
-    private String email;
-
-    /**
      * 生日
      */
     private LocalDateTime birthday;

@@ -4,7 +4,6 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.Status;
-import com.github.xujiaji.mk.security.service.impl.SecUserServiceImpl;
 import com.github.xujiaji.mk.security.util.JwtUtil;
 import com.github.xujiaji.mk.security.util.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;

@@ -3,10 +3,10 @@ package com.github.xujiaji.mk.security.admin.config;
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.base.Status;
-import com.github.xujiaji.mk.security.entity.SecPermission;
-import com.github.xujiaji.mk.security.entity.SecRole;
-import com.github.xujiaji.mk.security.mapper.SecPermissionMapper;
-import com.github.xujiaji.mk.security.mapper.SecRoleMapper;
+import com.github.xujiaji.mk.security.entity.MkSecPermission;
+import com.github.xujiaji.mk.security.entity.MkSecRole;
+import com.github.xujiaji.mk.security.mapper.MkSecPermissionMapper;
+import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -36,10 +36,10 @@ import com.github.xujiaji.mk.security.exception.SecurityException;
 @Component
 public class RbacAuthorityService {
     @Autowired
-    private SecRoleMapper secRoleMapper;
+    private MkSecRoleMapper mkSecRoleMapper;
 
     @Autowired
-    private SecPermissionMapper secPermissionMapper;
+    private MkSecPermissionMapper mkSecPermissionMapper;
 
     @Autowired
     private RequestMappingHandlerMapping mapping;
@@ -53,14 +53,14 @@ public class RbacAuthorityService {
         if (userInfo instanceof UserDetails) {
             UserPrincipal principal = (UserPrincipal) userInfo;
             Long secUserId = principal.getSecUserId();
-            List<SecRole> roles = secRoleMapper.selectBySecUserId(secUserId);
+            List<MkSecRole> roles = mkSecRoleMapper.selectBySecUserId(secUserId);
             List<Long> roleIds = roles.stream()
-                    .map(SecRole::getId)
+                    .map(MkSecRole::getId)
                     .collect(Collectors.toList());
-            List<SecPermission> permissions = secPermissionMapper.selectByRoleIdList(roleIds);
+            List<MkSecPermission> permissions = mkSecPermissionMapper.selectByRoleIdList(roleIds);
 
             //获取资源，前后端分离，所以过滤页面权限，只保留按钮权限
-            List<SecPermission> btnPerms = permissions.stream()
+            List<MkSecPermission> btnPerms = permissions.stream()
                     // 过滤页面权限
                     .filter(permission -> Objects.equals(permission.getType(), Consts.BUTTON))
                     // 过滤 URL 为空
@@ -69,7 +69,7 @@ public class RbacAuthorityService {
                     .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
                     .collect(Collectors.toList());
 
-            for (SecPermission btnPerm : btnPerms) {
+            for (MkSecPermission btnPerm : btnPerms) {
                 AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(btnPerm.getUrl(), btnPerm.getMethod());
                 if (antPathMatcher.matches(request)) {
                     hasPermission = true;

@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.auth;
+package com.github.xujiaji.mk.file;
 
 import com.github.xujiaji.mk.common.MysqlGenerator;
 
@@ -6,7 +6,7 @@ import com.github.xujiaji.mk.common.MysqlGenerator;
  * @author jiajixu
  * @date 2020/10/23 15:47
  */
-public class AuthMysqlGenerator extends MysqlGenerator {
+public class FileMysqlGenerator extends MysqlGenerator {
     @Override
     protected String tablePrefix() {
 //        return "sec_";
@@ -15,14 +15,13 @@ public class AuthMysqlGenerator extends MysqlGenerator {
 
     @Override
     protected String moduleName() {
-        return "auth";
+        return "file";
     }
 
 
     public static void main(String[] args) {
-        new AuthMysqlGenerator().runs(
-                "mk_auth_user",
-                "mk_auth_user_log"
+        new FileMysqlGenerator().runs(
+                "mk_file"
         );
     }
 }

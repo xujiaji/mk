@@ -6,8 +6,8 @@ import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.admin.vo.OnlineUser;
-import com.github.xujiaji.mk.security.entity.SecUser;
-import com.github.xujiaji.mk.security.mapper.SecUserMapper;
+import com.github.xujiaji.mk.security.entity.MkSecUser;
+import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
 import com.github.xujiaji.mk.security.service.IUserInfoService;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
 import com.google.common.collect.Lists;
@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +30,7 @@ public class MonitorService {
     private RedisUtil redisUtil;
 
     @Autowired
-    private SecUserMapper secUserMapper;
+    private MkSecUserMapper mkSecUserMapper;
 
     @Autowired
     private IUserInfoService userInfoService;
@@ -52,7 +51,7 @@ public class MonitorService {
                 .map(s -> StrUtil.subAfter(s, Consts.REDIS_JWT_KEY_PREFIX, true))
                 .collect(Collectors.toList());
         // 根据用户名查询用户信息
-        List<SecUser> userList = secUserMapper.selectBatchIds(usernameList);
+        List<MkSecUser> userList = mkSecUserMapper.selectBatchIds(usernameList);
 
         // 封装在线用户信息
         List<OnlineUser> onlineUserList = Lists.newArrayList();

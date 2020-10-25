@@ -3,7 +3,7 @@ package com.github.xujiaji.mk.security.admin.vo;
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.security.entity.IUser;
-import com.github.xujiaji.mk.security.entity.SecUser;
+import com.github.xujiaji.mk.security.entity.MkSecUser;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -51,10 +51,10 @@ public class OnlineUser {
      */
     private Integer sex;
 
-    public static OnlineUser create(SecUser secUser, IUser iUser) {
+    public static OnlineUser create(MkSecUser mkSecUser, IUser iUser) {
         OnlineUser onlineUser = new OnlineUser();
-        onlineUser.setSecUserId(secUser.getId());
-        onlineUser.setUserId(secUser.getUserId());
+        onlineUser.setSecUserId(mkSecUser.getId());
+        onlineUser.setUserId(mkSecUser.getUserId());
         onlineUser.setNickname(iUser.getNickname());
         // 脱敏
         onlineUser.setPhone(StrUtil.hide(iUser.getPhone(), 3, 7));

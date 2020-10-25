@@ -4,9 +4,9 @@ import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.security.entity.IUser;
-import com.github.xujiaji.mk.security.entity.SecPermission;
-import com.github.xujiaji.mk.security.entity.SecRole;
-import com.github.xujiaji.mk.security.entity.SecUser;
+import com.github.xujiaji.mk.security.entity.MkSecPermission;
+import com.github.xujiaji.mk.security.entity.MkSecRole;
+import com.github.xujiaji.mk.security.entity.MkSecUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -95,9 +95,9 @@ public class UserPrincipal implements UserDetails {
      */
     private Collection<? extends GrantedAuthority> authorities;
 
-    public static UserPrincipal create(SecUser secUser, IUser iUser, List<SecRole> roles, List<SecPermission> permissions) {
+    public static UserPrincipal create(MkSecUser mkSecUser, IUser iUser, List<MkSecRole> roles, List<MkSecPermission> permissions) {
         List<String> roleNames = roles.stream()
-                .map(SecRole::getName)
+                .map(MkSecRole::getName)
                 .collect(Collectors.toList());
 
         List<GrantedAuthority> authorities = permissions.stream()
@@ -106,7 +106,7 @@ public class UserPrincipal implements UserDetails {
                 .collect(Collectors.toList());
 
         return new UserPrincipal(
-                secUser.getId(),
+                mkSecUser.getId(),
                 iUser.getId(),
                 iUser.getNickname(),
                 iUser.getPhone(),
@@ -114,9 +114,9 @@ public class UserPrincipal implements UserDetails {
                 iUser.getBirthday(),
                 iUser.getSex(),
                 iUser.getPassword(),
-                secUser.getStatus(),
-                secUser.getCreateTime(),
-                secUser.getUpdateTime(),
+                mkSecUser.getStatus(),
+                mkSecUser.getCreateTime(),
+                mkSecUser.getUpdateTime(),
                 roleNames,
                 authorities);
     }

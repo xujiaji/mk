@@ -1,9 +1,9 @@
 package com.github.xujiaji.mk.security.admin.service;
 
-import com.github.xujiaji.mk.security.entity.SecRole;
-import com.github.xujiaji.mk.security.mapper.SecPermissionMapper;
-import com.github.xujiaji.mk.security.mapper.SecRoleMapper;
-import com.github.xujiaji.mk.security.mapper.SecUserMapper;
+import com.github.xujiaji.mk.security.entity.MkSecRole;
+import com.github.xujiaji.mk.security.mapper.MkSecPermissionMapper;
+import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
+import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
 import com.github.xujiaji.mk.security.service.IUserInfoService;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import lombok.val;
@@ -28,23 +28,23 @@ import java.util.stream.Collectors;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private SecUserMapper secUserMapper;
+    private MkSecUserMapper mkSecUserMapper;
     @Autowired
-    private SecRoleMapper secRoleMapper;
+    private MkSecRoleMapper mkSecRoleMapper;
     @Autowired
-    private SecPermissionMapper secPermissionMapper;
+    private MkSecPermissionMapper mkSecPermissionMapper;
     @Autowired
     private IUserInfoService userInfoService;
 
     @Override
     public UserDetails loadUserByUsername(String secUserId) throws UsernameNotFoundException {
-        val secUser = secUserMapper.selectById(secUserId);
+        val secUser = mkSecUserMapper.selectById(secUserId);
         val user = userInfoService.getUser(secUser.getUserId());
-        val secRoles = secRoleMapper.selectBySecUserId(Long.parseLong(secUserId));
+        val secRoles = mkSecRoleMapper.selectBySecUserId(Long.parseLong(secUserId));
         List<Long> roleIds = secRoles.stream()
-                .map(SecRole::getId)
+                .map(MkSecRole::getId)
                 .collect(Collectors.toList());
-        val secPermissions = secPermissionMapper.selectByRoleIdList(roleIds);
+        val secPermissions = mkSecPermissionMapper.selectByRoleIdList(roleIds);
         return UserPrincipal.create(secUser, user, secRoles, secPermissions);
     }
 }

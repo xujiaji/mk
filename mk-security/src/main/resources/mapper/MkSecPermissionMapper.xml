@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.xujiaji.mk.security.mapper.MkSecPermissionMapper">
+
+    <select id="selectByRoleIdList" resultType="com.github.xujiaji.mk.security.entity.MkSecPermission">
+        SELECT DISTINCT mk_sec_permission.*
+        FROM mk_sec_permission,mk_sec_role,mk_sec_role_permission
+        WHERE mk_sec_role.id = mk_sec_role_permission.role_id
+        AND mk_sec_permission.id = mk_sec_role_permission.permission_id
+        AND mk_sec_role.id IN
+        <foreach collection="roleIds" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+</mapper>

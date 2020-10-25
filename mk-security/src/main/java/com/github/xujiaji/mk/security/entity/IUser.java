@@ -13,5 +13,6 @@ public interface IUser {
     String getPassword();
     Integer getSex();
     String getPhone();
+    String getEmail();
     LocalDateTime getBirthday();
 }

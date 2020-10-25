@@ -50,6 +50,11 @@ public class UserPrincipal implements UserDetails {
     private String phone;
 
     /**
+     * 邮箱
+     */
+    private String email;
+
+    /**
      * 生日
      */
     private LocalDateTime birthday;
@@ -105,6 +110,7 @@ public class UserPrincipal implements UserDetails {
                 iUser.getId(),
                 iUser.getNickname(),
                 iUser.getPhone(),
+                iUser.getEmail(),
                 iUser.getBirthday(),
                 iUser.getSex(),
                 iUser.getPassword(),

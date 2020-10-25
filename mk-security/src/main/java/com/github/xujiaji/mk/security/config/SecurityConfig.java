@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AccessDeniedHandler accessDeniedHandler;
 
-    @Resource(name = "")
+    @Autowired
     private UserDetailsService userDetailsService;
 
     @Autowired

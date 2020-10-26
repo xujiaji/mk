@@ -15,6 +15,16 @@ public interface Consts {
     Integer DISABLE = 0;
 
     /**
+     * 正向
+     */
+    int POSITIVE = 1;
+
+    /**
+     * 反向
+     */
+    int NEGATIVE = 0;
+
+    /**
      * 页面
      */
     Integer PAGE = 1;

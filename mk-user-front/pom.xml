@@ -6,7 +6,7 @@
 	<name>mk-user-front</name>
 
 	<parent>
-		<artifactId>mk-user</artifactId>
+		<artifactId>mk</artifactId>
 		<groupId>com.github.xujiaji</groupId>
 		<version>0.0.1</version>
 	</parent>

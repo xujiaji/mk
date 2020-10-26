@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 用户 front 控制器
+ * @menu 用户 front 控制器
  * @author jiajixu
  * @date 2020/10/26 10:38
  */

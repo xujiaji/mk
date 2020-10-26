@@ -6,7 +6,7 @@
 	<name>mk-common-admin</name>
 
 	<parent>
-		<artifactId>mk-common</artifactId>
+		<artifactId>mk</artifactId>
 		<groupId>com.github.xujiaji</groupId>
 		<version>0.0.1</version>
 	</parent>

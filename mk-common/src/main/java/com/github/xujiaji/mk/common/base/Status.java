@@ -87,7 +87,18 @@ public enum Status implements IStatus {
     /**
      * 无法手动踢出自己，请尝试退出登录操作！
      */
-    KICKOUT_SELF(5004, "无法手动踢出自己，请尝试退出登录操作！");
+    KICKOUT_SELF(5004, "无法手动踢出自己，请尝试退出登录操作！"),
+
+
+    /**
+     * 数据库插入异常
+     */
+    DB_INSERT_ERROR(6000, "添加失败"),
+
+    /**
+     * 数据库更新异常
+     */
+    DB_UPDATE_ERROR(6001, "更新失败");
 
     /**
      * 状态码

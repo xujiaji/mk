@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * <p>
- * 用户表 前端控制器
- * </p>
- *
+ * @menu 用户
  * @author xujiaji
  * @since 2020-10-25
  */
@@ -24,6 +21,11 @@ public class MkUserController extends BaseController {
     @Autowired
     private MkUserServiceImpl mkUserService;
 
+    /**
+     * 用户基本信息
+     * @param id 用户ID
+     * @return {@link MkUser}
+     */
     @GetMapping("/info")
     public ApiResponse<MkUser> info(Long id) {
         return ApiResponse.ofSuccess(mkUserService.info(id));

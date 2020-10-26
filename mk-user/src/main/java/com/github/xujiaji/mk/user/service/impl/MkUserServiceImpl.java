@@ -17,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MkUserServiceImpl extends BaseServiceImpl<MkUserMapper, MkUser> implements IMkUserService {
 
+    @Override
+    public MkUser info(Long id) {
+        return baseMapper.selectById(id);
+    }
 }

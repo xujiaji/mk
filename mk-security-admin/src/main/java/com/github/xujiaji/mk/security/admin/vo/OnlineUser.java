@@ -2,7 +2,7 @@ package com.github.xujiaji.mk.security.admin.vo;
 
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.Consts;
-import com.github.xujiaji.mk.security.entity.IUser;
+import com.github.xujiaji.mk.common.entity.IUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import lombok.Data;
 

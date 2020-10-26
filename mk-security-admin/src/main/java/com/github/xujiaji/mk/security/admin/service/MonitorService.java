@@ -8,7 +8,7 @@ import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.admin.vo.OnlineUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
-import com.github.xujiaji.mk.security.service.IUserInfoService;
+import com.github.xujiaji.mk.common.service.IUserInfoService;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +55,7 @@ public class MonitorService {
 
         // 封装在线用户信息
         List<OnlineUser> onlineUserList = Lists.newArrayList();
-        userList.forEach(user -> onlineUserList.add(OnlineUser.create(user, userInfoService.getUser(user.getUserId()))));
+        userList.forEach(user -> onlineUserList.add(OnlineUser.create(user, userInfoService.getUserWithPhoneEmailPassword(user.getUserId()))));
         return PageVO.create(onlineUserList, pageCondition.getPage(), pageCondition.getSize(), keys.getTotal());
     }
 

@@ -1,10 +1,11 @@
 package com.github.xujiaji.mk.user.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
 import com.github.xujiaji.mk.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -16,7 +17,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("user")
+@TableName("mk_user")
 public class MkUser extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

@@ -5,6 +5,7 @@
 	<packaging>pom</packaging>
 	<modules>
 		<module>mk-common</module>
+		<module>mk-common-admin</module>
 
 		<module>mk-auth</module>
 		<module>mk-auth-admin</module>
@@ -101,6 +102,12 @@
 			<dependency>
 				<groupId>com.github.xujiaji</groupId>
 				<artifactId>mk-security</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.xujiaji</groupId>
+				<artifactId>mk-user</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

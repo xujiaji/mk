@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("sec_permission")
+@TableName("mk_sec_permission")
 public class MkSecPermission extends BaseEntity {
 
     private static final long serialVersionUID = 1L;

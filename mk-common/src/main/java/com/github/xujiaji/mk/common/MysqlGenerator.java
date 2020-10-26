@@ -100,6 +100,7 @@ public abstract class MysqlGenerator {
         strategy.setSuperControllerClass("com.github.xujiaji.mk.common.base.BaseController");
         strategy.setSuperServiceClass("com.github.xujiaji.mk.common.base.BaseIService");
         strategy.setSuperServiceImplClass("com.github.xujiaji.mk.common.base.BaseServiceImpl");
+        strategy.setRestControllerStyle(true);
         if (tableName == null) {
             strategy.setInclude(scanner("表名"));
         } else {

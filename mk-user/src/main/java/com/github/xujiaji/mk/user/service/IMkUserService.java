@@ -1,7 +1,7 @@
 package com.github.xujiaji.mk.user.service;
 
-import com.github.xujiaji.mk.user.entity.MkUser;
 import com.github.xujiaji.mk.common.base.BaseIService;
+import com.github.xujiaji.mk.user.entity.MkUser;
 
 /**
  * <p>
@@ -13,4 +13,5 @@ import com.github.xujiaji.mk.common.base.BaseIService;
  */
 public interface IMkUserService extends BaseIService<MkUser> {
 
+    MkUser info(Long id);
 }

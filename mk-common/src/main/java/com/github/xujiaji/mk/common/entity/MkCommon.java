@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.security.entity;
+package com.github.xujiaji.mk.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.github.xujiaji.mk.common.entity.BaseEntity;
@@ -7,23 +7,33 @@ import lombok.EqualsAndHashCode;
 
 /**
  * <p>
- * 角色表
+ * 
  * </p>
  *
  * @author xujiaji
- * @since 2020-10-23
+ * @since 2020-10-26
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("mk_sec_role")
-public class MkSecRole extends BaseEntity {
+@TableName("mk_common")
+public class MkCommon extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 角色名
+     * 标题
      */
-    private String name;
+    private String title;
+
+    /**
+     * 配置key
+     */
+    private String configKey;
+
+    /**
+     * 配置值
+     */
+    private String configValue;
 
     /**
      * 描述

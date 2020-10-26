@@ -4,7 +4,7 @@ import com.github.xujiaji.mk.security.entity.MkSecRole;
 import com.github.xujiaji.mk.security.mapper.MkSecPermissionMapper;
 import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
 import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
-import com.github.xujiaji.mk.security.service.IUserInfoService;
+import com.github.xujiaji.mk.common.service.IUserInfoService;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String secUserId) throws UsernameNotFoundException {
         val secUser = mkSecUserMapper.selectById(secUserId);
-        val user = userInfoService.getUser(secUser.getUserId());
+        val user = userInfoService.getUserWithPhoneEmailPassword(secUser.getUserId());
         val secRoles = mkSecRoleMapper.selectBySecUserId(Long.parseLong(secUserId));
         List<Long> roleIds = secRoles.stream()
                 .map(MkSecRole::getId)

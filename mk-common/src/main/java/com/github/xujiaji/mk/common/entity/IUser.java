@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.security.entity;
+package com.github.xujiaji.mk.common.entity;
 
 import java.time.LocalDateTime;
 

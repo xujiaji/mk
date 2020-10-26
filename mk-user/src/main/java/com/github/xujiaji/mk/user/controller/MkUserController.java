@@ -1,10 +1,13 @@
 package com.github.xujiaji.mk.user.controller;
 
-
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
+import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
+import com.github.xujiaji.mk.user.entity.MkUser;
+import com.github.xujiaji.mk.user.service.impl.MkUserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -14,8 +17,15 @@ import com.github.xujiaji.mk.common.base.BaseController;
  * @author xujiaji
  * @since 2020-10-25
  */
-@Controller
+@RestController
 @RequestMapping("/user")
 public class MkUserController extends BaseController {
 
+    @Autowired
+    private MkUserServiceImpl mkUserService;
+
+    @GetMapping("/info")
+    public ApiResponse<MkUser> info(Long id) {
+        return ApiResponse.ofSuccess(mkUserService.info(id));
+    }
 }

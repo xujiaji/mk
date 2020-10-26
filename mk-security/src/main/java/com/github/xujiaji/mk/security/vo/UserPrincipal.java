@@ -3,7 +3,7 @@ package com.github.xujiaji.mk.security.vo;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.xujiaji.mk.common.base.Consts;
-import com.github.xujiaji.mk.security.entity.IUser;
+import com.github.xujiaji.mk.common.entity.IUser;
 import com.github.xujiaji.mk.security.entity.MkSecPermission;
 import com.github.xujiaji.mk.security.entity.MkSecRole;
 import com.github.xujiaji.mk.security.entity.MkSecUser;

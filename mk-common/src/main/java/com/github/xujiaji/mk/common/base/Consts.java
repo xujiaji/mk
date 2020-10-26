@@ -63,4 +63,14 @@ public interface Consts {
      * 匿名用户 用户名
      */
     String ANONYMOUS_NAME = "匿名用户";
+
+    /**
+     * 数据库中配置的key
+     */
+    interface ConfigKey {
+        /**
+         * 基础文件存放路径
+         */
+        String basePath = "basePath";
+    }
 }

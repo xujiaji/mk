@@ -1,9 +1,7 @@
 package com.github.xujiaji.mk.common.service;
 
-import com.github.xujiaji.mk.common.entity.MkCommon;
 import com.github.xujiaji.mk.common.base.BaseIService;
-import com.github.xujiaji.mk.common.payload.AddConfigCondition;
-import com.github.xujiaji.mk.common.payload.EditConfigCondition;
+import com.github.xujiaji.mk.common.entity.MkCommon;
 
 /**
  * <p>
@@ -16,12 +14,7 @@ import com.github.xujiaji.mk.common.payload.EditConfigCondition;
 public interface IMkCommonService extends BaseIService<MkCommon> {
 
     /**
-     * 添加配置
+     * 通过key得到值
      */
-    void addConfig(AddConfigCondition config);
-
-    /**
-     * 编辑配置
-     */
-    void editConfig(EditConfigCondition config);
+    String valueByKey(String key);
 }

@@ -3,6 +3,20 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<packaging>pom</packaging>
+	<name>mk - mk/Business Module</name>
+	<description>springboot业务模块化！以依赖线上模块，自由选择所需模块，达到快速开发新项目的目的！并为统一维护提供便利</description>
+	<url>https://github.com/xujiaji/mk</url>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.3.4.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.github.xujiaji.mk</groupId>
+	<artifactId>mk</artifactId>
+	<version>0.0.1</version>
+
 	<modules>
 		<module>mk-common</module>
 		<module>mk-common-admin</module>
@@ -37,17 +51,6 @@
 
 	</modules>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
-	</parent>
-	<groupId>com.github.xujiaji</groupId>
-	<artifactId>mk</artifactId>
-	<version>0.0.1</version>
-	<name>mk</name>
-	<description>模块化</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -94,19 +97,19 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>com.github.xujiaji</groupId>
+				<groupId>com.github.xujiaji.mk</groupId>
 				<artifactId>mk-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.github.xujiaji</groupId>
+				<groupId>com.github.xujiaji.mk</groupId>
 				<artifactId>mk-security</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>com.github.xujiaji</groupId>
+				<groupId>com.github.xujiaji.mk</groupId>
 				<artifactId>mk-user</artifactId>
 				<version>${project.version}</version>
 			</dependency>
@@ -148,7 +151,142 @@
 	</dependencyManagement>
 
 
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>https://github.com/xujiaji/mk.git</connection>
+		<developerConnection>https://github.com/xujiaji/mk.git</developerConnection>
+		<url>https://github.com/xujiaji/mk</url>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>xujiaji</id>
+			<name>xujiaji</name>
+			<email>jiajixu@qq.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<organization>https://github.com/xujiaji</organization>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
+		<plugins>
+			<!-- 打包时跳过测试 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<!-- 以下都为上传jar默认配置不做修改 -->
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.8</version>
+				<!-- autoReleaseAfterClose的值为true，则脚本会自动完成在平台上close、release的操作，至此你将成功发布了 -->
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.3</version>
+				<configuration>
+					<autoVersionSubmodules>true</autoVersionSubmodules>
+					<useReleaseProfile>false</useReleaseProfile>
+					<releaseProfiles>release</releaseProfiles>
+					<goals>deploy</goals>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<!-- JDK8必须使用下面的配置 -->
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<charset>UTF-8</charset>
+							<javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
+							<additionalparam>-Xdoclint:none</additionalparam>
+						</configuration>
+
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<plugin>

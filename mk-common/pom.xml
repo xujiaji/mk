@@ -7,7 +7,7 @@
 
 	<parent>
 		<artifactId>mk</artifactId>
-		<groupId>com.github.xujiaji</groupId>
+		<groupId>com.github.xujiaji.mk</groupId>
 		<version>0.0.1</version>
 	</parent>
 
@@ -42,5 +42,15 @@
 			<artifactId>guava</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+		</plugins>
+	</build>
 
 </project>

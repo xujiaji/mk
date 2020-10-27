@@ -7,19 +7,19 @@
 
 	<parent>
 		<artifactId>mk</artifactId>
-		<groupId>com.github.xujiaji</groupId>
+		<groupId>com.github.xujiaji.mk</groupId>
 		<version>0.0.1</version>
 	</parent>
 
 	<dependencies>
 
 		<dependency>
-			<groupId>com.github.xujiaji</groupId>
+			<groupId>com.github.xujiaji.mk</groupId>
 			<artifactId>mk-common</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>com.github.xujiaji</groupId>
+			<groupId>com.github.xujiaji.mk</groupId>
 			<artifactId>mk-security</artifactId>
 		</dependency>
 

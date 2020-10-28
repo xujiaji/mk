@@ -8,7 +8,7 @@
 	<parent>
 		<artifactId>mk</artifactId>
 		<groupId>com.github.xujiaji.mk</groupId>
-		<version>0.0.2</version>
+		<version>0.0.3</version>
 	</parent>
 
 	<dependencies>

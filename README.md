@@ -3,7 +3,7 @@
 ## 依赖
 
 <details>
-  <summary>常用模块（基础模块）`common`</summary>
+  <summary>常用模块（基础模块）common</summary>
 
 1. `mk-common`
 
@@ -27,7 +27,7 @@
 </details>
 
 <details>
-    <summary>安全模块`security`</summary>
+    <summary>安全模块 security</summary>
 
 1. `mk-security`
 
@@ -62,7 +62,7 @@
 
 
 <details>
-    <summary>认证模块`auth`</summary>
+    <summary>认证模块 auth</summary>
     
 1. `mk-auth`
 
@@ -96,7 +96,7 @@
 </details>
 
 <details>
-    <summary>用户模块`user`</summary>
+    <summary>用户模块 user</summary>
     
 1. `mk-user`
 
@@ -130,7 +130,7 @@
 </details>
 
 <details>
-    <summary>圈子动态模块`community`</summary>
+    <summary>圈子动态模块 community</summary>
    
 1. `mk-community`
 
@@ -164,7 +164,7 @@
 </details>
 
 <details>
-    <summary>文件模块`file`</summary>
+    <summary>文件模块 file</summary>
     
 1. `mk-file`
 
@@ -198,7 +198,7 @@
 </details>
 
 <details>
-    <summary>日志模块`log`</summary>
+    <summary>日志模块 log</summary>
     
 1. `mk-log`
 
@@ -232,7 +232,7 @@
 </details>
 
 <details>
-    <summary>支付模块`pay`</summary>
+    <summary>支付模块 pay</summary>
     
 1. `mk-pay`
 

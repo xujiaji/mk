@@ -11,7 +11,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-common</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -21,7 +21,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-common-admin</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 </details>
@@ -35,7 +35,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-security</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -45,7 +45,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-security-front</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -55,7 +55,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-security-admin</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 </details>
@@ -70,7 +70,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-auth</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -80,7 +80,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-auth-front</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -90,7 +90,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-auth-admin</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 </details>
@@ -104,7 +104,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-user</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -114,7 +114,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-user-front</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -124,7 +124,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-user-admin</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ``` 
 </details>
@@ -138,7 +138,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-community</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -148,7 +148,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-community-front</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -158,7 +158,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-community-admin</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```  
 </details>
@@ -172,7 +172,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-file</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -182,7 +182,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-file-front</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -192,7 +192,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-file-admin</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```  
 </details>
@@ -206,7 +206,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-log</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -216,7 +216,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-log-front</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -226,7 +226,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-log-admin</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```  
 </details>
@@ -240,7 +240,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-pay</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -250,7 +250,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-pay-front</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```
 
@@ -260,7 +260,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>mk-pay-admin</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
 </dependency>
 ```  
 </details>

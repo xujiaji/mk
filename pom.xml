@@ -15,7 +15,7 @@
 	</parent>
 	<groupId>com.github.xujiaji.mk</groupId>
 	<artifactId>mk</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 
 	<modules>
 		<module>mk-common</module>

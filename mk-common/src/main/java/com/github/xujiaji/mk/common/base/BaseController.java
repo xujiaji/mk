@@ -1,5 +1,6 @@
 package com.github.xujiaji.mk.common.base;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.vo.PageVO;
@@ -39,6 +40,13 @@ public class BaseController {
     }
 
     /**
+     * 成功消息
+     */
+    protected ApiResponse<?> successMessage(String msg) {
+        return ApiResponse.ofMessage(msg);
+    }
+
+    /**
      * 添加成功
      */
     protected ApiResponse<?> successAdd() {
@@ -64,5 +72,12 @@ public class BaseController {
      */
     protected <T> ApiResponse<PageVO<T>> successPage(Page<T> p) {
         return ApiResponse.ofSuccess(responsePage(p));
+    }
+
+    /**
+     * request 转 实体
+     */
+    protected <T> T request2Entity(Object request, Class<T> tClass) {
+        return BeanUtil.copyProperties(request, tClass);
     }
 }

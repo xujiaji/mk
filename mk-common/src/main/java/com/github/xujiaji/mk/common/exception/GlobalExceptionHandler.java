@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -42,6 +41,9 @@ public class GlobalExceptionHandler {
                 .findFirst();
         if (first.isPresent()) {
             return first.get().handle(e);
+        } if (e instanceof RequestActionException) {
+            log.error("【全局异常拦截】RequestActionException: 错误信息 {}", e.getMessage());
+            return ApiResponse.of(Status.REQUEST_ERROR.getCode(), e.getMessage(), null);
         } else if (e instanceof HttpRequestMethodNotSupportedException) {
             log.error("【全局异常拦截】HttpRequestMethodNotSupportedException: 当前请求方式 {}, 支持请求方式 {}", ((HttpRequestMethodNotSupportedException) e).getMethod(), JSONUtil.toJsonStr(((HttpRequestMethodNotSupportedException) e).getSupportedHttpMethods()));
             return ApiResponse.ofStatus(Status.HTTP_BAD_METHOD);

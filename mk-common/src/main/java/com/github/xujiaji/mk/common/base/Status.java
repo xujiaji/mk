@@ -15,6 +15,11 @@ public enum Status implements IStatus {
     SUCCESS(200, "操作成功！"),
 
     /**
+     * 请求异常
+     */
+    REQUEST_ERROR(201, "异常！"),
+
+    /**
      * 操作异常！
      */
     ERROR(500, "操作异常！"),
@@ -98,7 +103,12 @@ public enum Status implements IStatus {
     /**
      * 数据库更新异常
      */
-    DB_UPDATE_ERROR(6001, "更新失败");
+    DB_UPDATE_ERROR(6001, "更新失败"),
+
+    /**
+     * 数据库删除异常
+     */
+    DB_DELETE_ERROR(6002, "删除失败");
 
     /**
      * 状态码

@@ -8,10 +8,7 @@ import org.springframework.context.annotation.ComponentScans;
 
 @SpringBootApplication
 @MapperScan("com.github.xujiaji.mk.*.mapper")
-@ComponentScans(
-		value = {@ComponentScan("com.github.xujiaji.mk.*.util"),
-				@ComponentScan("com.github.xujiaji.mk.*.config")}
-)
+@ComponentScan("com.github.xujiaji.mk")
 public class MkSecurityAdminApplication {
 
 	public static void main(String[] args) {

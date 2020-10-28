@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.security.mapper.MkSecRoleMapper">
+    <insert id="roleSetPermissions">
+        DELETE FROM mk_sec_role_permission WHERE role_id = ${id};
+        INSERT INTO mk_sec_role_permission(role_id, permission_id, create_time)
+        VALUES
+        <foreach collection="permissionIds" item="permissionId" separator=",">
+             (${id}, ${permissionId}, NOW())
+        </foreach>
+    </insert>
 
     <select id="selectBySecUserId" resultType="com.github.xujiaji.mk.security.entity.MkSecRole">
         SELECT mk_sec_role.*

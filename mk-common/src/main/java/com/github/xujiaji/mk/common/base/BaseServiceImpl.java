@@ -2,6 +2,7 @@ package com.github.xujiaji.mk.common.base;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.xujiaji.mk.common.exception.db.DBDeleteException;
 import com.github.xujiaji.mk.common.exception.db.DBInsertException;
 import com.github.xujiaji.mk.common.exception.db.DBUpdateException;
 
@@ -28,5 +29,29 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
         if (updateResult == Consts.NEGATIVE) {
             throw new DBUpdateException();
         }
+    }
+
+    /**
+     * 检查是否删除数据成功
+     */
+    public void checkDeleteSuccess(int deleteResult) {
+        if (deleteResult == Consts.NEGATIVE) {
+            throw new DBDeleteException();
+        }
+    }
+
+    @Override
+    public void add(T entity) {
+        checkInsertSuccess(baseMapper.insert(entity));
+    }
+
+    @Override
+    public void editById(T entity) {
+        checkUpdateSuccess(baseMapper.updateById(entity));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        checkDeleteSuccess(baseMapper.deleteById(id));
     }
 }

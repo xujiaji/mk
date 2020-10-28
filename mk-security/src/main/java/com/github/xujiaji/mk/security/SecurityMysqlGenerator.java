@@ -1,12 +1,13 @@
 package com.github.xujiaji.mk.security;
 
-import com.github.xujiaji.mk.common.MysqlGenerator;
+
+import com.github.xujiaji.mk.common.CommonMysqlGenerator;
 
 /**
  * @author jiajixu
  * @date 2020/10/23 15:47
  */
-public class SecurityMysqlGenerator extends MysqlGenerator {
+public class SecurityMysqlGenerator extends CommonMysqlGenerator {
     @Override
     protected String tablePrefix() {
 //        return "sec_";
@@ -15,7 +16,7 @@ public class SecurityMysqlGenerator extends MysqlGenerator {
 
     @Override
     protected String moduleName() {
-        return "security";
+        return "mk-security";
     }
 
 

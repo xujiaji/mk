@@ -52,23 +52,23 @@ public abstract class MysqlGenerator {
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/mk-" + moduleName() + "/src/main/java");
+        gc.setOutputDir(projectPath + "/" + moduleName() + "/src/main/java");
         gc.setAuthor("xujiaji");
         gc.setOpen(false);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/mk?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&serverTimezone=GMT%2B8");
+        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/" + dbName() + "?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&serverTimezone=GMT%2B8");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername("root");
-        dsc.setPassword("sKk2sxAwtfx");
+        dsc.setUsername(dbUsername());
+        dsc.setPassword(dbPassword());
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.github.xujiaji.mk." + moduleName());
+        pc.setParent(parentPackage() + "." + moduleName());
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -83,7 +83,7 @@ public abstract class MysqlGenerator {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输入文件名称
-                return projectPath + "/mk-" + moduleName() + "/src/main/resources/mapper/" + pc.getModuleName()
+                return projectPath + "/" + moduleName() + "/src/main/resources/mapper/" + pc.getModuleName()
                         + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
@@ -114,6 +114,30 @@ public abstract class MysqlGenerator {
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
     }
+
+    /**
+     * 主包名
+     * @return 父包名
+     */
+    protected abstract String parentPackage();
+
+    /**
+     * 数据库名
+     * @return 数据库名
+     */
+    protected abstract String dbName();
+
+    /**
+     * 数据库用户名
+     * @return 用户名
+     */
+    protected abstract String dbUsername();
+
+    /**
+     * 数据库密码
+     * @return 密码
+     */
+    protected abstract String dbPassword();
 
     /**
      * 表前缀

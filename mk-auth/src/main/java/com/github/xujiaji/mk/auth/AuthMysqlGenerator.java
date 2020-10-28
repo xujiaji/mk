@@ -1,12 +1,12 @@
 package com.github.xujiaji.mk.auth;
 
-import com.github.xujiaji.mk.common.MysqlGenerator;
+import com.github.xujiaji.mk.common.CommonMysqlGenerator;
 
 /**
  * @author jiajixu
  * @date 2020/10/23 15:47
  */
-public class AuthMysqlGenerator extends MysqlGenerator {
+public class AuthMysqlGenerator extends CommonMysqlGenerator {
     @Override
     protected String tablePrefix() {
 //        return "sec_";
@@ -15,7 +15,7 @@ public class AuthMysqlGenerator extends MysqlGenerator {
 
     @Override
     protected String moduleName() {
-        return "auth";
+        return "mk-auth";
     }
 
 

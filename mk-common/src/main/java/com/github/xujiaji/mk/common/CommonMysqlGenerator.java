@@ -6,6 +6,26 @@ package com.github.xujiaji.mk.common;
  */
 public class CommonMysqlGenerator extends MysqlGenerator {
     @Override
+    protected String parentPackage() {
+        return "com.github.xujiaji.mk";
+    }
+
+    @Override
+    protected String dbName() {
+        return "mk";
+    }
+
+    @Override
+    protected String dbUsername() {
+        return "root";
+    }
+
+    @Override
+    protected String dbPassword() {
+        return "sKk2sxAwtfx";
+    }
+
+    @Override
     protected String tablePrefix() {
 //        return "sec_";
         return "";
@@ -13,7 +33,7 @@ public class CommonMysqlGenerator extends MysqlGenerator {
 
     @Override
     protected String moduleName() {
-        return "common";
+        return "mk-common";
     }
 
 

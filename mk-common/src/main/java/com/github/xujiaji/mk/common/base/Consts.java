@@ -73,4 +73,19 @@ public interface Consts {
          */
         String basePath = "basePath";
     }
+
+    /**
+     * 权限类型
+     */
+    interface PermissionType {
+        /**
+         * 页面
+         */
+        int PAGE = 1;
+
+        /**
+         * 按钮
+         */
+        int BOTTOM = 2;
+    }
 }

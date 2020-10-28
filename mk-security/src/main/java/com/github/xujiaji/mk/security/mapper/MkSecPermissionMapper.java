@@ -17,4 +17,8 @@ import java.util.List;
 public interface MkSecPermissionMapper extends BaseMapper<MkSecPermission> {
 
     List<MkSecPermission> selectByRoleIdList(@Param("roleIds") List<Long> roleIds);
+
+    int countByParentId(@Param("parentId") Long parentId);
+
+    List<MkSecPermission> selectPermissionsBySecUserId(@Param("secUserId") Long secUserId);
 }

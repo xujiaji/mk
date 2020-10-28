@@ -36,9 +36,12 @@
 #      ignores:
 #        get:
 #          - "/admin/sec/role/*"
+#          - "/admin/sec/permission/*"
 #        # 需要过滤的 post 请求
 #        post:
 #          - "/admin/sec/role/*"
+#          - "/admin/sec/permission/*"
 #        put:
 #          - "/admin/sec/role/*"
 #          - "/admin/sec/role/set/permission"
+#          - "/admin/sec/permission/*"

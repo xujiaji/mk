@@ -12,4 +12,16 @@
             #{id}
         </foreach>
     </select>
+
+    <select id="countByParentId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM mk_sec_permission WHERE parent_id = ${parentId}
+    </select>
+
+    <select id="selectPermissionsBySecUserId"
+            resultType="com.github.xujiaji.mk.security.entity.MkSecPermission">
+        SELECT * FROM mk_sec_user_role ur
+            LEFT JOIN mk_sec_role_permission rp ON ur.role_id = rp.role_id
+            LEFT JOIN mk_sec_permission p ON p.id = rp.permission_id
+        WHERE ur.sec_user_id = ${secUserId}
+    </select>
 </mapper>

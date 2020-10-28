@@ -6,6 +6,10 @@ import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import lombok.val;
 
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  * Controller 基类
  * @author jiajixu
@@ -79,5 +83,32 @@ public class BaseController {
      */
     protected <T> T request2Entity(Object request, Class<T> tClass) {
         return BeanUtil.copyProperties(request, tClass);
+    }
+
+    /**
+     * 通过id和parentId构建树结构
+     * @param objList 需要构建的实体类列表
+     * @return 返回树行结构
+     */
+    protected List<Map<String, Object>> treeIdAndParentId(List<?> objList) {
+        return treeIdAndParentId(0L, objList.stream().map(BeanUtil::beanToMap).collect(Collectors.toList()), "id", "parentId", "children");
+    }
+
+    /**
+     * 构建树实体树结构
+     * @param parentId 父ID
+     * @param list 构建树的列表
+     * @param idKey 构建树关系的子ID key
+     * @param parentIdKey 构建树关系的父ID key
+     * @param childrenKey 用来存放子级列表的key
+     * @return 返回树行结构
+     */
+    protected List<Map<String, Object>> treeIdAndParentId(Object parentId, List<Map<String, Object>> list, String idKey, String parentIdKey, String childrenKey) {
+        val childArr = list.stream().filter(p -> (parentId != null && parentId.equals(p.get(parentIdKey))) || p.get(parentIdKey) == null).collect(Collectors.toList());
+        list.removeAll(childArr);
+        for (Map<String, Object> child : childArr) {
+            child.put(childrenKey, treeIdAndParentId(child.get(idKey), list, idKey, parentIdKey, childrenKey));
+        }
+        return childArr;
     }
 }

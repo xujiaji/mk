@@ -41,7 +41,10 @@ public class GlobalExceptionHandler {
                 .findFirst();
         if (first.isPresent()) {
             return first.get().handle(e);
-        } if (e instanceof RequestActionException) {
+        } else if (e instanceof StatusException) {
+            log.error("【全局异常拦截】RequestActionStatusException: 错误信息 {}", ((StatusException) e).getStatus().getMessage());
+            return ApiResponse.of(((StatusException) e).getStatus().getCode(), ((StatusException) e).getStatus().getMessage(), null);
+        } else if (e instanceof RequestActionException) {
             log.error("【全局异常拦截】RequestActionException: 错误信息 {}", e.getMessage());
             return ApiResponse.of(Status.REQUEST_ERROR.getCode(), e.getMessage(), null);
         } else if (e instanceof HttpRequestMethodNotSupportedException) {

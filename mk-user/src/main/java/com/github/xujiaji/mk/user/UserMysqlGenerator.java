@@ -19,10 +19,15 @@ public class UserMysqlGenerator extends CommonMysqlGenerator {
         return "mk-user";
     }
 
+    @Override
+    protected String subPackageName() {
+        return "user";
+    }
 
     public static void main(String[] args) {
         new UserMysqlGenerator().runs(
-                "user"
+                "mk_user",
+                "mk_user_login_log"
         );
     }
 }

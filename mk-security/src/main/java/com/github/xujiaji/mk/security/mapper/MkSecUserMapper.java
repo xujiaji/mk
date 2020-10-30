@@ -1,7 +1,7 @@
 package com.github.xujiaji.mk.security.mapper;
 
-import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.xujiaji.mk.security.entity.MkSecUser;
 
 /**
  * <p>

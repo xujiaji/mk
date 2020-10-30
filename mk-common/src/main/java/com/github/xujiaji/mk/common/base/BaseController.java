@@ -1,10 +1,12 @@
 package com.github.xujiaji.mk.common.base;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import lombok.val;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
  * @author jiajixu
  * @date 2020/10/22 16:57
  */
+@Validated
 public class BaseController {
 
     /**
@@ -27,7 +30,7 @@ public class BaseController {
     /**
      * 将mybatis-plus的page数据转换成response数据模型
      */
-    private <T> PageVO<T> responsePage(Page<T> page) {
+    private <T> PageVO<T> responsePage(IPage<T> page) {
         val pv = new PageVO<T>();
         pv.setList(page.getRecords());
         pv.setTotal(page.getTotal());
@@ -74,7 +77,7 @@ public class BaseController {
     /**
      * 包装分页返回成功的处理
      */
-    protected <T> ApiResponse<PageVO<T>> successPage(Page<T> p) {
+    protected <T> ApiResponse<PageVO<T>> successPage(IPage<T> p) {
         return ApiResponse.ofSuccess(responsePage(p));
     }
 

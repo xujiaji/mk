@@ -1,11 +1,12 @@
 package com.github.xujiaji.mk.common.admin.controller;
 
-import com.github.xujiaji.mk.common.admin.service.MkCommonAdminService;
+import cn.hutool.core.bean.BeanUtil;
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
 import com.github.xujiaji.mk.common.entity.MkCommon;
 import com.github.xujiaji.mk.common.payload.AddConfigCondition;
 import com.github.xujiaji.mk.common.payload.EditConfigCondition;
+import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +19,17 @@ import java.util.List;
  * @date 2020/10/26 14:13
  */
 @RestController
-@RequestMapping("/common-admin/config")
+@RequestMapping("/admin/common/config")
 public class MkCommonAdminController extends BaseController {
     @Autowired
-    private MkCommonAdminService mkCommonAdminService;
+    private MkCommonServiceImpl mkCommonService;
 
     /**
      * 添加配置
      */
     @PostMapping("/add")
     public ApiResponse<?> add(@RequestBody @Valid AddConfigCondition config) {
-        mkCommonAdminService.addConfig(config);
+        mkCommonService.add(BeanUtil.copyProperties(config, MkCommon.class));
         return successAdd();
     }
 
@@ -37,7 +38,7 @@ public class MkCommonAdminController extends BaseController {
      */
     @PutMapping("/edit")
     public ApiResponse<?> edit(@RequestBody @Valid EditConfigCondition config) {
-        mkCommonAdminService.editConfig(config);
+        mkCommonService.editById(BeanUtil.copyProperties(config, MkCommon.class));
         return successUpdate();
     }
 
@@ -46,7 +47,7 @@ public class MkCommonAdminController extends BaseController {
      */
     @GetMapping("/list")
     public ApiResponse<List<MkCommon>> list() {
-        return success(mkCommonAdminService.list());
+        return success(mkCommonService.list());
     }
 
 }

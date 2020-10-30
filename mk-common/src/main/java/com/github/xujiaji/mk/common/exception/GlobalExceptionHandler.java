@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.validation.ConstraintViolationException;
+import javax.validation.UnexpectedTypeException;
 import java.util.List;
 
 /**
@@ -56,6 +58,15 @@ public class GlobalExceptionHandler {
                     .getAllErrors()
                     .get(0)
                     .getDefaultMessage(), null);
+        } else if (e instanceof BindException) {
+            log.error("【全局异常拦截】BindException", e);
+            return ApiResponse.of(Status.BAD_REQUEST.getCode(), ((BindException) e).getBindingResult()
+                    .getAllErrors()
+                    .get(0)
+                    .getDefaultMessage(), null);
+        } else if (e instanceof UnexpectedTypeException) {
+            log.error("【全局异常拦截】UnexpectedTypeException", e);
+            return ApiResponse.of(Status.BAD_REQUEST.getCode(), "请检查参数有没有传或是类型是否正确", null);
         } else if (e instanceof ConstraintViolationException) {
             log.error("【全局异常拦截】ConstraintViolationException", e);
             return ApiResponse.of(Status.BAD_REQUEST.getCode(), CollUtil.getFirst(((ConstraintViolationException) e).getConstraintViolations())

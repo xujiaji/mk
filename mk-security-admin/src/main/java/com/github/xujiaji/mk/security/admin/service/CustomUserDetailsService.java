@@ -39,7 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String secUserId) throws UsernameNotFoundException {
         val secUser = mkSecUserMapper.selectById(secUserId);
-        val user = userInfoService.getUserWithPhoneEmailPassword(secUser.getUserId());
+        val user = userInfoService.getUserDetails(secUser.getUserId());
         val secRoles = mkSecRoleMapper.selectBySecUserId(Long.parseLong(secUserId));
         List<Long> roleIds = secRoles.stream()
                 .map(MkSecRole::getId)

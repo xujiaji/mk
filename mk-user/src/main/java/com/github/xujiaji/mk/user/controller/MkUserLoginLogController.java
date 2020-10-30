@@ -7,13 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.xujiaji.mk.common.base.BaseController;
 
 /**
- * @menu 用户
- *
+ * @menu 用户登录日志
  * @author xujiaji
  * @since 2020-10-30
  */
 @RestController
-@RequestMapping("/user")
-public class MkUserController extends BaseController {
+@RequestMapping("/user/login/log")
+public class MkUserLoginLogController extends BaseController {
 
 }

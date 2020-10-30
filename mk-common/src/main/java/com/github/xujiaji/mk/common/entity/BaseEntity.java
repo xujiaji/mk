@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
  */
 @Data
 public class BaseEntity implements Serializable {
-
     /**
      * 主键
      */
@@ -33,6 +32,4 @@ public class BaseEntity implements Serializable {
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
-
-
 }

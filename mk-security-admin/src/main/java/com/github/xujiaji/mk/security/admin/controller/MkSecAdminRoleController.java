@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * @menu 权限-角色管理
@@ -30,7 +31,7 @@ public class MkSecAdminRoleController extends BaseController {
      * 角色列表
      */
     @GetMapping("/page")
-    public ApiResponse<PageVO<MkSecRole>> page(PageCondition request) {
+    public ApiResponse<PageVO<MkSecRole>> page(@Valid PageCondition request) {
         return successPage(secRoleService.page(mapPage(request)));
     }
 
@@ -57,8 +58,8 @@ public class MkSecAdminRoleController extends BaseController {
      * @param id 角色id
      */
     @DeleteMapping
-    public ApiResponse<?> roleDelete(Long id) {
-        secRoleService.deleteById(id);
+    public ApiResponse<?> roleDelete(@NotNull(message = "角色ID不能为空") Long id) {
+        secRoleService.deleteRoleById(id);
         return successDelete();
     }
 

@@ -55,7 +55,7 @@ public class MonitorService {
 
         // 封装在线用户信息
         List<OnlineUser> onlineUserList = Lists.newArrayList();
-        userList.forEach(user -> onlineUserList.add(OnlineUser.create(user, userInfoService.getUserWithPhoneEmailPassword(user.getUserId()))));
+        userList.forEach(user -> onlineUserList.add(OnlineUser.create(user, userInfoService.getUserDetails(user.getUserId()))));
         return PageVO.create(onlineUserList, pageCondition.getPage(), pageCondition.getSize(), keys.getTotal());
     }
 

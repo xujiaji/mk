@@ -21,4 +21,10 @@ public interface IMkSecRoleService extends BaseIService<MkSecRole> {
      * @param permissionIds 权限列表
      */
     void roleSetPermissions(Long id, List<Long> permissionIds);
+
+    /**
+     * 通过id删除角色
+     * @param id 角色ID
+     */
+    void deleteRoleById(Long id);
 }

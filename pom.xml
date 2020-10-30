@@ -21,10 +21,6 @@
 		<module>mk-common</module>
 		<module>mk-common-admin</module>
 
-		<module>mk-auth</module>
-		<module>mk-auth-admin</module>
-		<module>mk-auth-front</module>
-
 		<module>mk-pay</module>
 		<module>mk-pay-admin</module>
 		<module>mk-pay-front</module>

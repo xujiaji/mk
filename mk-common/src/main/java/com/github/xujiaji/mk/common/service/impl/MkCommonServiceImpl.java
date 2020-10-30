@@ -6,6 +6,8 @@ import com.github.xujiaji.mk.common.mapper.MkCommonMapper;
 import com.github.xujiaji.mk.common.service.IMkCommonService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -20,5 +22,10 @@ public class MkCommonServiceImpl extends BaseServiceImpl<MkCommonMapper, MkCommo
     @Override
     public String valueByKey(String key) {
         return baseMapper.getConfigValueByKey(key);
+    }
+
+    @Override
+    public List<MkCommon> entitiesByKeys(String... keys) {
+        return baseMapper.selectEntitiesByKeys(keys);
     }
 }

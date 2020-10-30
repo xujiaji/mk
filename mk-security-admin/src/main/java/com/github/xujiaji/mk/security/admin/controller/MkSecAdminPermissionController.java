@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
 
@@ -80,7 +81,7 @@ public class MkSecAdminPermissionController extends BaseController {
      * 删除权限
      */
     @DeleteMapping("/del")
-    public ApiResponse<?> permissionDelete(Long id) {
+    public ApiResponse<?> permissionDelete(@NotNull(message = "权限ID不能为空") Long id) {
         permissionService.deletePermission(id);
         return successDelete();
     }

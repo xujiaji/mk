@@ -5,4 +5,11 @@
     <select id="getConfigValueByKey" resultType="java.lang.String">
         SELECT * FROM mk_common WHERE config_key = #{key}
     </select>
+
+    <select id="selectEntitiesByKeys" resultType="com.github.xujiaji.mk.common.entity.MkCommon">
+        SELECT * FROM mk_common WHERE config_key IN
+        <foreach collection="keys" item="key" separator="," open="(" close=")">
+            #{key}
+        </foreach>
+    </select>
 </mapper>

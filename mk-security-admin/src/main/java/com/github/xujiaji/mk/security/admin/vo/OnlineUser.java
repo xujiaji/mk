@@ -2,7 +2,7 @@ package com.github.xujiaji.mk.security.admin.vo;
 
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.Consts;
-import com.github.xujiaji.mk.common.entity.IUser;
+import com.github.xujiaji.mk.common.entity.MkUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import lombok.Data;
 
@@ -51,16 +51,16 @@ public class OnlineUser {
      */
     private Integer sex;
 
-    public static OnlineUser create(MkSecUser mkSecUser, IUser iUser) {
+    public static OnlineUser create(MkSecUser mkSecUser, MkUser mkUser) {
         OnlineUser onlineUser = new OnlineUser();
         onlineUser.setSecUserId(mkSecUser.getId());
         onlineUser.setUserId(mkSecUser.getUserId());
-        onlineUser.setNickname(iUser.getNickname());
+        onlineUser.setNickname(mkUser.getNickname());
         // 脱敏
-        onlineUser.setPhone(StrUtil.hide(iUser.getPhone(), 3, 7));
-        onlineUser.setEmail(StrUtil.hide(iUser.getEmail(), 1, StrUtil.indexOfIgnoreCase(iUser.getEmail(), Consts.SYMBOL_EMAIL)));
-        onlineUser.setBirthday(iUser.getBirthday());
-        onlineUser.setSex(iUser.getSex());
+        onlineUser.setPhone(StrUtil.hide(mkUser.getPhone(), 3, 7));
+        onlineUser.setEmail(StrUtil.hide(mkUser.getEmail(), 1, StrUtil.indexOfIgnoreCase(mkUser.getEmail(), Consts.SYMBOL_EMAIL)));
+        onlineUser.setBirthday(mkUser.getBirthday());
+        onlineUser.setSex(mkUser.getSex());
         return onlineUser;
     }
 }

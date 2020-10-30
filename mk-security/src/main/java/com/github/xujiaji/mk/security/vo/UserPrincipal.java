@@ -3,7 +3,7 @@ package com.github.xujiaji.mk.security.vo;
 import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.xujiaji.mk.common.base.Consts;
-import com.github.xujiaji.mk.common.entity.IUser;
+import com.github.xujiaji.mk.common.entity.MkUser;
 import com.github.xujiaji.mk.security.entity.MkSecPermission;
 import com.github.xujiaji.mk.security.entity.MkSecRole;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
@@ -95,7 +95,7 @@ public class UserPrincipal implements UserDetails {
      */
     private Collection<? extends GrantedAuthority> authorities;
 
-    public static UserPrincipal create(MkSecUser mkSecUser, IUser iUser, List<MkSecRole> roles, List<MkSecPermission> permissions) {
+    public static UserPrincipal create(MkSecUser mkSecUser, MkUser mkUser, List<MkSecRole> roles, List<MkSecPermission> permissions) {
         List<String> roleNames = roles.stream()
                 .map(MkSecRole::getName)
                 .collect(Collectors.toList());
@@ -107,13 +107,13 @@ public class UserPrincipal implements UserDetails {
 
         return new UserPrincipal(
                 mkSecUser.getId(),
-                iUser.getId(),
-                iUser.getNickname(),
-                iUser.getPhone(),
-                iUser.getEmail(),
-                iUser.getBirthday(),
-                iUser.getSex(),
-                iUser.getPassword(),
+                mkUser.getId(),
+                mkUser.getNickname(),
+                mkUser.getPhone(),
+                mkUser.getEmail(),
+                mkUser.getBirthday(),
+                mkUser.getSex(),
+                mkUser.getPassword(),
                 mkSecUser.getStatus(),
                 mkSecUser.getCreateTime(),
                 mkSecUser.getUpdateTime(),

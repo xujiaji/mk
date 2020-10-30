@@ -68,7 +68,7 @@ public abstract class MysqlGenerator {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent(parentPackage() + "." + moduleName());
+        pc.setParent(parentPackage() + "." + (subPackageName() == null ? moduleName() : subPackageName()));
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -150,4 +150,11 @@ public abstract class MysqlGenerator {
      * @return 模块
      */
     protected abstract String moduleName();
+
+    /**
+     * 子包名
+     */
+    protected String subPackageName() {
+        return null;
+    }
 }

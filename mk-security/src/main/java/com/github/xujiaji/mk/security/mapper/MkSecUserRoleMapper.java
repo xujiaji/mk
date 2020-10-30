@@ -2,6 +2,7 @@ package com.github.xujiaji.mk.security.mapper;
 
 import com.github.xujiaji.mk.security.entity.MkSecUserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MkSecUserRoleMapper extends BaseMapper<MkSecUserRole> {
 
+    int addSecUserRole(@Param("secUserId") Long secUserId, @Param("roleId") Long roleId);
 }

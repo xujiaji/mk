@@ -70,7 +70,7 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void addAdmin(String phone, String username, Long roleId, String password) {
         // 判断是否有这个角色
         val mkSecRole = secRoleMapper.selectById(roleId);
@@ -99,5 +99,12 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
         checkInsertSuccess(baseMapper.insert(mkSecUser));
 
         checkInsertSuccess(secUserRoleMapper.addSecUserRole(mkSecUser.getId(), roleId));
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteAdminUserBySecUserId(Long secUserId) {
+        deleteById(secUserId);
+        checkDeleteSuccess(secUserRoleMapper.deleteBySecUserId(secUserId));
     }
 }

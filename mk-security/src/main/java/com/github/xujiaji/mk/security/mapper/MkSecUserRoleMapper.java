@@ -15,4 +15,6 @@ import org.apache.ibatis.annotations.Param;
 public interface MkSecUserRoleMapper extends BaseMapper<MkSecUserRole> {
 
     int addSecUserRole(@Param("secUserId") Long secUserId, @Param("roleId") Long roleId);
+
+    int deleteBySecUserId(@Param("secUserId") Long secUserId);
 }

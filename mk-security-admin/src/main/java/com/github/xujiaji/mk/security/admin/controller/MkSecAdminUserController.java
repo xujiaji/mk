@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 /**
  * @menu 权限-管理员管理
@@ -61,5 +62,16 @@ public class MkSecAdminUserController extends BaseController {
         mkSecUser.setStatus(Integer.valueOf(request.getStatus()));
         secUserService.editById(mkSecUser);
         return successUpdate();
+    }
+
+    /**
+     * 管理员删除
+     * @param secUserId 管理员secUserId
+     */
+    @DeleteMapping
+    public ApiResponse<?> delete(@NotNull(message = "管理员secUserId不能为空")
+                                             Long secUserId) {
+        secUserService.deleteAdminUserBySecUserId(secUserId);
+        return successDelete();
     }
 }

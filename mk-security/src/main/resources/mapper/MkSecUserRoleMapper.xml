@@ -6,4 +6,8 @@
         INSERT INTO mk_sec_user_role(sec_user_id, role_id, create_time)
         VALUES (${secUserId}, ${roleId}, NOW())
     </insert>
+
+    <delete id="deleteBySecUserId">
+        DELETE FROM mk_sec_user_role WHERE sec_user_id = ${secUserId}
+    </delete>
 </mapper>

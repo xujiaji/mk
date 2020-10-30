@@ -60,41 +60,6 @@
 ```
 </details>
 
-
-<details>
-    <summary>认证模块 auth</summary>
-    
-1. `mk-auth`
-
-``` xml
-<dependency>
-  <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-auth</artifactId>
-  <version>0.0.4</version>
-</dependency>
-```
-
-2. `mk-auth-front`前端认证模块
-
-``` xml
-<dependency>
-  <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-auth-front</artifactId>
-  <version>0.0.4</version>
-</dependency>
-```
-
-3. `mk-auth-admin`认证管理模块
-
-``` xml
-<dependency>
-  <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-auth-admin</artifactId>
-  <version>0.0.4</version>
-</dependency>
-```
-</details>
-
 <details>
     <summary>用户模块 user</summary>
     

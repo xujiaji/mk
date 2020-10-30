@@ -30,4 +30,10 @@ public interface IMkSecUserService extends BaseIService<MkSecUser> {
      * @param password 密码
      */
     void addAdmin(String phone, String username, Long roleId, String password);
+
+    /**
+     * 管理员删除
+     * @param secUserId 管理员secUserId
+     */
+    void deleteAdminUserBySecUserId(Long secUserId);
 }

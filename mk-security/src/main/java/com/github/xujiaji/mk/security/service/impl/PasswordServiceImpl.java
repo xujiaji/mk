@@ -1,7 +1,7 @@
 package com.github.xujiaji.mk.security.service.impl;
 
 import com.github.xujiaji.mk.common.service.IPasswordService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
  * @author jiajixu
  * @date 2020/10/30 14:54
  */
+@RequiredArgsConstructor
 @Service
 public class PasswordServiceImpl implements IPasswordService {
 
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+    private final BCryptPasswordEncoder encoder;
 
     @Override
     public String encode(CharSequence rawPassword) {

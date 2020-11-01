@@ -7,7 +7,7 @@ import com.github.xujiaji.mk.common.entity.MkCommon;
 import com.github.xujiaji.mk.common.payload.AddConfigCondition;
 import com.github.xujiaji.mk.common.payload.EditConfigCondition;
 import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,10 +19,10 @@ import java.util.List;
  * @date 2020/10/26 14:13
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/admin/common/config")
 public class MkCommonAdminController extends BaseController {
-    @Autowired
-    private MkCommonServiceImpl mkCommonService;
+    private final MkCommonServiceImpl mkCommonService;
 
     /**
      * 添加配置

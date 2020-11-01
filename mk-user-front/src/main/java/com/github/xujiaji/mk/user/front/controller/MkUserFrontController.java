@@ -2,7 +2,7 @@ package com.github.xujiaji.mk.user.front.controller;
 
 import com.github.xujiaji.mk.common.base.BaseController;
 import com.github.xujiaji.mk.user.front.service.MkUserFrontService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2020/10/26 10:38
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/user-front")
 public class MkUserFrontController extends BaseController {
 
-    @Autowired
-    private MkUserFrontService mkUserFrontService;
+    private final MkUserFrontService mkUserFrontService;
 
 }

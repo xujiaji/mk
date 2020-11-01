@@ -8,8 +8,8 @@ import com.github.xujiaji.mk.security.entity.MkSecUserRole;
 import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
 import com.github.xujiaji.mk.security.mapper.MkSecUserRoleMapper;
 import com.github.xujiaji.mk.security.service.IMkSecRoleService;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,11 +20,11 @@ import java.util.List;
  * @author xujiaji
  * @since 2020-10-23
  */
+@RequiredArgsConstructor
 @Service
 public class MkSecRoleServiceImpl extends BaseServiceImpl<MkSecRoleMapper, MkSecRole> implements IMkSecRoleService {
 
-    @Autowired
-    private MkSecUserRoleMapper secUserRoleMapper;
+    private final MkSecUserRoleMapper secUserRoleMapper;
 
     @Override
     public void roleSetPermissions(Long id, List<Long> permissionIds) {

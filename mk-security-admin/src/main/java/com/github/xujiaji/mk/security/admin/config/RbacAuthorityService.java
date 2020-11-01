@@ -10,6 +10,7 @@ import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,16 +34,14 @@ import com.github.xujiaji.mk.security.exception.SecurityException;
  * 动态路由认证
  * </p>
  */
+@RequiredArgsConstructor
 @Component
 public class RbacAuthorityService {
-    @Autowired
-    private MkSecRoleMapper mkSecRoleMapper;
+    private final MkSecRoleMapper mkSecRoleMapper;
 
-    @Autowired
-    private MkSecPermissionMapper mkSecPermissionMapper;
+    private final MkSecPermissionMapper mkSecPermissionMapper;
 
-    @Autowired
-    private RequestMappingHandlerMapping mapping;
+    private final RequestMappingHandlerMapping mapping;
 
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
         checkRequest(request);

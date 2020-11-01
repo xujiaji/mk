@@ -3,16 +3,16 @@ package com.github.xujiaji.mk.security.admin.service;
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.payload.PageCondition;
+import com.github.xujiaji.mk.common.service.IUserInfoService;
 import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.admin.vo.OnlineUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
-import com.github.xujiaji.mk.common.service.IUserInfoService;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
 import com.google.common.collect.Lists;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,16 +24,12 @@ import java.util.stream.Collectors;
  * </p>
  */
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class MonitorService {
-    @Autowired
-    private RedisUtil redisUtil;
-
-    @Autowired
-    private MkSecUserMapper mkSecUserMapper;
-
-    @Autowired
-    private IUserInfoService userInfoService;
+    private final RedisUtil redisUtil;
+    private final MkSecUserMapper mkSecUserMapper;
+    private final IUserInfoService userInfoService;
 
     /**
      * 在线用户分页列表

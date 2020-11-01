@@ -9,8 +9,8 @@ import com.github.xujiaji.mk.security.admin.service.MonitorService;
 import com.github.xujiaji.mk.security.admin.vo.OnlineUser;
 import com.github.xujiaji.mk.security.exception.SecurityException;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,10 +23,10 @@ import java.util.List;
  */
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/monitor")
 public class MonitorController {
-    @Autowired
-    private MonitorService monitorService;
+    private final MonitorService monitorService;
 
     /**
      * 在线用户列表

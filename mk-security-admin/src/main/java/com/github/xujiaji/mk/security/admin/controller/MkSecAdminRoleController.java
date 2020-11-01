@@ -7,9 +7,9 @@ import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.admin.payload.RoleAddCondition;
 import com.github.xujiaji.mk.security.admin.payload.RoleEditCondition;
 import com.github.xujiaji.mk.security.admin.payload.RoleSetPermissionsCondition;
-import com.github.xujiaji.mk.security.service.impl.MkSecRoleServiceImpl;
 import com.github.xujiaji.mk.security.entity.MkSecRole;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.xujiaji.mk.security.service.impl.MkSecRoleServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,11 +21,11 @@ import javax.validation.constraints.NotNull;
  * @date 2020/10/28 14:22
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/admin/sec/role")
 public class MkSecAdminRoleController extends BaseController {
 
-    @Autowired
-    private MkSecRoleServiceImpl secRoleService;
+    private final MkSecRoleServiceImpl secRoleService;
 
     /**
      * 角色列表

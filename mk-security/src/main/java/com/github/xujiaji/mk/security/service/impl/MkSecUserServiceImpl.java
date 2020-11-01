@@ -13,20 +13,17 @@ import com.github.xujiaji.mk.common.service.IUserInfoService;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.entity.MkAdminUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
-import com.github.xujiaji.mk.security.entity.MkSecUserRole;
 import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
 import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
 import com.github.xujiaji.mk.security.mapper.MkSecUserRoleMapper;
 import com.github.xujiaji.mk.security.service.IMkSecUserService;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
@@ -37,15 +34,13 @@ import java.util.stream.Collectors;
  * @author xujiaji
  * @since 2020-10-23
  */
+@RequiredArgsConstructor
 @Service
 public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSecUser> implements IMkSecUserService {
 
-    @Autowired
-    private IUserInfoService userInfoService;
-    @Autowired
-    private MkSecUserRoleMapper secUserRoleMapper;
-    @Autowired
-    private MkSecRoleMapper secRoleMapper;
+    private final IUserInfoService userInfoService;
+    private final MkSecUserRoleMapper secUserRoleMapper;
+    private final MkSecRoleMapper secRoleMapper;
 
     @Override
     public PageVO<MkAdminUser> adminUserPage(Page<MkSecUser> page) {

@@ -11,8 +11,8 @@ import com.github.xujiaji.mk.security.entity.MkAdminUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.playload.AdminAddCondition;
 import com.github.xujiaji.mk.security.service.impl.MkSecUserServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,11 +24,11 @@ import javax.validation.constraints.NotNull;
  * @date 2020/10/29 11:36
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/admin/sec/user")
 public class MkSecAdminUserController extends BaseController {
 
-    @Autowired
-    private MkSecUserServiceImpl secUserService;
+    private final MkSecUserServiceImpl secUserService;
 
     /**
      * 管理员列表

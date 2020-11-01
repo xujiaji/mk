@@ -6,6 +6,7 @@ import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
 import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
 import com.github.xujiaji.mk.common.service.IUserInfoService;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,17 +25,14 @@ import java.util.stream.Collectors;
  * @author xujiaji
  * @since 2020-10-23
  */
+@RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private MkSecUserMapper mkSecUserMapper;
-    @Autowired
-    private MkSecRoleMapper mkSecRoleMapper;
-    @Autowired
-    private MkSecPermissionMapper mkSecPermissionMapper;
-    @Autowired
-    private IUserInfoService userInfoService;
+    private final MkSecUserMapper mkSecUserMapper;
+    private final MkSecRoleMapper mkSecRoleMapper;
+    private final MkSecPermissionMapper mkSecPermissionMapper;
+    private final IUserInfoService userInfoService;
 
     @Override
     public UserDetails loadUserByUsername(String secUserId) throws UsernameNotFoundException {

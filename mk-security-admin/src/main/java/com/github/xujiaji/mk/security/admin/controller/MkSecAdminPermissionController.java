@@ -10,8 +10,8 @@ import com.github.xujiaji.mk.security.admin.payload.PermissionEditCondition;
 import com.github.xujiaji.mk.security.entity.MkSecPermission;
 import com.github.xujiaji.mk.security.service.impl.MkSecPermissionServiceImpl;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,9 +26,9 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/admin/sec/permission")
+@RequiredArgsConstructor
 public class MkSecAdminPermissionController extends BaseController {
-    @Autowired
-    MkSecPermissionServiceImpl permissionService;
+    private final MkSecPermissionServiceImpl permissionService;
 
     /**
      * 获取权限树

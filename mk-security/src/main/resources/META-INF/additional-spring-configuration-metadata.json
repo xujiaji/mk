@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "mk.security.config.ignores",
+      "type": "java.lang.String",
+      "description": "Description for mk.security.config.ignores."
+    },
+    {
+      "name": "mk.security.config.enable-api-request-encrypt",
+      "type": "java.lang.String",
+      "description": "Description for mk.security.config.enable-api-request-encrypt."
+    },
+    {
+      "name": "mk.security.config.enable-api-version",
+      "type": "java.lang.String",
+      "description": "Description for mk.security.config.enable-api-version."
+    }
+  ] }

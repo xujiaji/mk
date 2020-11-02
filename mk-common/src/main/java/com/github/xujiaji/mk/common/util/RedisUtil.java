@@ -3,17 +3,16 @@ package com.github.xujiaji.mk.common.util;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.Cursor;
-import org.springframework.data.redis.core.RedisConnectionUtils;
-import org.springframework.data.redis.core.ScanOptions;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
@@ -23,6 +22,8 @@ import java.util.List;
 @Component
 @Slf4j
 public class RedisUtil {
+    public static final String GUID_VERIFY = "guid_verify";
+
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
@@ -62,6 +63,30 @@ public class RedisUtil {
             log.warn("Redis连接关闭异常，", e);
         }
         return PageVO.create(result, currentPage, pageSize, tmpIndex);
+    }
+
+
+    /**
+     * 设置session和验证码
+     */
+    public void setGuidAndVerifyCode(String guid, String verifyCode) {
+        val sv = stringRedisTemplate.opsForHash();
+        sv.put(GUID_VERIFY, guid, verifyCode);
+        stringRedisTemplate.expire(GUID_VERIFY, 1, TimeUnit.MINUTES);
+    }
+
+    /**
+     * 通过guid获取验证码
+     * @param guid
+     * @return
+     */
+    public String getVerifyCodeByGuid(String guid) {
+        HashOperations<String, String, String> sv = stringRedisTemplate.opsForHash();
+        if (sv.hasKey(GUID_VERIFY, guid)) {
+            log.info("从redis获取验证码");
+            return sv.get(GUID_VERIFY, guid);
+        }
+        return null;
     }
 
     /**

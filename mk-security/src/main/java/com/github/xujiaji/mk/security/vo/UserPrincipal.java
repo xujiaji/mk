@@ -40,6 +40,11 @@ public class UserPrincipal implements UserDetails {
     private Long userId;
 
     /**
+     * 用户名
+     */
+    private String username;
+
+    /**
      * 昵称
      */
     private String nickname;
@@ -108,6 +113,7 @@ public class UserPrincipal implements UserDetails {
         return new UserPrincipal(
                 mkSecUser.getId(),
                 mkUser.getId(),
+                mkUser.getUsername(),
                 mkUser.getNickname(),
                 mkUser.getPhone(),
                 mkUser.getEmail(),
@@ -133,7 +139,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return String.valueOf(userId);
+        return username;
     }
 
     @Override

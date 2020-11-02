@@ -23,9 +23,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableConfigurationProperties(CustomSecurityConfig.class)
+@EnableConfigurationProperties(MkSecurityConfig.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private final CustomSecurityConfig customSecurityConfig;
+    private final MkSecurityConfig mkSecurityConfig;
 
     private final AccessDeniedHandler accessDeniedHandler;
 
@@ -91,31 +91,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         WebSecurity and = web.ignoring().and();
 
         // 忽略 GET
-        customSecurityConfig.getIgnores().getGet().forEach(url -> and.ignoring().antMatchers(HttpMethod.GET, url));
+        mkSecurityConfig.getIgnores().getGet().forEach(url -> and.ignoring().antMatchers(HttpMethod.GET, url));
 
         // 忽略 POST
-        customSecurityConfig.getIgnores().getPost().forEach(url -> and.ignoring().antMatchers(HttpMethod.POST, url));
+        mkSecurityConfig.getIgnores().getPost().forEach(url -> and.ignoring().antMatchers(HttpMethod.POST, url));
 
         // 忽略 DELETE
-        customSecurityConfig.getIgnores().getDelete().forEach(url -> and.ignoring().antMatchers(HttpMethod.DELETE, url));
+        mkSecurityConfig.getIgnores().getDelete().forEach(url -> and.ignoring().antMatchers(HttpMethod.DELETE, url));
 
         // 忽略 PUT
-        customSecurityConfig.getIgnores().getPut().forEach(url -> and.ignoring().antMatchers(HttpMethod.PUT, url));
+        mkSecurityConfig.getIgnores().getPut().forEach(url -> and.ignoring().antMatchers(HttpMethod.PUT, url));
 
         // 忽略 HEAD
-        customSecurityConfig.getIgnores().getHead().forEach(url -> and.ignoring().antMatchers(HttpMethod.HEAD, url));
+        mkSecurityConfig.getIgnores().getHead().forEach(url -> and.ignoring().antMatchers(HttpMethod.HEAD, url));
 
         // 忽略 PATCH
-        customSecurityConfig.getIgnores().getPatch().forEach(url -> and.ignoring().antMatchers(HttpMethod.PATCH, url));
+        mkSecurityConfig.getIgnores().getPatch().forEach(url -> and.ignoring().antMatchers(HttpMethod.PATCH, url));
 
         // 忽略 OPTIONS
-        customSecurityConfig.getIgnores().getOptions().forEach(url -> and.ignoring().antMatchers(HttpMethod.OPTIONS, url));
+        mkSecurityConfig.getIgnores().getOptions().forEach(url -> and.ignoring().antMatchers(HttpMethod.OPTIONS, url));
 
         // 忽略 TRACE
-        customSecurityConfig.getIgnores().getTrace().forEach(url -> and.ignoring().antMatchers(HttpMethod.TRACE, url));
+        mkSecurityConfig.getIgnores().getTrace().forEach(url -> and.ignoring().antMatchers(HttpMethod.TRACE, url));
 
         // 按照请求格式忽略
-        customSecurityConfig.getIgnores().getPattern().forEach(url -> and.ignoring().antMatchers(url));
+        mkSecurityConfig.getIgnores().getPattern().forEach(url -> and.ignoring().antMatchers(url));
 
     }
 }

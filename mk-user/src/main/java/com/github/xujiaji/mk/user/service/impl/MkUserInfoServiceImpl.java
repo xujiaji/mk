@@ -7,6 +7,7 @@ import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.service.IPasswordService;
 import com.github.xujiaji.mk.common.service.IUserInfoService;
 import com.github.xujiaji.mk.user.mapper.MkUserMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,12 +20,11 @@ import java.util.List;
  * @date 2020/10/26 10:22
  */
 @Service
+@RequiredArgsConstructor
 public class MkUserInfoServiceImpl implements IUserInfoService {
 
-    @Autowired
-    private MkUserMapper mkUserMapper;
-    @Autowired
-    private IPasswordService passwordService;
+    private final MkUserMapper mkUserMapper;
+    private final IPasswordService passwordService;
 
 
     @Override
@@ -48,10 +48,9 @@ public class MkUserInfoServiceImpl implements IUserInfoService {
     }
 
     @Override
-    public MkUser createUserByPhoneOrUsername(String phone, String username, String password) {
+    public MkUser createUserByUsername(String username, String password) {
         val mkUser = new MkUser();
         mkUser.setUsername(username);
-        mkUser.setPhone(phone);
         mkUser.setPassword(passwordService.encode(password));
         if (mkUserMapper.insert(mkUser) == Consts.NEGATIVE) {
             throw new RequestActionException("用户创建失败");

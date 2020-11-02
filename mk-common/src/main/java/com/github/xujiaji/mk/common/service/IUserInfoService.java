@@ -40,10 +40,9 @@ public interface IUserInfoService {
 
     /**
      * 通过用户名或手机号创建用户
-     * @param phone 手机号
      * @param username 用户民
      * @param password 用户名
      * @return 返回创建的用户
      */
-    MkUser createUserByPhoneOrUsername(String phone, String username, String password);
+    MkUser createUserByUsername(String username, String password);
 }

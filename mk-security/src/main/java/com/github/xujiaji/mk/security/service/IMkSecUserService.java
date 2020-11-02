@@ -6,6 +6,8 @@ import com.github.xujiaji.mk.common.base.BaseIService;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.entity.MkAdminUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
+import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
+import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
 
 /**
  * <p>
@@ -24,16 +26,20 @@ public interface IMkSecUserService extends BaseIService<MkSecUser> {
 
     /**
      * 管理员添加
-     * @param phone 手机号
      * @param username 用户名
      * @param roleId 角色ID
      * @param password 密码
      */
-    void addAdmin(String phone, String username, Long roleId, String password);
+    void addAdmin(String username, Long roleId, String password);
 
     /**
      * 管理员删除
      * @param secUserId 管理员secUserId
      */
     void deleteAdminUserBySecUserId(Long secUserId);
+
+    /**
+     * 管理员登录
+     */
+    AdminLoginSuccessVO login(AdminLoginCondition request);
 }

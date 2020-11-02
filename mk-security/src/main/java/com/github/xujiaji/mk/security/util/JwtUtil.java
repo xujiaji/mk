@@ -1,11 +1,16 @@
 package com.github.xujiaji.mk.security.util;
 
+import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.SecureUtil;
+import cn.hutool.extra.servlet.ServletUtil;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.base.Status;
 import com.github.xujiaji.mk.security.config.JwtConfig;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
+import com.google.common.collect.Lists;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +21,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import com.github.xujiaji.mk.security.exception.SecurityException;
 
@@ -42,17 +44,17 @@ public class JwtUtil {
      * 创建JWT
      *
      * @param rememberMe  记住我
-     * @param secUserId   用户id
-     * @param userId      用户名
+     * @param userId      用户userId
+     * @param username    用户名
      * @param roles       用户角色
      * @param authorities 用户权限
      * @return JWT
      */
-    public String createJWT(Boolean rememberMe, Long secUserId, String userId, List<String> roles, Collection<? extends GrantedAuthority> authorities) {
+    public String createJWT(Boolean rememberMe, Long userId, String username, List<String> roles, Collection<? extends GrantedAuthority> authorities) {
         Date now = new Date();
         JwtBuilder builder = Jwts.builder()
-                .setId(secUserId.toString())
-                .setSubject(userId)
+                .setId(userId.toString())
+                .setSubject(username)
                 .setIssuedAt(now)
                 .signWith(SignatureAlgorithm.HS256, jwtConfig.getKey())
                 .claim("roles", roles)
@@ -67,7 +69,7 @@ public class JwtUtil {
         String jwt = builder.compact();
         // 将生成的JWT保存至Redis
         stringRedisTemplate.opsForValue()
-                .set(Consts.REDIS_JWT_KEY_PREFIX + secUserId, jwt, ttl, TimeUnit.MILLISECONDS);
+                .set(Consts.REDIS_JWT_KEY_PREFIX + username, jwt, ttl, TimeUnit.MILLISECONDS);
         return jwt;
     }
 
@@ -80,7 +82,7 @@ public class JwtUtil {
      */
     public String createJWT(Authentication authentication, Boolean rememberMe) {
         UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        return createJWT(rememberMe, userPrincipal.getSecUserId(), userPrincipal.getUsername(), userPrincipal.getRoles(), userPrincipal.getAuthorities());
+        return createJWT(rememberMe, userPrincipal.getUserId(), userPrincipal.getUsername(), userPrincipal.getRoles(), userPrincipal.getAuthorities());
     }
 
     /**
@@ -137,18 +139,18 @@ public class JwtUtil {
      */
     public void invalidateJWT(HttpServletRequest request) {
         String jwt = getJwtFromRequest(request);
-        String userId = getSecUserIdFromJWT(jwt);
+        String username = getUsernameFromJWT(jwt);
         // 从redis中清除JWT
-        stringRedisTemplate.delete(Consts.REDIS_JWT_KEY_PREFIX + userId);
+        stringRedisTemplate.delete(Consts.REDIS_JWT_KEY_PREFIX + username);
     }
 
     /**
-     * 根据 jwt 获取secUserId
+     * 根据 jwt 获取userId
      *
      * @param jwt JWT
      * @return 获取secUserId
      */
-    public String getSecUserIdFromJWT(String jwt) {
+    public String getUserIdFromJWT(String jwt) {
         Claims claims = parseJWT(jwt);
         return claims.getId();
     }
@@ -159,7 +161,7 @@ public class JwtUtil {
      * @param jwt JWT
      * @return userId
      */
-    public String getUserIdFromJWT(String jwt) {
+    public String getUsernameFromJWT(String jwt) {
         Claims claims = parseJWT(jwt);
         return claims.getSubject();
     }
@@ -178,4 +180,62 @@ public class JwtUtil {
         return null;
     }
 
+    /**
+     * 得到接口版本号
+     * @param request 请求
+     * @return 接口版本号
+     */
+    public String getVersion(HttpServletRequest request) {
+        return request.getHeader("version");
+    }
+
+    /**
+     * 得到接口请求时间戳
+     * @param request 请求
+     * @return 接口请求时间戳
+     */
+    public String getTimestamp(HttpServletRequest request) {
+        return request.getHeader("timestamp");
+    }
+
+    /**
+     * 得到接口请求签名
+     * @param request 请求
+     * @return 签名
+     */
+    public String getSign(HttpServletRequest request) {
+        return request.getHeader("sign");
+    }
+
+    /**
+     * 检测签名是否正确
+     * @param sign 签名
+     * @param timestamp 时间
+     * @param request 请求
+     * @return 签名是否有效
+     */
+    private List<String> ignoreParams = Lists.newArrayList();
+    public boolean checkSign(String sign, String timestamp, HttpServletRequest request) {
+        if (
+                !NumberUtil.isLong(timestamp)
+                        || timestamp.length() < 10
+                        || DateUtil.date().between(new Date(Long.parseLong(timestamp)), DateUnit.SECOND) > 60) {
+            return false;
+        }
+        Map<String, String> params = ServletUtil.getParamMap(request);
+        String values = "";
+        if (!params.isEmpty()) {
+            Optional<String> optional = params.keySet()
+                    .stream()
+                    .filter(s -> !ignoreParams.contains(s))
+                    .sorted()
+                    .map(params::get)
+                    .reduce((s1, s2) -> String.format("%s%s", s1, s2));
+            if (optional.isPresent()) {
+                values = optional.get();
+            }
+        }
+        String s = SecureUtil.md5(values + SecureUtil.md5(timestamp.substring(0, 8)) + timestamp);
+        return s.equals(sign);
+    }
 }

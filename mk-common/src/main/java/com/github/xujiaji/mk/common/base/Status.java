@@ -70,6 +70,26 @@ public enum Status implements IStatus {
     USER_DISABLED(403, "当前用户已被锁定，请联系管理员解锁！"),
 
     /**
+     * 请传入时间戳！
+     */
+    NOT_TIMESTAMP(4011, "请求时间戳错误！"),
+
+    /**
+     * 请求版本
+     */
+    NOT_VERSION(4012, "请求版本错误"),
+
+    /**
+     * 请求签名
+     */
+    NOT_SIGN(4013, "请求签名错误"),
+
+    /**
+     * 请求签名
+     */
+    REQUEST_INVALID(4014, "请求签名无效"),
+
+    /**
      * 用户名或密码错误！
      */
     USERNAME_PASSWORD_ERROR(5001, "用户名或密码错误！"),

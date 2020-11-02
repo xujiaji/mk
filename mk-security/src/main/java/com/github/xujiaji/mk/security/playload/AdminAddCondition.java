@@ -15,12 +15,8 @@ public class AdminAddCondition {
     /**
      * 用户名
      */
+    @NotNull(message = "用户名不能为空")
     private String username;
-
-    /**
-     * 手机号
-     */
-    private String phone;
 
     /**
      * 角色ID

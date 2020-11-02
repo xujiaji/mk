@@ -35,14 +35,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final IUserInfoService userInfoService;
 
     @Override
-    public UserDetails loadUserByUsername(String secUserId) throws UsernameNotFoundException {
-        val secUser = mkSecUserMapper.selectById(secUserId);
-        val user = userInfoService.getUserDetails(secUser.getUserId());
-        val secRoles = mkSecRoleMapper.selectBySecUserId(Long.parseLong(secUserId));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        val mkUser = userInfoService.getUserByUsername(username);
+        if (mkUser == null) {
+            throw new UsernameNotFoundException("没有这个用户");
+        }
+        val secUser = mkSecUserMapper.selectByUserId(mkUser.getId());
+        val secRoles = mkSecRoleMapper.selectBySecUserId(secUser.getId());
         List<Long> roleIds = secRoles.stream()
                 .map(MkSecRole::getId)
                 .collect(Collectors.toList());
         val secPermissions = mkSecPermissionMapper.selectByRoleIdList(roleIds);
-        return UserPrincipal.create(secUser, user, secRoles, secPermissions);
+        return UserPrincipal.create(secUser, mkUser, secRoles, secPermissions);
     }
 }

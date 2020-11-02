@@ -88,4 +88,14 @@ public interface Consts {
          */
         int BOTTOM = 2;
     }
+
+    /**
+     * 正则表达式
+     */
+    interface Regexp {
+        /**
+         * 手机号
+         */
+        String PHONE = "1[0-10]{10}";
+    }
 }

@@ -1,12 +1,19 @@
 package com.github.xujiaji.mk.security.admin.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.CircleCaptcha;
+import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.payload.AdminStatusChangeCondition;
 import com.github.xujiaji.mk.common.payload.PageCondition;
+import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
+import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
+import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
+import com.github.xujiaji.mk.security.admin.vo.VerifyVO;
 import com.github.xujiaji.mk.security.entity.MkAdminUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.playload.AdminAddCondition;
@@ -29,6 +36,33 @@ import javax.validation.constraints.NotNull;
 public class MkSecAdminUserController extends BaseController {
 
     private final MkSecUserServiceImpl secUserService;
+    private final RedisUtil redisUtil;
+
+    /**
+     * 得到验证码
+     */
+    @GetMapping("/verifyCode")
+    public ApiResponse<VerifyVO> createVerify() {
+        CircleCaptcha circleCaptcha = CaptchaUtil.createCircleCaptcha(100, 30, 4, 3);
+        val uuid = UUID.randomUUID().toString();
+        redisUtil.setGuidAndVerifyCode(uuid, circleCaptcha.getCode());
+        return ApiResponse.ofSuccess(new VerifyVO(uuid, circleCaptcha.getImageBase64()));
+    }
+
+    /**
+     * 管理员登录
+     */
+    @PutMapping("/login")
+    public ApiResponse<AdminLoginSuccessVO> login(@Valid @RequestBody AdminLoginCondition request) {
+        val verifyCodeByGuid = redisUtil.getVerifyCodeByGuid(request.getVerify());
+        if (verifyCodeByGuid == null) {
+            throw new RequestActionException("验证码已过期请重新获取验证码");
+        }
+        if (!verifyCodeByGuid.equals(request.getCode())) {
+            throw new RequestActionException("验证码错误");
+        }
+        return ApiResponse.ofSuccess(secUserService.login(request));
+    }
 
     /**
      * 管理员列表
@@ -43,12 +77,7 @@ public class MkSecAdminUserController extends BaseController {
      */
     @PostMapping("/add")
     public ApiResponse<?> add(@RequestBody @Valid AdminAddCondition request) {
-        if (StrUtil.isBlank(request.getPhone()) && StrUtil.isBlank(request.getUsername())) {
-            throw new RequestActionException("手机号和用户名必须传一个");
-        } else if (StrUtil.isNotBlank(request.getPhone()) && StrUtil.isNotBlank(request.getUsername())) {
-            throw new RequestActionException("手机号和用户名只能选填一个");
-        }
-        secUserService.addAdmin(request.getPhone(), request.getUsername(), request.getRoleId(), request.getPassword());
+        secUserService.addAdmin(request.getUsername(), request.getRoleId(), request.getPassword());
         return successAdd();
     }
 

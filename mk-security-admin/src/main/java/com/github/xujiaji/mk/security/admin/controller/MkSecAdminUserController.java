@@ -6,6 +6,7 @@ import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
+import com.github.xujiaji.mk.common.config.ApiVersion;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.payload.AdminStatusChangeCondition;
 import com.github.xujiaji.mk.common.payload.PageCondition;
@@ -41,6 +42,7 @@ public class MkSecAdminUserController extends BaseController {
     /**
      * 得到验证码
      */
+    @ApiVersion("1.0.0")
     @GetMapping("/verifyCode")
     public ApiResponse<VerifyVO> createVerify() {
         CircleCaptcha circleCaptcha = CaptchaUtil.createCircleCaptcha(100, 30, 4, 3);

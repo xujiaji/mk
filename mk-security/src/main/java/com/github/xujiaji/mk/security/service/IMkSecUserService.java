@@ -9,6 +9,8 @@ import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
 import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * <p>
  * 用户表 服务类
@@ -41,5 +43,5 @@ public interface IMkSecUserService extends BaseIService<MkSecUser> {
     /**
      * 管理员登录
      */
-    AdminLoginSuccessVO login(AdminLoginCondition request);
+    AdminLoginSuccessVO login(AdminLoginCondition request, HttpServletRequest hsr);
 }

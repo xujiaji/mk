@@ -72,6 +72,11 @@ public interface Consts {
          * 基础文件存放路径
          */
         String basePath = "basePath";
+
+        /**
+         * IP城市数据库路径
+         */
+        String ipCityDBPath = "ipCityDBPath";
     }
 
     /**
@@ -97,5 +102,19 @@ public interface Consts {
          * 手机号
          */
         String PHONE = "1[0-10]{10}";
+    }
+
+    /**
+     * 登录类型
+     * 1.QQ登录；2.微信登录；3.手机密码登录；4.手机验证码登录；5.邮箱登录；6.iOS登录；7.用户名密码登录
+     */
+    interface LoginType {
+        int QQ = 1;
+        int WX = 2;
+        int PHONE_PASSWORD = 3;
+        int PHONE_SMS = 4;
+        int EMAIL = 5;
+        int IOS = 6;
+        int USERNAME = 7;
     }
 }

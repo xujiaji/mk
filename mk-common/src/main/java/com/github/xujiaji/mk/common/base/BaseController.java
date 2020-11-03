@@ -94,7 +94,7 @@ public class BaseController {
      * @return 返回树行结构
      */
     protected List<Map<String, Object>> treeIdAndParentId(List<?> objList) {
-        return treeIdAndParentId(0L, objList.stream().map(BeanUtil::beanToMap).collect(Collectors.toList()), "id", "parentId", "children");
+        return treeIdAndParentId("0", objList.stream().map(BeanUtil::beanToMap).collect(Collectors.toList()), "id", "parentId", "children");
     }
 
     /**
@@ -106,11 +106,23 @@ public class BaseController {
      * @param childrenKey 用来存放子级列表的key
      * @return 返回树行结构
      */
-    protected List<Map<String, Object>> treeIdAndParentId(Object parentId, List<Map<String, Object>> list, String idKey, String parentIdKey, String childrenKey) {
+    protected List<Map<String, Object>> treeIdAndParentId(String parentId, List<Map<String, Object>> list, String idKey, String parentIdKey, String childrenKey) {
+        // 将包含ID的值转化成string类型
+        for (Map<String, Object> map : list) {
+            for (String key : map.keySet()) {
+                if (key.toLowerCase().contains("id")) {
+                    map.put(key,  map.get(key) == null ? null : map.get(key).toString());
+                }
+            }
+        }
+        return treeIdAndParentIdBuild(parentId, list, idKey, parentIdKey, childrenKey);
+    }
+
+    private List<Map<String, Object>> treeIdAndParentIdBuild(Object parentId, List<Map<String, Object>> list, String idKey, String parentIdKey, String childrenKey) {
         val childArr = list.stream().filter(p -> (parentId != null && parentId.equals(p.get(parentIdKey))) || p.get(parentIdKey) == null).collect(Collectors.toList());
         list.removeAll(childArr);
         for (Map<String, Object> child : childArr) {
-            child.put(childrenKey, treeIdAndParentId(child.get(idKey), list, idKey, parentIdKey, childrenKey));
+            child.put(childrenKey, treeIdAndParentIdBuild(child.get(idKey), list, idKey, parentIdKey, childrenKey));
         }
         return childArr;
     }

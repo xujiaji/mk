@@ -31,7 +31,7 @@ public class MkUserLoginLog extends BaseEntity {
     private String loginIp;
 
     /**
-     * 1.QQ登录；2.微信登录；3.手机密码登录；4.手机验证码登录；5.邮箱登录；6.iOS登录
+     * 1.QQ登录；2.微信登录；3.手机密码登录；4.手机验证码登录；5.邮箱登录；6.iOS登录；7.用户名密码登录
      */
     private Integer loginType;
 

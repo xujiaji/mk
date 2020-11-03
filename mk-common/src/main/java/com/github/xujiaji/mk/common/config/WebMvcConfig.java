@@ -55,6 +55,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .maxAge(MAX_AGE_SECS);
     }
 
+
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.stream()

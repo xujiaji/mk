@@ -26,8 +26,9 @@ public class UserMysqlGenerator extends CommonMysqlGenerator {
 
     public static void main(String[] args) {
         new UserMysqlGenerator().runs(
-                "mk_user",
-                "mk_user_login_log"
+//                "mk_user",
+//                "mk_user_login_log"
+                "mk_user_login_log_admin_view"
         );
     }
 }

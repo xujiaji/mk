@@ -3,7 +3,7 @@
 <mapper namespace="com.github.xujiaji.mk.common.mapper.MkCommonMapper">
 
     <select id="getConfigValueByKey" resultType="java.lang.String">
-        SELECT * FROM mk_common WHERE config_key = #{key}
+        SELECT config_value FROM mk_common WHERE config_key = #{key}
     </select>
 
     <select id="selectEntitiesByKeys" resultType="com.github.xujiaji.mk.common.entity.MkCommon">

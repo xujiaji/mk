@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -51,11 +52,17 @@ public class MkSecAdminUserController extends BaseController {
         return ApiResponse.ofSuccess(new VerifyVO(uuid, circleCaptcha.getImageBase64()));
     }
 
+    @ApiVersion("1.0.1")
+    @GetMapping("/verifyCode")
+    public ApiResponse<VerifyVO> createVerify1_0_1() {
+        return ApiResponse.ofSuccess(new VerifyVO("aaaa", "11111"));
+    }
+
     /**
      * 管理员登录
      */
     @PutMapping("/login")
-    public ApiResponse<AdminLoginSuccessVO> login(@Valid @RequestBody AdminLoginCondition request) {
+    public ApiResponse<AdminLoginSuccessVO> login(@Valid @RequestBody AdminLoginCondition request, HttpServletRequest hsr) {
         val verifyCodeByGuid = redisUtil.getVerifyCodeByGuid(request.getVerify());
         if (verifyCodeByGuid == null) {
             throw new RequestActionException("验证码已过期请重新获取验证码");
@@ -63,7 +70,7 @@ public class MkSecAdminUserController extends BaseController {
         if (!verifyCodeByGuid.equals(request.getCode())) {
             throw new RequestActionException("验证码错误");
         }
-        return ApiResponse.ofSuccess(secUserService.login(request));
+        return ApiResponse.ofSuccess(secUserService.login(request, hsr));
     }
 
     /**

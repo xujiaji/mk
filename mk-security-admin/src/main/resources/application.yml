@@ -1,0 +1,53 @@
+spring:
+  datasource:
+    hikari:
+      username: root
+      password: sKk2sxAwtfx
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/mk?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 200MB
+  mvc:
+    throw-exception-if-no-handler-found: true
+  redis:
+    host: localhost
+    port: 6379
+  jackson:
+    #参数意义：
+    #JsonInclude.Include.ALWAYS              默认
+    #JsonInclude.Include.NON_DEFAULT     属性为默认值不序列化
+    #JsonInclude.Include.NON_EMPTY         属性为 空（””） 或者为 NULL 都不序列化
+    #JsonInclude.Include.NON_NULL           属性为NULL   不序列化
+    default-property-inclusion: ALWAYS
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+logging:
+  level:
+    com.github.xujiaji.mk: debug
+
+mk:
+  security:
+    config:
+      enable-api-version: true
+      enable-api-request-encrypt: true
+      ignores:
+        get:
+          - "/admin/sec/user/verifyCode"
+          - "/admin/sec/role/*"
+          - "/admin/sec/permission/*"
+          - "/admin/sec/user/page"
+          - "/treesss"
+        # 需要过滤的 post 请求
+        post:
+          - "/admin/sec/role/*"
+          - "/admin/sec/permission/*"
+          - "/admin/sec/user/add"
+        put:
+          - "/admin/sec/user/login"
+          - "/admin/sec/role/*"
+          - "/admin/sec/role/set/permission"
+          - "/admin/sec/permission/*"
+          - "/admin/sec/user/status"

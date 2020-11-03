@@ -15,7 +15,7 @@
 
 		<dependency>
 			<groupId>com.github.xujiaji.mk</groupId>
-			<artifactId>mk-common</artifactId>
+			<artifactId>mk-user</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 

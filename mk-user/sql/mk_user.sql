@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 30/10/2020 16:35:26
+ Date: 03/11/2020 14:45:11
 */
 
 SET NAMES utf8mb4;
@@ -45,8 +45,8 @@ CREATE TABLE `mk_user` (
 -- Records of mk_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `mk_user` VALUES (0, 'dsafas', '123', '123123', 12312, 1, '2020-10-30 13:40:41', '1', '111@qq.d', '213', '213', '213124', '4235', '23523', '2020-10-30 13:40:54', '2020-10-30 13:40:58');
-INSERT INTO `mk_user` VALUES (1, 'hjgjg', '213ff', '123123dsf', 12312, 1, '2020-10-30 13:40:41', '1', '111@qq.d', '213', '213', '213124', '4235', '23523', '2020-10-30 13:40:54', '2020-10-30 13:40:58');
+INSERT INTO `mk_user` VALUES (1, 'admin', '213ff', '123123dsf', 12312, 1, '2020-10-30 13:40:41', '1', '111@qq.d', '$2a$10$FXUFXYx0/mv3lOjfUNA8xeJZy1M3mpt1ggUJ3I8ZSyn8f4b53f3h.', '213', '213124', '4235', '23523', '2020-10-30 13:40:54', '2020-10-30 13:40:58');
+INSERT INTO `mk_user` VALUES (1322104167057199104, 'NrZrKbI', '', '', NULL, 1, NULL, '', '', '$2a$10$AMGH5mAdSmvlgiPxVEA3neIcoDbs0S6yKVOtOgO/hnMBjP79EPQIG', '', '', '', '', '2020-10-30 17:12:52', '2020-10-30 17:12:52');
 COMMIT;
 
 -- ----------------------------
@@ -56,11 +56,12 @@ DROP TABLE IF EXISTS `mk_user_login_log`;
 CREATE TABLE `mk_user_login_log` (
   `id` bigint NOT NULL COMMENT '主键',
   `user_id` bigint NOT NULL COMMENT '用户id',
-  `create_time` datetime NOT NULL COMMENT '登录时间',
   `login_ip` varchar(50) COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '登录ip',
-  `login_type` int NOT NULL COMMENT '1.QQ登录；2.微信登录；3.手机密码登录；4.手机验证码登录；5.邮箱登录；6.iOS登录',
+  `login_type` int NOT NULL COMMENT '1.QQ登录；2.微信登录；3.手机密码登录；4.手机验证码登录；5.邮箱登录；6.iOS登录；7.用户名密码登录',
   `login_location` varchar(50) COLLATE utf8mb4_bin NOT NULL COMMENT '登录地点',
-  `login_device` varchar(50) COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '登录设备',
+  `login_device` varchar(255) COLLATE utf8mb4_bin NOT NULL DEFAULT '' COMMENT '登录设备',
+  `create_time` datetime NOT NULL COMMENT '登录时间',
+  `update_time` datetime NOT NULL COMMENT '修改日志时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='认证用户日志';
 

@@ -10,6 +10,7 @@ import com.github.xujiaji.mk.common.entity.MkUser;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.service.IPasswordService;
 import com.github.xujiaji.mk.common.service.IUserInfoService;
+import com.github.xujiaji.mk.common.service.IUserLoginLogService;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.entity.MkAdminUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
@@ -23,6 +24,7 @@ import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,6 +32,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,6 +56,9 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
     private final IPasswordService passwordService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+
+    @Autowired(required = false)
+    private IUserLoginLogService userLoginLogService;
 
     @Override
     public PageVO<MkAdminUser> adminUserPage(Page<MkSecUser> page) {
@@ -111,7 +117,7 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
     }
 
     @Override
-    public AdminLoginSuccessVO login(AdminLoginCondition request) {
+    public AdminLoginSuccessVO login(AdminLoginCondition request, HttpServletRequest hsr) {
 
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
@@ -119,10 +125,16 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
 
         String jwt = jwtUtil.createJWT(authentication, request.getRememberMe());
 
+        val principal = (UserPrincipal) authentication.getPrincipal();
+
+        if (userLoginLogService != null) {
+            userLoginLogService.insertLog(principal.getUserId(), Consts.LoginType.USERNAME, hsr);
+        }
+
         return AdminLoginSuccessVO.builder()
                 .authorization(jwt)
                 .authorizationType("Bearer")
-                .user((UserPrincipal) authentication.getPrincipal())
+                .user(principal)
                 .build();
     }
 }

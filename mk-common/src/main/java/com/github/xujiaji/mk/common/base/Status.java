@@ -70,6 +70,16 @@ public enum Status implements IStatus {
     USER_DISABLED(403, "当前用户已被锁定，请联系管理员解锁！"),
 
     /**
+     * 手机号已注册
+     */
+    ERROR_PHONE_REGISTERED(1000, "该手机号已注册！"),
+
+    /**
+     * 手机号已绑定
+     */
+    ERROR_PHONE_BOUND(1000, "该手机号已绑定！"),
+
+    /**
      * 请传入时间戳！
      */
     NOT_TIMESTAMP(4011, "请求时间戳错误！"),

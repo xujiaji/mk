@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class RedisUtil {
     public static final String GUID_VERIFY = "guid_verify";
+    public static final String WX_MINI_SESSION_KEY = "wx_mini_session_key";
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
@@ -85,6 +86,31 @@ public class RedisUtil {
         if (sv.hasKey(GUID_VERIFY, guid)) {
             log.info("从redis获取验证码");
             return sv.get(GUID_VERIFY, guid);
+        }
+        return null;
+    }
+
+    /**
+     * 存放微信小程序SessionKey
+     * @param code
+     * @param sessionKey
+     */
+    public void putWxMiniSessionKey(String code, String sessionKey) {
+        val sv = stringRedisTemplate.opsForHash();
+        sv.put(WX_MINI_SESSION_KEY, code, sessionKey);
+        stringRedisTemplate.expire(WX_MINI_SESSION_KEY, 1, TimeUnit.MINUTES);
+    }
+
+    /**
+     * 获取微信小程序SessionKey
+     * @param code
+     * @return
+     */
+    public String getWxMiniSessionKey(String code) {
+        HashOperations<String, String, String> sv = stringRedisTemplate.opsForHash();
+        if (sv.hasKey(WX_MINI_SESSION_KEY, code)) {
+            log.info("从redis获取验证码");
+            return sv.get(WX_MINI_SESSION_KEY, code);
         }
         return null;
     }

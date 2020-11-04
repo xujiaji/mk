@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user-front")
+@RequestMapping("/front/user")
 public class MkUserFrontController extends BaseController {
 
     private final MkUserFrontService mkUserFrontService;
+
 
 }

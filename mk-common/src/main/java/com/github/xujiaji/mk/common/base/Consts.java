@@ -77,6 +77,71 @@ public interface Consts {
          * IP城市数据库路径
          */
         String ipCityDBPath = "ipCityDBPath";
+
+        /**
+         * 微信appId
+         */
+        String wxAppId = "wxAppId";
+
+        /**
+         * 微信支付key
+         */
+        String wxPayKey = "wxPayKey";
+
+        /**
+         * 微信secret
+         */
+        String wxSecret = "wxSecret";
+
+        /**
+         * 微信小程序appid
+         */
+        String wxMiniAppId = "wxMiniAppId";
+
+        /**
+         * 微信小程序secret
+         */
+        String wxMiniSecret = "wxMiniSecret";
+
+        /**
+         * 短信模版-普通
+         */
+        String smsTemplateNormal = "smsTemplateNormal";
+
+        /**
+         * 短信模版-注册
+         */
+        String smsTemplateRegister = "smsTemplateRegister";
+
+        /**
+         * 短信模版-登录
+         */
+        String smsTemplateLogin = "smsTemplateLogin";
+
+        /**
+         * 短信模版-信息变更
+         */
+        String smsTemplateModify = "smsTemplateModify";
+
+        /**
+         * 短信模版-手机号变更
+         */
+        String smsTemplateModifyPhone = "smsTemplateModifyPhone";
+
+        /**
+         * 阿里云短信key
+         */
+        String aliSmsKey = "aliSmsKey";
+
+        /**
+         * 阿里云短信secret
+         */
+        String aliSmsSecret = "aliSmsSecret";
+
+        /**
+         * 阿里云短信sign name
+         */
+        String aliSmsSignName = "aliSmsSignName";
     }
 
     /**
@@ -106,7 +171,7 @@ public interface Consts {
 
     /**
      * 登录类型
-     * 1.QQ登录；2.微信登录；3.手机密码登录；4.手机验证码登录；5.邮箱登录；6.iOS登录；7.用户名密码登录
+     * 1.QQ登录；2.微信登录；3.手机密码登录；4.手机验证码登录；5.邮箱登录；6.iOS登录；7.用户名密码登录；8.微信小程序
      */
     interface LoginType {
         int QQ = 1;
@@ -116,5 +181,29 @@ public interface Consts {
         int EMAIL = 5;
         int IOS = 6;
         int USERNAME = 7;
+        int WX_MINI = 8;
+    }
+
+    interface Sms {
+        /**
+         * 普通短信
+         */
+        int NORMAL = 1;
+        /**
+         * 注册短信
+         */
+        int REGISTER = 2;
+        /**
+         * 登录短信
+         */
+        int LOGIN = 3;
+        /**
+         * 信息变更短信
+         */
+        int MODIFY = 4;
+        /**
+         * 修改绑定手机号
+         */
+        int MODIFY_MOBILE = 5;
     }
 }

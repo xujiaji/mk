@@ -6,9 +6,9 @@ import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.base.Status;
 import com.github.xujiaji.mk.security.config.JwtConfig;
+import com.github.xujiaji.mk.security.exception.SecurityException;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import com.google.common.collect.Lists;
 import io.jsonwebtoken.*;
@@ -23,7 +23,6 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import com.github.xujiaji.mk.security.exception.SecurityException;
 
 /**
  * <p>
@@ -69,7 +68,7 @@ public class JwtUtil {
         String jwt = builder.compact();
         // 将生成的JWT保存至Redis
         stringRedisTemplate.opsForValue()
-                .set(Consts.REDIS_JWT_KEY_PREFIX + username, jwt, ttl, TimeUnit.MILLISECONDS);
+                .set(jwtConfig.getRedisJwtKeyPrefix() + username, jwt, ttl, TimeUnit.MILLISECONDS);
         return jwt;
     }
 
@@ -99,7 +98,7 @@ public class JwtUtil {
                     .getBody();
 
             String username = claims.getSubject();
-            String redisKey = Consts.REDIS_JWT_KEY_PREFIX + username;
+            String redisKey = jwtConfig.getRedisJwtKeyPrefix() + username;
 
             // 校验redis中的JWT是否存在
             Long expire = stringRedisTemplate.getExpire(redisKey, TimeUnit.MILLISECONDS);
@@ -141,7 +140,7 @@ public class JwtUtil {
         String jwt = getJwtFromRequest(request);
         String username = getUsernameFromJWT(jwt);
         // 从redis中清除JWT
-        stringRedisTemplate.delete(Consts.REDIS_JWT_KEY_PREFIX + username);
+        stringRedisTemplate.delete(jwtConfig.getRedisJwtKeyPrefix() + username);
     }
 
     /**

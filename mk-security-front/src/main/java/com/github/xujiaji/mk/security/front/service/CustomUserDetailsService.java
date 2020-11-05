@@ -1,10 +1,6 @@
 package com.github.xujiaji.mk.security.front.service;
 
 import com.github.xujiaji.mk.common.service.IUserInfoService;
-import com.github.xujiaji.mk.security.entity.MkSecRole;
-import com.github.xujiaji.mk.security.mapper.MkSecPermissionMapper;
-import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
-import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -12,9 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -32,6 +25,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        val mkUser = userInfoService.getUserByUsername(username);
+        if (mkUser == null) {
+            throw new UsernameNotFoundException("没有这个用户");
+        }
+        return UserPrincipal.create(mkUser);
     }
 }

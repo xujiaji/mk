@@ -1,5 +1,6 @@
 package com.github.xujiaji.mk.security.config;
 
+import com.github.xujiaji.mk.security.service.impl.PasswordServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordServiceImpl passwordEncoder;
 
     @Override
     @Bean

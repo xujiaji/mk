@@ -10,10 +10,18 @@ import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.service.IUserLoginLogService;
 import com.github.xujiaji.mk.common.util.CommonUtil;
 import com.github.xujiaji.mk.common.util.UserUtil;
+import com.github.xujiaji.mk.security.util.JwtUtil;
+import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import com.github.xujiaji.mk.user.entity.MkUserView;
 import com.github.xujiaji.mk.user.front.payload.*;
 import com.github.xujiaji.mk.user.front.service.MkAuthUserService;
+import com.github.xujiaji.mk.user.front.vo.LoginSuccessVO;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,20 +42,42 @@ public class MkAuthUserController extends BaseController {
     private final IUserLoginLogService userLoginLogService;
     private final CommonUtil commonUtil;
     private final UserUtil userUtil;
+    private final JwtUtil jwtUtil;
 
-    private MkUserView loginSuccessHandle(MkUser mkUser, Integer loginType, HttpServletRequest hsr) {
+    private ApiResponse<LoginSuccessVO> loginSuccessHandle(MkUser mkUser, Integer loginType, HttpServletRequest hsr) {
         MkUserView mkUserView = BeanUtil.copyProperties(mkUser, MkUserView.class);
         mkUserView.setPhone(commonUtil.hidePhone(mkUserView.getPhone()));
         mkUserView.setEmail(commonUtil.hideEmail(mkUserView.getEmail()));
         userLoginLogService.insertLog(mkUserView.getId(), loginType, hsr);
-        return mkUserView;
+
+        UserDetails userDetails = UserPrincipal.create(mkUser);
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(hsr));
+        SecurityContextHolder.getContext()
+                .setAuthentication(authentication);
+        String jwt = jwtUtil.createJWT(authentication, true);
+        return success(LoginSuccessVO
+                .builder()
+                .authorization(jwt)
+                .user(mkUserView)
+                .authorizationType("Bearer")
+                .build());
+    }
+
+    /**
+     * 刷新登录状态
+     */
+    @PutMapping("/refresh/login")
+    public ApiResponse<LoginSuccessVO> refreshLogin(HttpServletRequest hsr) {
+        val user = authUserService.getById(userUtil.currentUserIdNotNull());
+        return loginSuccessHandle(user, Consts.LoginType.REFRESH, hsr);
     }
 
     /**
      * 三方登录
      */
     @PostMapping("/third/login")
-    public ApiResponse<MkUserView> thirdLogin(@RequestBody @Valid ThirdLoginCondition request, HttpServletRequest hsr) {
+    public ApiResponse<LoginSuccessVO> thirdLogin(@RequestBody @Valid ThirdLoginCondition request, HttpServletRequest hsr) {
         MkUser mkUser;
         switch (request.getType()) {
             case Consts.LoginType.QQ:
@@ -69,25 +99,25 @@ public class MkAuthUserController extends BaseController {
                 throw new RequestActionException("没有这个登录类型");
         }
 
-        return success(loginSuccessHandle(mkUser, request.getType(), hsr));
+        return loginSuccessHandle(mkUser, request.getType(), hsr);
     }
 
     /**
      * 微信小程序登录
      */
     @PostMapping("/mini/wx/login")
-    public ApiResponse<MkUserView> miniWxLogin(@Valid @RequestBody MiniWxLoginCondition request, HttpServletRequest hsr) {
+    public ApiResponse<LoginSuccessVO> miniWxLogin(@Valid @RequestBody MiniWxLoginCondition request, HttpServletRequest hsr) {
         MkUser user = authUserService.authMiniWeiXin(request);
-        return success(loginSuccessHandle(user, Consts.LoginType.WX_MINI, hsr));
+        return loginSuccessHandle(user, Consts.LoginType.WX_MINI, hsr);
     }
 
     /**
      * 微信小程序注册通过用户信息
      */
     @PostMapping("/mini/wx/info/login")
-    public ApiResponse<MkUserView> miniWxLoginByInfo(@Valid @RequestBody MiniWxInfoLoginCondition request, HttpServletRequest hsr) {
+    public ApiResponse<LoginSuccessVO> miniWxLoginByInfo(@Valid @RequestBody MiniWxInfoLoginCondition request, HttpServletRequest hsr) {
         MkUser user = authUserService.authMiniWeiXinByInfo(request);
-        return success(loginSuccessHandle(user, Consts.LoginType.WX_MINI, hsr));
+        return loginSuccessHandle(user, Consts.LoginType.WX_MINI, hsr);
     }
 
     /**
@@ -121,27 +151,27 @@ public class MkAuthUserController extends BaseController {
      * 手机号密码注册
      */
     @PostMapping("/register")
-    public ApiResponse<MkUserView> register(@RequestBody @Valid RegisterCondition register, HttpServletRequest hsr) {
+    public ApiResponse<LoginSuccessVO> register(@RequestBody @Valid RegisterCondition register, HttpServletRequest hsr) {
         MkUser newUser = authUserService.registerByPhone(register);
-        return success(loginSuccessHandle(newUser, Consts.LoginType.PHONE_SMS, hsr));
+        return loginSuccessHandle(newUser, Consts.LoginType.PHONE_SMS, hsr);
     }
 
     /**
      * 手机号密码登录
      */
     @PostMapping("/mobile/login")
-    public ApiResponse<MkUserView> mobileLogin(@RequestBody @Valid MobileLoginCondition mobileLoginRequest, HttpServletRequest hsr) {
+    public ApiResponse<LoginSuccessVO> mobileLogin(@RequestBody @Valid MobileLoginCondition mobileLoginRequest, HttpServletRequest hsr) {
         MkUser user = authUserService.loginByMobile(mobileLoginRequest);
-        return success(loginSuccessHandle(user, Consts.LoginType.PHONE_PASSWORD, hsr));
+        return loginSuccessHandle(user, Consts.LoginType.PHONE_PASSWORD, hsr);
     }
 
     /**
      * 手机验证码登录
      */
     @PostMapping("/verify/login")
-    public ApiResponse<MkUserView> verifyLogin(@RequestBody @Valid MobileSmsLoginCondition mobileSmsLoginRequest, HttpServletRequest hsr) {
+    public ApiResponse<LoginSuccessVO> verifyLogin(@RequestBody @Valid MobileSmsLoginCondition mobileSmsLoginRequest, HttpServletRequest hsr) {
         MkUser user = authUserService.loginByMobileSms(mobileSmsLoginRequest);
-        return success(loginSuccessHandle(user, Consts.LoginType.PHONE_SMS, hsr));
+        return loginSuccessHandle(user, Consts.LoginType.PHONE_SMS, hsr);
     }
 
     /**

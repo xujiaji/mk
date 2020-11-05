@@ -34,8 +34,8 @@ public class RegisterCondition {
     @Range(min = 1000, max = 9999, message = "请输入正确的验证码")
     private Integer code;
 
-    /**
-     * 邀请码（可选）
-     */
-    private String inviteCode;
+//    /**
+//     * 邀请码（可选）
+//     */
+//    private String inviteCode;
 }

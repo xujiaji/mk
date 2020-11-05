@@ -35,11 +35,6 @@ public interface Consts {
     Integer BUTTON = 2;
 
     /**
-     * JWT 在 Redis 中保存的key前缀
-     */
-    String REDIS_JWT_KEY_PREFIX = "security:jwt:";
-
-    /**
      * 星号
      */
     String SYMBOL_STAR = "*";
@@ -171,7 +166,7 @@ public interface Consts {
 
     /**
      * 登录类型
-     * 1.QQ登录；2.微信登录；3.手机密码登录；4.手机验证码登录；5.邮箱登录；6.iOS登录；7.用户名密码登录；8.微信小程序
+     * 1.QQ登录；2.微信登录；3.手机密码登录；4.手机验证码登录；5.邮箱登录；6.iOS登录；7.用户名密码登录；8.微信小程序；9.刷新登录
      */
     interface LoginType {
         int QQ = 1;
@@ -182,6 +177,7 @@ public interface Consts {
         int IOS = 6;
         int USERNAME = 7;
         int WX_MINI = 8;
+        int REFRESH = 9;
     }
 
     interface Sms {

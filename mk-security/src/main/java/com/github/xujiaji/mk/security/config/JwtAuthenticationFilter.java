@@ -9,6 +9,7 @@ import com.github.xujiaji.mk.security.util.JwtUtil;
 import com.github.xujiaji.mk.security.util.ResponseUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,6 +36,7 @@ import java.util.Set;
  */
 @Component
 @RequiredArgsConstructor
+@EnableConfigurationProperties(MkSecurityConfig.class)
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;

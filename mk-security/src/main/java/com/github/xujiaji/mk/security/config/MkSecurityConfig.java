@@ -30,4 +30,9 @@ public class MkSecurityConfig {
      * 开启API请求加密后，排除的不加密的接口
      */
     private IgnoreConfig apiRequestEncryptExclude;
+
+    /**
+     * 密码key值，默认：mk-security-password-key
+     */
+    private String passwordKey = "mk-security-password-key";
 }

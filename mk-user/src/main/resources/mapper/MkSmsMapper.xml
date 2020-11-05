@@ -7,7 +7,7 @@
         FROM mk_sms
         WHERE mobile = #{mobile}
           AND type = ${type}
-          AND create_time >= ${nowSub10Date}
+          AND create_time >= #{nowSub10Date}
           AND code = ${code}
         ORDER BY create_time ASC
         LIMIT 1

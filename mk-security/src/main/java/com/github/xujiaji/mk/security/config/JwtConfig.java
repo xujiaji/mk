@@ -7,14 +7,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * JWT 配置
  * @author jiajixu
  */
-@ConfigurationProperties(prefix = "jwt.config")
+@ConfigurationProperties(prefix = "mk.jwt.config")
 @Data
 public class JwtConfig {
 
     /**
-     * jwt 加密 key，默认值：baozaoYUNYU!!!...
+     * jwt 加密 key，默认值：mk-security!!!...
      */
     private String key = "mk-security!!!...";
+
+    /**
+     * JWT 在 Redis 中保存的key前缀
+     */
+    private String redisJwtKeyPrefix = "mk:security:jwt:";
 
     /**
      * jwt 过期时间，默认值：600000 {@code 10 分钟}.

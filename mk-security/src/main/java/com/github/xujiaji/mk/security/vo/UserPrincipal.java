@@ -7,6 +7,7 @@ import com.github.xujiaji.mk.common.entity.MkUser;
 import com.github.xujiaji.mk.security.entity.MkSecPermission;
 import com.github.xujiaji.mk.security.entity.MkSecRole;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -125,6 +126,24 @@ public class UserPrincipal implements UserDetails {
                 mkSecUser.getUpdateTime(),
                 roleNames,
                 authorities);
+    }
+
+    public static UserPrincipal create(MkUser mkUser) {
+        return new UserPrincipal(
+                null,
+                mkUser.getId(),
+                mkUser.getUsername(),
+                mkUser.getNickname(),
+                mkUser.getPhone(),
+                mkUser.getEmail(),
+                mkUser.getBirthday(),
+                mkUser.getSex(),
+                mkUser.getPassword(),
+                Consts.ENABLE,
+                mkUser.getCreateTime(),
+                mkUser.getUpdateTime(),
+                Lists.newArrayList(),
+                Lists.newArrayList());
     }
 
     @Override

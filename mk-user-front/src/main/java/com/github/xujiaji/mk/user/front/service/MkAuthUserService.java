@@ -360,7 +360,7 @@ public class MkAuthUserService extends MkUserServiceImpl {
         if (StrUtil.isBlank(mkUser.getPassword())) {
             throw new RequestActionException("该账号还未设置过密码，请使用短信登录");
         }
-        if (passwordService.matches(mobileLoginRequest.getPassword(), mkUser.getPassword())) {
+        if (!passwordService.matches(mobileLoginRequest.getPassword(), mkUser.getPassword())) {
             throw new RequestActionException("密码错误");
         }
         return mkUser;

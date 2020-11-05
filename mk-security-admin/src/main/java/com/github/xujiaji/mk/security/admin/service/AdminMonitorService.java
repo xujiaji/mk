@@ -7,6 +7,7 @@ import com.github.xujiaji.mk.common.service.IUserInfoService;
 import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.admin.vo.OnlineUser;
+import com.github.xujiaji.mk.security.config.JwtConfig;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
@@ -30,6 +31,7 @@ public class AdminMonitorService {
     private final RedisUtil redisUtil;
     private final MkSecUserMapper mkSecUserMapper;
     private final IUserInfoService userInfoService;
+    private final JwtConfig jwtConfig;
 
     /**
      * 在线用户分页列表
@@ -38,12 +40,12 @@ public class AdminMonitorService {
      * @return 在线用户分页列表
      */
     public PageVO<OnlineUser> onlineUser(PageCondition pageCondition) {
-        PageVO<String> keys = redisUtil.findKeysForPage(Consts.REDIS_JWT_KEY_PREFIX + Consts.SYMBOL_STAR, pageCondition.getPage(), pageCondition.getSize());
+        PageVO<String> keys = redisUtil.findKeysForPage(jwtConfig.getRedisJwtKeyPrefix() + Consts.SYMBOL_STAR, pageCondition.getPage(), pageCondition.getSize());
         List<String> rows = keys.getList();
 
         // 根据 redis 中键获取用户名列表
         List<String> usernameList = rows.stream()
-                .map(s -> StrUtil.subAfter(s, Consts.REDIS_JWT_KEY_PREFIX, true))
+                .map(s -> StrUtil.subAfter(s, jwtConfig.getRedisJwtKeyPrefix(), true))
                 .collect(Collectors.toList());
         // 根据用户名查询用户信息
         List<MkSecUser> userList = mkSecUserMapper.selectBatchIds(usernameList);
@@ -62,7 +64,7 @@ public class AdminMonitorService {
     public void kickout(List<String> names) {
         // 清除 Redis 中的 JWT 信息
         List<String> redisKeys = names.parallelStream()
-                .map(s -> Consts.REDIS_JWT_KEY_PREFIX + s)
+                .map(s -> jwtConfig.getRedisJwtKeyPrefix() + s)
                 .collect(Collectors.toList());
         redisUtil.delete(redisKeys);
 

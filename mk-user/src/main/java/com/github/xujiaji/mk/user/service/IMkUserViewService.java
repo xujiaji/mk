@@ -13,4 +13,5 @@ import com.github.xujiaji.mk.common.base.BaseIService;
  */
 public interface IMkUserViewService extends BaseIService<MkUserView> {
 
+    MkUserView getUserViewHidePhoneAndEmailById(Long id);
 }

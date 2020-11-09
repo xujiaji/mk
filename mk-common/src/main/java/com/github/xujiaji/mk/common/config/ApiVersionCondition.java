@@ -28,7 +28,7 @@ public class ApiVersionCondition implements RequestCondition<ApiVersionCondition
 
     @Override
     public ApiVersionCondition getMatchingCondition(HttpServletRequest httpServletRequest) {
-        if (apiVersion.compareTo(httpServletRequest.getHeader("version")) >= 0) {
+        if (apiVersion.equals(httpServletRequest.getHeader("version"))) {
             return this;
         }
         return null;

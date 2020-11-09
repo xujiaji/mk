@@ -1,10 +1,10 @@
-package com.github.xujiaji.mk.user.entity;
+package com.github.xujiaji.mk.user.front.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
-import com.github.xujiaji.mk.common.entity.BaseEntity;
+import com.github.xujiaji.mk.common.entity.BaseWithIdEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -16,8 +16,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("mk_user_view")
-public class MkUserView extends BaseEntity {
+public class UserVO extends BaseWithIdEntity {
 
     private static final long serialVersionUID = 1L;
 

@@ -3,14 +3,10 @@ package com.github.xujiaji.mk.user.admin.controller;
 
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
-import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.vo.PageVO;
-import com.github.xujiaji.mk.user.entity.MkUserLoginLog;
-import com.github.xujiaji.mk.user.entity.MkUserLoginLogView;
+import com.github.xujiaji.mk.user.admin.dto.UserLoginLogDTO;
 import com.github.xujiaji.mk.user.payload.LogPageCondition;
-import com.github.xujiaji.mk.user.service.IMkUserLoginLogViewService;
 import com.github.xujiaji.mk.user.service.impl.MkUserLoginLogServiceImpl;
-import com.github.xujiaji.mk.user.service.impl.MkUserLoginLogViewServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,15 +25,15 @@ public class MkUserAdminLoginLogController extends BaseController {
 
     private final MkUserLoginLogServiceImpl mkUserLoginLogService;
 
-    private final MkUserLoginLogViewServiceImpl userLoginLogViewService;
 
     /**
      * 登录日志分页获取
      * @param request 分页请求
      */
     @GetMapping("/page")
-    public ApiResponse<PageVO<MkUserLoginLogView>> page(@Valid LogPageCondition request) {
-        return successPage(userLoginLogViewService.pageSearch(request, mapPage(request)));
+    public ApiResponse<PageVO<UserLoginLogDTO>> page(@Valid LogPageCondition request) {
+//        return successPage(userLoginLogViewService.pageSearch(request, mapPage(request)));
+        return null;
     }
 
     /**

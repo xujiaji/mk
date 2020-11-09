@@ -33,7 +33,12 @@ public class PermissionAddCondition {
      * 类型为页面1时，代表前端路由地址；类型为按钮2时，代表后端接口地址
      */
     @NotNull(message = "请输入地址")
-    private String url;
+    private String path;
+
+    /**
+     * 前端所需元件
+     */
+    private String component;
 
     /**
      * 权限表达式

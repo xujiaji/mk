@@ -69,6 +69,26 @@ public interface Consts {
         String basePath = "basePath";
 
         /**
+         * 存放文本文件的路径
+         */
+        String baseTextPath = "baseTextPath";
+
+        /**
+         * 存放音频文件的路径
+         */
+        String baseAudioPath = "baseAudioPath";
+
+        /**
+         * 存放视频文件的路径
+         */
+        String baseVideoPath = "baseVideoPath";
+
+        /**
+         * 存放图片文件的路径
+         */
+        String baseImagePath = "baseImagePath";
+
+        /**
          * IP城市数据库路径
          */
         String ipCityDBPath = "ipCityDBPath";
@@ -137,6 +157,11 @@ public interface Consts {
          * 阿里云短信sign name
          */
         String aliSmsSignName = "aliSmsSignName";
+
+        /**
+         * 基础文件url
+         */
+        String baseFileUrl = "baseFileUrl";
     }
 
     /**
@@ -201,5 +226,24 @@ public interface Consts {
          * 修改绑定手机号
          */
         int MODIFY_MOBILE = 5;
+    }
+
+    /**
+     * 文件类型1.图片；2.视频；3.音频；4.文本
+     */
+    interface FileType {
+        int IMAGE = 1;
+        int VIDEO = 2;
+        int AUDIO = 3;
+        int TEXT = 4;
+    }
+
+    /**
+     * 0可使用，1已禁用，2附件已删除
+     */
+    interface FileState {
+        int ENABLE = 0;
+        int DISABLE = 1;
+        int DELETED = 2;
     }
 }

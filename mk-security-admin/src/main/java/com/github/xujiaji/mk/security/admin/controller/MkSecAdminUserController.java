@@ -43,7 +43,6 @@ public class MkSecAdminUserController extends BaseController {
     /**
      * 得到验证码
      */
-    @ApiVersion("1.0.0")
     @GetMapping("/verifyCode")
     public ApiResponse<VerifyVO> createVerify() {
         CircleCaptcha circleCaptcha = CaptchaUtil.createCircleCaptcha(100, 30, 4, 3);
@@ -52,11 +51,11 @@ public class MkSecAdminUserController extends BaseController {
         return ApiResponse.ofSuccess(new VerifyVO(uuid, circleCaptcha.getImageBase64()));
     }
 
-    @ApiVersion("1.0.1")
-    @GetMapping("/verifyCode")
-    public ApiResponse<VerifyVO> createVerify1_0_1() {
-        return ApiResponse.ofSuccess(new VerifyVO("aaaa", "11111"));
-    }
+//    @ApiVersion("1.0.1")
+//    @GetMapping("/verifyCode")
+//    public ApiResponse<VerifyVO> createVerify1_0_1() {
+//        return ApiResponse.ofSuccess(new VerifyVO("aaaa", "11111"));
+//    }
 
     /**
      * 管理员登录

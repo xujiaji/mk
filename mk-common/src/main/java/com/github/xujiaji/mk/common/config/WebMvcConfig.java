@@ -7,8 +7,7 @@ import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
-import com.github.xujiaji.mk.common.base.Consts;
-import com.github.xujiaji.mk.common.service.IFilePathService;
+import com.github.xujiaji.mk.common.service.IFileUrlService;
 import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
 import com.google.common.collect.Sets;
 import lombok.val;
@@ -45,7 +44,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Resource(name = "mkCommonServiceImpl")
     private MkCommonServiceImpl mkCommonService;
     @Autowired(required = false)
-    private IFilePathService filePathService;
+    private IFileUrlService filePathService;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -88,7 +87,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                                 if (value == null) {
                                                     return;
                                                 }
-                                                gen.writeString(mkCommonService.valueByKey(Consts.ConfigKey.basePath) + filePathService.getPathById((Long) value));
+                                                gen.writeString(filePathService.getUrlBy(value));
                                             }
                                         });
                                     }

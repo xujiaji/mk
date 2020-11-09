@@ -12,10 +12,10 @@ import com.github.xujiaji.mk.common.util.CommonUtil;
 import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.security.util.JwtUtil;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
-import com.github.xujiaji.mk.user.entity.MkUserView;
 import com.github.xujiaji.mk.user.front.payload.*;
 import com.github.xujiaji.mk.user.front.service.MkAuthUserService;
 import com.github.xujiaji.mk.user.front.vo.LoginSuccessVO;
+import com.github.xujiaji.mk.user.front.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,7 +45,7 @@ public class MkAuthUserController extends BaseController {
     private final JwtUtil jwtUtil;
 
     private ApiResponse<LoginSuccessVO> loginSuccessHandle(MkUser mkUser, Integer loginType, HttpServletRequest hsr) {
-        MkUserView mkUserView = BeanUtil.copyProperties(mkUser, MkUserView.class);
+        UserVO mkUserView = BeanUtil.copyProperties(mkUser, UserVO.class);
         mkUserView.setPhone(commonUtil.hidePhone(mkUserView.getPhone()));
         mkUserView.setEmail(commonUtil.hideEmail(mkUserView.getEmail()));
         userLoginLogService.insertLog(mkUserView.getId(), loginType, hsr);
@@ -56,12 +56,10 @@ public class MkAuthUserController extends BaseController {
         SecurityContextHolder.getContext()
                 .setAuthentication(authentication);
         String jwt = jwtUtil.createJWT(authentication, true);
-        return success(LoginSuccessVO
-                .builder()
-                .authorization(jwt)
-                .user(mkUserView)
-                .authorizationType("Bearer")
-                .build());
+        val successUser = BeanUtil.copyProperties(mkUserView, LoginSuccessVO.class);
+        successUser.setAuthorization(jwt);
+        successUser.setAuthorizationType("Bearer");
+        return success(successUser);
     }
 
     /**

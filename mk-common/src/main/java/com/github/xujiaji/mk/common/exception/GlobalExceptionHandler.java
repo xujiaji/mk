@@ -10,6 +10,7 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -43,6 +44,9 @@ public class GlobalExceptionHandler {
                 .findFirst();
         if (first.isPresent()) {
             return first.get().handle(e);
+        } else if (e instanceof HttpMediaTypeNotSupportedException) {
+            log.error("【全局异常拦截】HttpMediaTypeNotSupportedException: 当前请求内容类型 {}, 支持请求类型 {}", ((HttpMediaTypeNotSupportedException) e).getContentType(), JSONUtil.toJsonStr(((HttpMediaTypeNotSupportedException) e).getSupportedMediaTypes()));
+            return ApiResponse.ofStatus(Status.HTTP_BAD_CONTENT_TYPE);
         } else if (e instanceof StatusException) {
             log.error("【全局异常拦截】RequestActionStatusException: 错误信息 {}", ((StatusException) e).getStatus().getMessage());
             return ApiResponse.of(((StatusException) e).getStatus().getCode(), ((StatusException) e).getStatus().getMessage(), null);

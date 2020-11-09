@@ -1,7 +1,6 @@
 package com.github.xujiaji.mk.file.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.time.LocalDateTime;
 import com.github.xujiaji.mk.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -37,9 +36,9 @@ public class MkFile extends BaseEntity {
     private Integer fileType;
 
     /**
-     * 删除时间
+     * 状态：0可使用，1已禁用，2附件已删除
      */
-    private LocalDateTime deleteTime;
+    private Integer state;
 
 
 }

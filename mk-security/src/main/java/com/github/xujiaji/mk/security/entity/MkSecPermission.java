@@ -28,7 +28,12 @@ public class MkSecPermission extends BaseEntity {
     /**
      * 类型为页面时，代表前端路由地址，类型为按钮时，代表后端接口地址
      */
-    private String url;
+    private String path;
+
+    /**
+     * 前端所需元件
+     */
+    private String component;
 
     /**
      * 权限类型，页面-1，按钮-2

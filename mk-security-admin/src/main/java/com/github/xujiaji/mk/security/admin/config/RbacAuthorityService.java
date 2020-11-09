@@ -11,7 +11,6 @@ import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -62,14 +61,14 @@ public class RbacAuthorityService {
             List<MkSecPermission> btnPerms = permissions.stream()
                     // 过滤页面权限
                     .filter(permission -> Objects.equals(permission.getType(), Consts.BUTTON))
-                    // 过滤 URL 为空
-                    .filter(permission -> StrUtil.isNotBlank(permission.getUrl()))
+                    // 过滤 path 为空
+                    .filter(permission -> StrUtil.isNotBlank(permission.getPath()))
                     // 过滤 METHOD 为空
                     .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
                     .collect(Collectors.toList());
 
             for (MkSecPermission btnPerm : btnPerms) {
-                AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(btnPerm.getUrl(), btnPerm.getMethod());
+                AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(btnPerm.getPath(), btnPerm.getMethod());
                 if (antPathMatcher.matches(request)) {
                     hasPermission = true;
                     break;

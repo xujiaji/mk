@@ -2,7 +2,7 @@ package com.github.xujiaji.mk.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
-import com.github.xujiaji.mk.common.entity.BaseEntity;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

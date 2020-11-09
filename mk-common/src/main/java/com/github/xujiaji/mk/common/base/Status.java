@@ -50,6 +50,11 @@ public enum Status implements IStatus {
     HTTP_BAD_METHOD(405, "请求方式不支持！"),
 
     /**
+     * 请求content type不支持！
+     */
+    HTTP_BAD_CONTENT_TYPE(406, "请求ContentType不支持！"),
+
+    /**
      * 请求异常！
      */
     BAD_REQUEST(400, "请求异常！"),

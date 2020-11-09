@@ -2,6 +2,7 @@ package com.github.xujiaji.mk.file.mapper;
 
 import com.github.xujiaji.mk.file.entity.MkFile;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MkFileMapper extends BaseMapper<MkFile> {
 
+    String getPathById(@Param("fileId") Long fileId);
 }

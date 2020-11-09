@@ -20,4 +20,8 @@ public class PermissionEditCondition extends PermissionAddCondition {
     @NotNull(message = "请传入权限ID")
     private Long id;
 
+    /**
+     * 前端所需元件
+     */
+    private String component;
 }

@@ -1,10 +1,9 @@
 package com.github.xujiaji.mk.log.controller;
 
 
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.stereotype.Controller;
 import com.github.xujiaji.mk.common.base.BaseController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -14,7 +13,7 @@ import com.github.xujiaji.mk.common.base.BaseController;
  * @author xujiaji
  * @since 2020-10-26
  */
-@Controller
+@RestController
 @RequestMapping("/mk-log")
 public class MkLogController extends BaseController {
 

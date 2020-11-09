@@ -80,11 +80,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
 
-        if (checkIgnores(request)) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-
         String jwt = jwtUtil.getJwtFromRequest(request);
 
         if (StrUtil.isNotBlank(jwt)) {
@@ -101,9 +96,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 ResponseUtil.renderJson(response, e);
             }
         } else {
+            if (checkIgnores(request)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
             ResponseUtil.renderJson(response, Status.UNAUTHORIZED, null);
         }
-
     }
 
     /**

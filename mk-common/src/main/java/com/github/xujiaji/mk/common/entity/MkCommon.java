@@ -1,7 +1,6 @@
 package com.github.xujiaji.mk.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.github.xujiaji.mk.common.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

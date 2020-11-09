@@ -213,7 +213,7 @@ public class JwtUtil {
      * @param request 请求
      * @return 签名是否有效
      */
-    private List<String> ignoreParams = Lists.newArrayList();
+    private List<String> ignoreParams = Lists.newArrayList("file");
     public boolean checkSign(String sign, String timestamp, HttpServletRequest request) {
         if (
                 !NumberUtil.isLong(timestamp)

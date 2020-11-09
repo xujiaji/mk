@@ -1,5 +1,6 @@
 package com.github.xujiaji.mk.security.admin.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
@@ -7,6 +8,7 @@ import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.security.admin.payload.PermissionAddCondition;
 import com.github.xujiaji.mk.security.admin.payload.PermissionEditCondition;
+import com.github.xujiaji.mk.security.admin.vo.PermissionVO;
 import com.github.xujiaji.mk.security.entity.MkSecPermission;
 import com.github.xujiaji.mk.security.service.impl.MkSecPermissionServiceImpl;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
@@ -18,6 +20,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @menu 权限管理
@@ -46,7 +49,14 @@ public class MkSecAdminPermissionController extends BaseController {
     @GetMapping("/user/tree")
     public ApiResponse<List<Map<String, Object>>> userTree() {
         val currentSecUserId = SecurityUtil.getCurrentSecUserId();
-        val permissions = permissionService.userPermissions(currentSecUserId);
+        val permissions = permissionService.userPermissions(currentSecUserId).stream().map(m -> {
+            val pv = BeanUtil.copyProperties(m, PermissionVO.class);
+            pv.setMeta(PermissionVO.Meta.builder()
+                    .icon(pv.getIcon())
+                    .title(pv.getName())
+                    .build());
+            return pv;
+        }).collect(Collectors.toList());
         return success(treeIdAndParentId(permissions));
     }
 

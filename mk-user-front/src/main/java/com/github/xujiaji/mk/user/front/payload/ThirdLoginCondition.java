@@ -18,7 +18,7 @@ public class ThirdLoginCondition {
      */
     @NotNull(message = "三方类型不能为NULL")
     @Pattern(regexp = "[126]", message = "没有该类型")
-    private Integer type;
+    private String type;
     /**
      * qq和微信 三方登录token
      */

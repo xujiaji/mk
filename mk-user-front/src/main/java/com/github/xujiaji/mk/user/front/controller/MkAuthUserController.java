@@ -77,7 +77,8 @@ public class MkAuthUserController extends BaseController {
     @PostMapping("/third/login")
     public ApiResponse<LoginSuccessVO> thirdLogin(@RequestBody @Valid ThirdLoginCondition request, HttpServletRequest hsr) {
         MkUser mkUser;
-        switch (request.getType()) {
+        val loginType = Integer.parseInt(request.getType());
+        switch (loginType) {
             case Consts.LoginType.QQ:
                 if (StrUtil.isBlank(request.getTokenId())) {
                     throw new RequestActionException("请传入三方登录token");
@@ -97,7 +98,7 @@ public class MkAuthUserController extends BaseController {
                 throw new RequestActionException("没有这个登录类型");
         }
 
-        return loginSuccessHandle(mkUser, request.getType(), hsr);
+        return loginSuccessHandle(mkUser, loginType, hsr);
     }
 
     /**

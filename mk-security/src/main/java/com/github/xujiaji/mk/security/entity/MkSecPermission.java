@@ -46,6 +46,11 @@ public class MkSecPermission extends BaseEntity {
     private String permission;
 
     /**
+     * 图标
+     */
+    private String icon;
+
+    /**
      * 后端接口访问方式
      */
     private String method;

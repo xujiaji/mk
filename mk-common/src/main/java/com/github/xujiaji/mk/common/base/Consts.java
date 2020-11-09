@@ -162,6 +162,16 @@ public interface Consts {
          * 基础文件url
          */
         String baseFileUrl = "baseFileUrl";
+
+        /**
+         * qq app id
+         */
+        String qqAppId = "qqAppId";
+
+        /**
+         * qq app key
+         */
+        String qqSecret = "qqSecret";
     }
 
     /**

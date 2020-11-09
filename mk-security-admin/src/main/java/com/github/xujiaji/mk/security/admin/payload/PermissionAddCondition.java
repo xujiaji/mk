@@ -41,6 +41,11 @@ public class PermissionAddCondition {
     private String component;
 
     /**
+     * 图标
+     */
+    private String icon;
+
+    /**
      * 权限表达式
      */
     @NotNull(message = "请输入权限表达式")

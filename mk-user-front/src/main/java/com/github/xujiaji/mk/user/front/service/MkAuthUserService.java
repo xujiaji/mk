@@ -38,7 +38,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -73,8 +72,9 @@ public class MkAuthUserService extends MkUserServiceImpl {
         MkUser user = new MkUser();
         user.setNo(mkUserIdNumber.getId().toString());
         user.setUsername("mk" + user.getNo());
+        user.setNickname(user.getUsername());
         user.setPhone(mobile);
-        user.setPassword(passwordService.encode(password));
+        user.setPassword(password == null ? null : passwordService.encode(password));
         user.setQqId(qqId);
         user.setWxId(wxId);
         user.setWxMiniOpenId(wxMiniOpenId);
@@ -206,7 +206,7 @@ public class MkAuthUserService extends MkUserServiceImpl {
     public void bindThirdLogin(Long userId, ThirdLoginCondition request) {
         MkUser user = new MkUser();
         user.setId(userId);
-        switch (request.getType()) {
+        switch (Integer.parseInt(request.getType())) {
             case Consts.LoginType.QQ:
                 user = authQQ(request, user);
                 break;

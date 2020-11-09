@@ -103,6 +103,9 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
 
     @Override
     public String getUrlBy(Object obj) {
+        if (!(obj instanceof Long)) {
+            return null;
+        }
         Long fileId = (Long) obj;
         val path = baseMapper.getPathById(fileId);
         if (path == null) {

@@ -1,7 +1,6 @@
 package com.github.xujiaji.mk.security.admin.vo;
 
 import com.github.xujiaji.mk.security.entity.MkSecPermission;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,12 +12,9 @@ import lombok.EqualsAndHashCode;
 @Data
 public class PermissionVO extends MkSecPermission {
 
-    private Meta meta;
+    private PermissionMetaVO meta;
 
-    @Data
-    @Builder
-    public static class Meta {
-        private String icon;
-        private String title;
-    }
 }
+
+
+

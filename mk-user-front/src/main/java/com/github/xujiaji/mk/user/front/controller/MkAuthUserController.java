@@ -15,6 +15,7 @@ import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import com.github.xujiaji.mk.user.front.payload.*;
 import com.github.xujiaji.mk.user.front.service.MkAuthUserService;
 import com.github.xujiaji.mk.user.front.vo.LoginSuccessVO;
+import com.github.xujiaji.mk.user.dto.ThirdBindStatusDTO;
 import com.github.xujiaji.mk.user.front.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -29,7 +30,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 /**
- * @menu 前端-用户认证
+ * @menu 前端-用户认证与安全
  * @author jiajixu
  * @date 2020/11/4 10:29
  */
@@ -117,6 +118,14 @@ public class MkAuthUserController extends BaseController {
     public ApiResponse<LoginSuccessVO> miniWxLoginByInfo(@Valid @RequestBody MiniWxInfoLoginCondition request, HttpServletRequest hsr) {
         MkUser user = authUserService.authMiniWeiXinByInfo(request);
         return loginSuccessHandle(user, Consts.LoginType.WX_MINI, hsr);
+    }
+
+    /**
+     * 获取账号三方绑定状态
+     */
+    @GetMapping("/bind/status")
+    public ApiResponse<ThirdBindStatusDTO> thirdBindStatus() {
+        return success(authUserService.bindStatus(userUtil.currentUserIdNotNull()));
     }
 
     /**

@@ -19,11 +19,9 @@ import com.github.xujiaji.mk.common.exception.StatusException;
 import com.github.xujiaji.mk.common.service.IPasswordService;
 import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
 import com.github.xujiaji.mk.common.util.RedisUtil;
+import com.github.xujiaji.mk.user.dto.ThirdBindStatusDTO;
 import com.github.xujiaji.mk.user.entity.MkSms;
-import com.github.xujiaji.mk.user.front.dto.AliSmsDTO;
-import com.github.xujiaji.mk.user.front.dto.QQLoginDTO;
-import com.github.xujiaji.mk.user.front.dto.WXLoginDTO;
-import com.github.xujiaji.mk.user.front.dto.WXMiniLoginDTO;
+import com.github.xujiaji.mk.user.front.dto.*;
 import com.github.xujiaji.mk.user.front.payload.*;
 import com.github.xujiaji.mk.user.front.util.WXBizDataCrypt;
 import com.github.xujiaji.mk.user.service.impl.MkSmsServiceImpl;
@@ -470,5 +468,9 @@ public class MkAuthUserService extends MkUserServiceImpl {
         }
         mkUser.setPassword(passwordService.encode(mpr.getNewPass()));
         editById(mkUser);
+    }
+
+    public ThirdBindStatusDTO bindStatus(Long userId) {
+        return baseMapper.selectBindStatus(userId);
     }
 }

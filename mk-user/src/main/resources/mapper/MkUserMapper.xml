@@ -8,4 +8,15 @@
     <select id="selectByPhone" resultType="com.github.xujiaji.mk.common.entity.MkUser">
         SELECT * FROM mk_user WHERE phone = #{mobile}
     </select>
+    <select id="selectBindStatus" resultType="com.github.xujiaji.mk.user.dto.ThirdBindStatusDTO">
+        SELECT
+               IF(phone = '', 1, 0) phone_status,
+               IF(qq_id = '', 1, 0) qq_status,
+               IF(wx_id = '', 1, 0) wx_status,
+               IF(wx_mini_open_id = '', 1, 0) wx_mini_status,
+               IF(ios_id = '', 1, 0) ios_status,
+               IF(email = '', 1, 0) email_status
+        FROM mk_user
+        WHERE id = ${userId}
+    </select>
 </mapper>

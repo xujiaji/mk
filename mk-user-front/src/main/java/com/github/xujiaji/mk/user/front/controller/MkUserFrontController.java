@@ -13,7 +13,7 @@ import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @menu 前端-用户编辑自己的信息
+ * @menu 前端-用户查看或编辑自己的信息
  * @author jiajixu
  * @date 2020/10/26 10:38
  */

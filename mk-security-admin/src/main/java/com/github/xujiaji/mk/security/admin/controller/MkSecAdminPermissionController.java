@@ -8,6 +8,7 @@ import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.security.admin.payload.PermissionAddCondition;
 import com.github.xujiaji.mk.security.admin.payload.PermissionEditCondition;
+import com.github.xujiaji.mk.security.admin.vo.PermissionMetaVO;
 import com.github.xujiaji.mk.security.admin.vo.PermissionVO;
 import com.github.xujiaji.mk.security.entity.MkSecPermission;
 import com.github.xujiaji.mk.security.service.impl.MkSecPermissionServiceImpl;
@@ -50,8 +51,8 @@ public class MkSecAdminPermissionController extends BaseController {
     public ApiResponse<List<Map<String, Object>>> userTree() {
         val currentSecUserId = SecurityUtil.getCurrentSecUserId();
         val permissions = permissionService.userPermissions(currentSecUserId).stream().map(m -> {
-            val pv = BeanUtil.copyProperties(m, PermissionVO.class);
-            pv.setMeta(PermissionVO.Meta.builder()
+            PermissionVO pv = BeanUtil.copyProperties(m, PermissionVO.class);
+            pv.setMeta(PermissionMetaVO.builder()
                     .icon(pv.getIcon())
                     .title(pv.getName())
                     .build());

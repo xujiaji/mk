@@ -2,6 +2,7 @@ package com.github.xujiaji.mk.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.xujiaji.mk.common.entity.MkUser;
+import com.github.xujiaji.mk.user.dto.ThirdBindStatusDTO;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -23,4 +24,11 @@ public interface MkUserMapper extends BaseMapper<MkUser> {
      * @param mobile 手机号
      */
     MkUser selectByPhone(@Param("mobile") String mobile);
+
+    /**
+     * 获取三方绑定状态
+     * @param userId 用户ID
+     * @return 所有绑定状态
+     */
+    ThirdBindStatusDTO selectBindStatus(@Param("userId") Long userId);
 }

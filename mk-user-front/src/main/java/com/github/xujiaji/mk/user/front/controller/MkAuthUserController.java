@@ -156,6 +156,15 @@ public class MkAuthUserController extends BaseController {
     }
 
     /**
+     * 发送修改信息验证码
+     */
+    @PostMapping("/sms/send/modify")
+    public ApiResponse<?> sendSmsModify() {
+        authUserService.sendSmsModify(userUtil.currentUserIdNotNull());
+        return ApiResponse.ofSuccess();
+    }
+
+    /**
      * 手机号密码注册
      */
     @PostMapping("/register")
@@ -213,7 +222,7 @@ public class MkAuthUserController extends BaseController {
      * 更改绑定手机号
      */
     @PutMapping("/change/mobile")
-    public ApiResponse<?> changeMobile(@RequestBody @Valid BindMobileCondition bindMobileRequest) {
+    public ApiResponse<?> changeMobile(@RequestBody @Valid ChangeMobileCondition bindMobileRequest) {
         authUserService.changeMobile(userUtil.currentUserIdNotNull(), bindMobileRequest);
         return successMessage("绑定成功");
     }

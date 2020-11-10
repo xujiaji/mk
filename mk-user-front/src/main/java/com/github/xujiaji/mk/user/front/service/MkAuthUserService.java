@@ -1,5 +1,6 @@
 package com.github.xujiaji.mk.user.front.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
@@ -246,6 +247,14 @@ public class MkAuthUserService extends MkUserServiceImpl {
         editById(user);
     }
 
+    public void sendSmsModify(Long userId) {
+        val user = getById(userId);
+        val smsCondition = new SmsCondition();
+        smsCondition.setMobile(user.getPhone());
+        smsCondition.setType(Consts.Sms.MODIFY);
+        sendSms(smsCondition);
+    }
+
     public void sendSms(SmsCondition smsRequest) {
         String templateCodeKey = null;
         switch (smsRequest.getType()) {
@@ -443,13 +452,9 @@ public class MkAuthUserService extends MkUserServiceImpl {
      * @param userId 用户ID
      * @param request 修改绑定手机号请求
      */
-    public void changeMobile(Long userId, BindMobileCondition request) {
+    public void changeMobile(Long userId, ChangeMobileCondition request) {
         checkValidSmsCode(request.getMobile(), request.getCode(), Consts.Sms.MODIFY_MOBILE);
-        MkUser user = baseMapper.selectById(userId);
-        if (StrUtil.isBlank(user.getPassword())) {
-            throw new RequestActionException("没有密码无法修改，请先设置密码");
-        }
-        bindMobile(userId, request, false);
+        bindMobile(userId, BeanUtil.copyProperties(request, BindMobileCondition.class), false);
     }
 
     /**

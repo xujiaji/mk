@@ -11,6 +11,7 @@ import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.file.entity.MkFile;
 import com.github.xujiaji.mk.file.mapper.MkFileMapper;
 import com.github.xujiaji.mk.file.service.IMkFileService;
+import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 /**
  * <p>
@@ -99,6 +101,16 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
         mkFile.setUserId(userId);
         add(mkFile);
         return mkFile;
+    }
+
+    /**
+     * 包含图片id的字段转图片全路径
+     */
+    private final Set<String> imgKeys = Sets.newHashSet("image", "avatar", "thumb", "img");
+
+    @Override
+    public boolean isEnableUrlAutoFull(String key) {
+        return imgKeys.contains(key);
     }
 
     @Override

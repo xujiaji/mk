@@ -8,8 +8,6 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.BeanPropertyWriter;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 import com.github.xujiaji.mk.common.service.IFileUrlService;
-import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
-import com.google.common.collect.Sets;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +16,8 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 /**
  * MVC配置
@@ -36,15 +32,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     private static final String STR_ID = "id";
 
-    /**
-     * 包含图片id的字段转图片全路径
-     */
-    private static final Set<String> imgKeys = Sets.newHashSet("image", "avatar", "thumb", "img");
-
-    @Resource(name = "mkCommonServiceImpl")
-    private MkCommonServiceImpl mkCommonService;
     @Autowired(required = false)
-    private IFileUrlService filePathService;
+    private List<IFileUrlService> fileUrlServices;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -80,16 +69,22 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                                 gen.writeString(value.toString());
                                             }
                                         });
-                                    } else if (filePathService != null && imgKeys.contains(s)) { // 将是图片的字段id转为图片全路径
-                                        beanPropertyWriter.assignSerializer(new JsonSerializer<Object>() {
-                                            @Override
-                                            public void serialize(Object value, JsonGenerator gen, SerializerProvider serializerProvider) throws IOException {
-                                                if (value == null) {
-                                                    return;
-                                                }
-                                                gen.writeString(filePathService.getUrlBy(value));
+                                    } else if (fileUrlServices != null){ // 将是图片的字段id转为图片全路径
+                                        for (IFileUrlService fileUrlService : fileUrlServices) {
+                                            if (fileUrlService.isEnableUrlAutoFull(s)) {
+                                                beanPropertyWriter.assignSerializer(new JsonSerializer<Object>() {
+                                                    @Override
+                                                    public void serialize(Object value, JsonGenerator gen, SerializerProvider serializerProvider) throws IOException {
+                                                        if (value == null) {
+                                                            return;
+                                                        }
+
+                                                        gen.writeString(fileUrlService.getUrlBy(value));
+                                                    }
+                                                });
+                                                break;
                                             }
-                                        });
+                                        }
                                     }
 
                                 }

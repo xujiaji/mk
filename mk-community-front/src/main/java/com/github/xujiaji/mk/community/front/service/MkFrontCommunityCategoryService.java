@@ -1,7 +1,7 @@
 package com.github.xujiaji.mk.community.front.service;
 
-import com.github.xujiaji.mk.community.dto.FrontArticleCategoryDTO;
-import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleCategoryServiceImpl;
+import com.github.xujiaji.mk.community.dto.FrontCategoryDTO;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityCategoryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +18,9 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Service
-public class MkFrontCommunityArticleCategoryService extends MkCommunityArticleCategoryServiceImpl {
+public class MkFrontCommunityCategoryService extends MkCommunityCategoryServiceImpl {
 
-    public List<FrontArticleCategoryDTO> all() {
+    public List<FrontCategoryDTO> all() {
         return baseMapper.selectFrontAll();
     }
 }

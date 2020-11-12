@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.xujiaji.mk.community.mapper.MkCommunityArticleCategoryMapper">
+<mapper namespace="com.github.xujiaji.mk.community.mapper.MkCommunityCategoryMapper">
 
-    <select id="selectFrontAll" resultType="com.github.xujiaji.mk.community.dto.FrontArticleCategoryDTO">
+    <select id="selectFrontAll" resultType="com.github.xujiaji.mk.community.dto.FrontCategoryDTO">
         SELECT c.id, c.title, f.path thumb
-        FROM mk_community_article_category c
+        FROM mk_community_category c
             LEFT JOIN mk_file f
                 ON c.thumb = f.id
         WHERE display = 1

@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @TableName("mk_community_article_category")
-public class MkCommunityArticleCategory extends BaseEntity {
+public class MkCommunityCategory extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

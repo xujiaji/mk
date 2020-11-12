@@ -8,14 +8,14 @@ import com.github.xujiaji.mk.common.base.BaseController;
 
 /**
  * <p>
- * 社区动态—分类表 前端控制器
+ * 社区动态—话题表 前端控制器
  * </p>
  *
  * @author xujiaji
  * @since 2020-11-12
  */
 @RestController
-@RequestMapping("/mk-community-article-category")
-public class MkCommunityArticleCategoryController extends BaseController {
+@RequestMapping("/mk-community-topic")
+public class MkCommunityTopicController extends BaseController {
 
 }

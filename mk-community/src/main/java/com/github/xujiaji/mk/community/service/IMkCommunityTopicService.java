@@ -1,6 +1,6 @@
 package com.github.xujiaji.mk.community.service;
 
-import com.github.xujiaji.mk.community.entity.MkCommunityArticleTopic;
+import com.github.xujiaji.mk.community.entity.MkCommunityTopic;
 import com.github.xujiaji.mk.common.base.BaseIService;
 
 /**
@@ -11,6 +11,6 @@ import com.github.xujiaji.mk.common.base.BaseIService;
  * @author xujiaji
  * @since 2020-11-12
  */
-public interface IMkCommunityArticleTopicService extends BaseIService<MkCommunityArticleTopic> {
+public interface IMkCommunityTopicService extends BaseIService<MkCommunityTopic> {
 
 }

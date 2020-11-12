@@ -3,7 +3,7 @@ package com.github.xujiaji.mk.community.dto;
 import lombok.Data;
 
 @Data
-public class FrontArticleTopicDTO {
+public class FrontCategoryDTO {
 
     /**
      * id
@@ -16,17 +16,7 @@ public class FrontArticleTopicDTO {
     private String title;
 
     /**
-     * 话题图片
-     */
-    private String image;
-
-    /**
-     * 略缩图
+     * 封面
      */
     private String thumb;
-
-    /**
-     * 话题描述
-     */
-    private String content;
 }

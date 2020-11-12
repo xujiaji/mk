@@ -55,40 +55,37 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                                                          List<BeanPropertyWriter> beanProperties) {
                             for (BeanPropertyWriter beanPropertyWriter : beanProperties) {
                                 val javaType = beanPropertyWriter.getType();
-                                if (javaType.isTypeOrSubTypeOf(Long.class)) {
-                                    val s = beanPropertyWriter.getName().toLowerCase();
-                                    // 将包含id的Long字段转为String类型
-                                    if (s.contains(STR_ID)) {
-                                        beanPropertyWriter.assignSerializer(new JsonSerializer<Object>() {
+                                val key = beanPropertyWriter.getName().toLowerCase();
+                                // 将包含id的Long字段转为String类型
+                                if (javaType.isTypeOrSubTypeOf(Long.class) && key.contains(STR_ID)) {
+                                    beanPropertyWriter.assignSerializer(new JsonSerializer<Object>() {
 
-                                            @Override
-                                            public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-                                                if (value == null) {
-                                                    return;
-                                                }
-                                                gen.writeString(value.toString());
+                                        @Override
+                                        public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+                                            if (value == null) {
+                                                return;
                                             }
-                                        });
-                                    } else if (fileUrlServices != null){ // 将是图片的字段id转为图片全路径
-                                        for (IFileUrlService fileUrlService : fileUrlServices) {
-                                            if (fileUrlService.isEnableUrlAutoFull(s)) {
-                                                beanPropertyWriter.assignSerializer(new JsonSerializer<Object>() {
-                                                    @Override
-                                                    public void serialize(Object value, JsonGenerator gen, SerializerProvider serializerProvider) throws IOException {
-                                                        if (value == null) {
-                                                            return;
-                                                        }
-                                                        val url = fileUrlService.getUrlBy(value);
-                                                        if (url != null) {
-                                                            gen.writeString(url);
-                                                        }
+                                            gen.writeString(value.toString());
+                                        }
+                                    });
+                                } else if (javaType.isTypeOrSubTypeOf(String.class) && fileUrlServices != null) { // 将是图片的字段id转为图片全路径
+                                    for (IFileUrlService fileUrlService : fileUrlServices) {
+                                        if (fileUrlService.isEnableUrlAutoFull(key)) {
+                                            beanPropertyWriter.assignSerializer(new JsonSerializer<Object>() {
+                                                @Override
+                                                public void serialize(Object value, JsonGenerator gen, SerializerProvider serializerProvider) throws IOException {
+                                                    if (value == null) {
+                                                        return;
                                                     }
-                                                });
-                                                break;
-                                            }
+                                                    val url = fileUrlService.getUrlBy(value);
+                                                    if (url != null) {
+                                                        gen.writeString(url);
+                                                    }
+                                                }
+                                            });
+                                            break;
                                         }
                                     }
-
                                 }
 
                             }

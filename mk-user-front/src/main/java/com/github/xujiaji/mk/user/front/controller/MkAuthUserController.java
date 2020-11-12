@@ -10,12 +10,13 @@ import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.service.IUserLoginLogService;
 import com.github.xujiaji.mk.common.util.CommonUtil;
 import com.github.xujiaji.mk.common.util.UserUtil;
+import com.github.xujiaji.mk.file.service.impl.MkFileServiceImpl;
 import com.github.xujiaji.mk.security.util.JwtUtil;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
+import com.github.xujiaji.mk.user.dto.ThirdBindStatusDTO;
 import com.github.xujiaji.mk.user.front.payload.*;
 import com.github.xujiaji.mk.user.front.service.MkAuthUserService;
 import com.github.xujiaji.mk.user.front.vo.LoginSuccessVO;
-import com.github.xujiaji.mk.user.dto.ThirdBindStatusDTO;
 import com.github.xujiaji.mk.user.front.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -44,6 +45,7 @@ public class MkAuthUserController extends BaseController {
     private final CommonUtil commonUtil;
     private final UserUtil userUtil;
     private final JwtUtil jwtUtil;
+    private final MkFileServiceImpl fileService;
 
     private ApiResponse<LoginSuccessVO> loginSuccessHandle(MkUser mkUser, Integer loginType, HttpServletRequest hsr) {
         UserVO mkUserView = BeanUtil.copyProperties(mkUser, UserVO.class);
@@ -58,6 +60,7 @@ public class MkAuthUserController extends BaseController {
                 .setAuthentication(authentication);
         String jwt = jwtUtil.createJWT(authentication, true);
         val successUser = BeanUtil.copyProperties(mkUserView, LoginSuccessVO.class);
+        successUser.setAvatar(fileService.getPathById(mkUserView.getId()));
         successUser.setAuthorization(jwt);
         successUser.setAuthorizationType("Bearer");
         return success(successUser);

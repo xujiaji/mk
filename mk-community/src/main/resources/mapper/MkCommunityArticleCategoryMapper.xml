@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.community.mapper.MkCommunityArticleCategoryMapper">
 
+    <select id="selectFrontAll" resultType="com.github.xujiaji.mk.community.dto.FrontArticleCategoryDTO">
+        SELECT c.id, c.title, f.path thumb
+        FROM mk_community_article_category c
+            LEFT JOIN mk_file f
+                ON c.thumb = f.id
+        WHERE display = 1
+        ORDER BY priority DESC
+    </select>
 </mapper>

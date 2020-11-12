@@ -1,7 +1,10 @@
 package com.github.xujiaji.mk.community.mapper;
 
-import com.github.xujiaji.mk.community.entity.MkCommunityArticleCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.github.xujiaji.mk.community.dto.FrontArticleCategoryDTO;
+import com.github.xujiaji.mk.community.entity.MkCommunityArticleCategory;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MkCommunityArticleCategoryMapper extends BaseMapper<MkCommunityArticleCategory> {
 
+    List<FrontArticleCategoryDTO> selectFrontAll();
 }

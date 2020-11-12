@@ -1,8 +1,6 @@
 package com.github.xujiaji.mk.user.front.vo;
 
-import com.github.xujiaji.mk.common.entity.BaseWithIdEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
@@ -15,10 +13,12 @@ import java.time.LocalDateTime;
  * @since 2020-11-04
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class UserVO extends BaseWithIdEntity {
+public class UserVO {
 
-    private static final long serialVersionUID = 1L;
+    /**
+     * id
+     */
+    private Long id;
 
     /**
      * 用户名
@@ -26,7 +26,7 @@ public class UserVO extends BaseWithIdEntity {
     private String username;
 
     /**
-     * id编号
+     * 用户编号
      */
     private String no;
 
@@ -38,7 +38,7 @@ public class UserVO extends BaseWithIdEntity {
     /**
      * 头像文件id
      */
-    private Long avatar;
+    private String avatar;
 
     /**
      * 1男 2女

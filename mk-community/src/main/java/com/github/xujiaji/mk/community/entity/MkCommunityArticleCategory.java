@@ -35,5 +35,9 @@ public class MkCommunityArticleCategory extends BaseEntity {
      */
     private Integer priority;
 
+    /**
+     * 封面
+     */
+    private Long thumb;
 
 }

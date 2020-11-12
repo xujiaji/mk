@@ -5,6 +5,7 @@ import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
 import com.github.xujiaji.mk.common.entity.MkUser;
 import com.github.xujiaji.mk.common.util.UserUtil;
+import com.github.xujiaji.mk.file.service.impl.MkFileServiceImpl;
 import com.github.xujiaji.mk.user.front.payload.UserEditCondition;
 import com.github.xujiaji.mk.user.front.service.MkUserFrontService;
 import com.github.xujiaji.mk.user.front.vo.UserVO;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class MkUserFrontController extends BaseController {
     private final MkUserFrontService mkUserFrontService;
     private final UserUtil userUtil;
+    private final MkFileServiceImpl fileService;
 
     /**
      * 用户信息修改
@@ -42,6 +44,9 @@ public class MkUserFrontController extends BaseController {
     @GetMapping("/info")
     public ApiResponse<UserVO> info() {
         val userId = userUtil.currentUserIdNotNull();
-        return success(BeanUtil.copyProperties(mkUserFrontService.getUserHidePhoneAndEmailById(userId), UserVO.class));
+        val user = mkUserFrontService.getUserHidePhoneAndEmailById(userId);
+        val userVO = BeanUtil.copyProperties(user, UserVO.class);
+        userVO.setAvatar(fileService.getPathById(user.getId()));
+        return success(userVO);
     }
 }

@@ -11,14 +11,17 @@ import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.payload.AdminStatusChangeCondition;
 import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.util.RedisUtil;
+import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
+import com.github.xujiaji.mk.security.util.SecurityUtil;
 import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
 import com.github.xujiaji.mk.security.admin.vo.VerifyVO;
 import com.github.xujiaji.mk.security.entity.MkAdminUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.playload.AdminAddCondition;
 import com.github.xujiaji.mk.security.service.impl.MkSecUserServiceImpl;
+import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +73,14 @@ public class MkSecAdminUserController extends BaseController {
             throw new RequestActionException("验证码错误");
         }
         return ApiResponse.ofSuccess(secUserService.login(request, hsr));
+    }
+
+    /**
+     * 管理员信息
+     */
+    @GetMapping("/info")
+    public ApiResponse<UserPrincipal> info() {
+        return success(SecurityUtil.getCurrentUser());
     }
 
     /**

@@ -106,6 +106,11 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
     }
 
     @Override
+    public String getPathById(Long id) {
+        return baseMapper.getPathById(id);
+    }
+
+    @Override
     public MkFile upload(MultipartFile multipartFile, Integer type) {
         val userId = userUtil.currentUserIdNotNull();
         return upload(userId, multipartFile, null, type);
@@ -127,13 +132,11 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
     }
 
     @Override
-    public String getUrlBy(Object obj) {
-        if (!(obj instanceof Long)) {
+    public String getUrlBy(Object path) {
+        if (!(path instanceof String)) {
             return null;
         }
-        Long fileId = (Long) obj;
-        val path = baseMapper.getPathById(fileId);
-        if (path == null) {
+        if (StrUtil.isBlank(path.toString())) {
             return null;
         }
         return mkCommonService.valueByKey(Consts.ConfigKey.baseFileUrl) + path;

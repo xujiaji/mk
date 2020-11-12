@@ -35,7 +35,7 @@ public class MkFileController extends BaseController {
     @PostMapping("/upload")
     public ApiResponse<MkFile> upload(@NotNull(message = "请上传文件") @RequestParam("file") MultipartFile file,
                                       @NotNull(message = "请传入类型") @RequestParam("type") @Pattern(regexp = "[1234]", message = "没有这个类型") String type) {
-        return success(fileService.upload(file, type));
+        return success(fileService.upload(file, Integer.parseInt(type)));
     }
 
 }

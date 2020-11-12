@@ -1,5 +1,6 @@
 package com.github.xujiaji.mk.file.service.impl;
 
+import cn.hutool.core.codec.Base64;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.BaseServiceImpl;
@@ -39,7 +40,7 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
 
     private String getFileName(MultipartFile multipartFile, Integer type, Long userId) {
         // 获取文件名
-        String fileName = multipartFile.getOriginalFilename();
+        String fileName = multipartFile != null ? multipartFile.getOriginalFilename() : null;
         // 获取文件后缀
         String suffix;
         // 如果没有找到尾缀
@@ -58,12 +59,9 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
         return String.format("%s/%s%s", userId, snowflake.nextId(), suffix);
     }
 
-    @Override
-    public MkFile upload(MultipartFile multipartFile, String type) {
-        val userId = userUtil.currentUserIdNotNull();
-
+    private MkFile upload(Long userId, MultipartFile multipartFile, String base64File, Integer type) {
         String parentRelativePathKey;
-        switch (Integer.parseInt(type)) {
+        switch (type) {
             case Consts.FileType.AUDIO:
                 parentRelativePathKey = Consts.ConfigKey.baseAudioPath;
                 break;
@@ -80,7 +78,7 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
                 throw new RequestActionException("没有这个类型");
         }
         String parentRelativePath = mkCommonService.valueByKey(parentRelativePathKey);
-        String filename = getFileName(multipartFile, Integer.parseInt(type), userId);
+        String filename = getFileName(multipartFile, type, userId);
 
         File file = new File(mkCommonService.valueByKey(Consts.ConfigKey.basePath) + parentRelativePath, filename);
         if (!file.getParentFile().exists()) {
@@ -89,18 +87,33 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
             }
         }
         try {
-            multipartFile.transferTo(file);
+            if (multipartFile != null) {
+                multipartFile.transferTo(file);
+            } else {
+                Base64.decodeToFile(base64File, file);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             throw new RequestActionException("文件创建失败 - " + e.getMessage());
         }
         val mkFile = new MkFile();
-        mkFile.setPath(parentRelativePath + filename);
-        mkFile.setFileType(Integer.parseInt(type));
+        mkFile.setPath(parentRelativePath + "/" + filename);
+        mkFile.setFileType(type);
         mkFile.setState(Consts.FileState.ENABLE);
         mkFile.setUserId(userId);
         add(mkFile);
         return mkFile;
+    }
+
+    @Override
+    public MkFile upload(MultipartFile multipartFile, Integer type) {
+        val userId = userUtil.currentUserIdNotNull();
+        return upload(userId, multipartFile, null, type);
+    }
+
+    @Override
+    public MkFile uploadBase64(Long userId, String base64Image, Integer type) {
+        return upload(userId, null, base64Image, type);
     }
 
     /**

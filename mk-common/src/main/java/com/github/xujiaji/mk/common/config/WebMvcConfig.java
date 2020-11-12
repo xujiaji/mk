@@ -78,8 +78,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                                         if (value == null) {
                                                             return;
                                                         }
-
-                                                        gen.writeString(fileUrlService.getUrlBy(value));
+                                                        val url = fileUrlService.getUrlBy(value);
+                                                        if (url != null) {
+                                                            gen.writeString(url);
+                                                        }
                                                     }
                                                 });
                                                 break;

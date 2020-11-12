@@ -68,7 +68,11 @@ public class MkAuthUserController extends BaseController {
      */
     @PutMapping("/refresh/login")
     public ApiResponse<LoginSuccessVO> refreshLogin(HttpServletRequest hsr) {
-        val user = authUserService.getById(userUtil.currentUserIdNotNull());
+        val userId = userUtil.currentUserIdNotNull();
+        if (userLoginLogService.isExistTodayLog(userId)) {
+            return ApiResponse.ofSuccess();
+        }
+        val user = authUserService.getById(userId);
         return loginSuccessHandle(user, Consts.LoginType.REFRESH, hsr);
     }
 

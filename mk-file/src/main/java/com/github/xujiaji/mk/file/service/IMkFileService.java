@@ -14,5 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface IMkFileService extends BaseIService<MkFile> {
 
-    MkFile upload(MultipartFile multipartFile, String type);
+    MkFile upload(MultipartFile multipartFile, Integer type);
+
+    MkFile uploadBase64(Long userId, String base64Image, Integer type);
 }

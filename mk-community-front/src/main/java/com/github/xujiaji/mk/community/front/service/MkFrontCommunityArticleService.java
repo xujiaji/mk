@@ -1,6 +1,7 @@
 package com.github.xujiaji.mk.community.front.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.base.Consts;
@@ -94,25 +95,43 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
         return article;
     }
 
-    public void articleCollect(Long userId, Long articleId) {
-        if (baseMapper.updateCollectAdd1(articleId) == 0) {
+    public void articleCollect(Long userId, Long articleId, Integer type) {
+        if ((type == Consts.DISABLE ? baseMapper.updateCollectSub1(articleId) : baseMapper.updateCollectAdd1(articleId)) == 0) {
             throw new RequestActionException("没有这个动态");
         }
-        val collect = new MkCommunityCollect();
-        collect.setCollectedId(articleId);
-        collect.setUserId(userId);
-        collect.setType(Consts.CollectType.ARTICLE);
-        collectService.add(collect);
+        if (type == Consts.DISABLE) {
+            collectService.getBaseMapper()
+                    .delete(
+                            new QueryWrapper<MkCommunityCollect>()
+                                    .eq("user_id", userId)
+                                    .eq("collected_id", articleId)
+                                    .eq("type", Consts.CollectType.ARTICLE));
+        } else {
+            val collect = new MkCommunityCollect();
+            collect.setCollectedId(articleId);
+            collect.setUserId(userId);
+            collect.setType(Consts.CollectType.ARTICLE);
+            collectService.add(collect);
+        }
     }
 
-    public void articlePraise(Long userId, Long articleId) {
-        if (baseMapper.updatePraiseAdd1(articleId) == 0) {
+    public void articlePraise(Long userId, Long articleId, Integer type) {
+        if ((type == Consts.DISABLE ? baseMapper.updatePraiseSub1(articleId) : baseMapper.updatePraiseAdd1(articleId)) == 0) {
             throw new RequestActionException("没有这个动态");
         }
-        val praise = new MkCommunityPraise();
-        praise.setPraisedId(articleId);
-        praise.setUserId(userId);
-        praise.setType(Consts.PraiseType.ARTICLE);
-        praiseService.add(praise);
+        if (type == Consts.DISABLE) {
+            praiseService.getBaseMapper()
+                    .delete(
+                            new QueryWrapper<MkCommunityPraise>()
+                                    .eq("user_id", userId)
+                                    .eq("praised_id", articleId)
+                                    .eq("type", Consts.PraiseType.ARTICLE));
+        } else {
+            val praise = new MkCommunityPraise();
+            praise.setPraisedId(articleId);
+            praise.setUserId(userId);
+            praise.setType(Consts.PraiseType.ARTICLE);
+            praiseService.add(praise);
+        }
     }
 }

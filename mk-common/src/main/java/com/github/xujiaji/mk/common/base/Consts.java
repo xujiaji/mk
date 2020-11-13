@@ -8,11 +8,11 @@ public interface Consts {
     /**
      * 启用
      */
-    Integer ENABLE = 1;
+    int ENABLE = 1;
     /**
      * 禁用
      */
-    Integer DISABLE = 0;
+    int DISABLE = 0;
 
     /**
      * 正向

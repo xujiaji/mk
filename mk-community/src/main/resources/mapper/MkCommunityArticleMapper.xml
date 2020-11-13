@@ -7,6 +7,12 @@
     <update id="updatePraiseAdd1">
         UPDATE mk_community_article SET praise_num = praise_num + 1 WHERE id = ${articleId}
     </update>
+    <update id="updateCollectSub1">
+        UPDATE mk_community_article SET collect_num = collect_num - 1 WHERE id = ${articleId}
+    </update>
+    <update id="updatePraiseSub1">
+        UPDATE mk_community_article SET praise_num = praise_num - 1 WHERE id = ${articleId}
+    </update>
 
     <select id="articlePage" resultType="com.github.xujiaji.mk.community.dto.FrontArticleDTO">
         SELECT

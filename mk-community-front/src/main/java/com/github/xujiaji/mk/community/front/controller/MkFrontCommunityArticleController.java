@@ -3,6 +3,7 @@ package com.github.xujiaji.mk.community.front.controller;
 
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
+import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.community.dto.FrontArticleDTO;
@@ -61,22 +62,30 @@ public class MkFrontCommunityArticleController extends BaseController {
 
     /**
      * 帖子收藏喜欢
+     * @param articleId 帖子id
+     * @param type 1收藏 0取消收藏
      */
     @PostMapping("/collect")
-    public ApiResponse<?> articleCollect(@NotNull(message = "帖子id不能为空") @RequestParam Long articleId) {
+    public ApiResponse<?> articleCollect(
+            @NotNull(message = "帖子id不能为空") @RequestParam Long articleId,
+            @NotNull(message = "1收藏 0取消收藏") @RequestParam Integer type) {
         val userId = userUtil.currentUserIdNotNull();
-        articleService.articleCollect(userId, articleId);
-        return successMessage("收藏成功");
+        articleService.articleCollect(userId, articleId, type);
+        return successMessage(type == Consts.DISABLE ? "取消收藏成功" : "收藏成功");
     }
 
     /**
      * 帖子点赞
+     * @param articleId 帖子id
+     * @param type 1点赞 0取消点赞
      */
     @PostMapping("/praise")
-    public ApiResponse<?> articlePraise(@NotNull(message = "帖子id不能为空") @RequestParam Long articleId) {
+    public ApiResponse<?> articlePraise(
+            @NotNull(message = "帖子id不能为空") @RequestParam Long articleId,
+            @NotNull(message = "1点赞 0取消点赞") @RequestParam Integer type) {
         val userId = userUtil.currentUserIdNotNull();
-        articleService.articlePraise(userId, articleId);
-        return successMessage("点赞成功");
+        articleService.articlePraise(userId, articleId, type);
+        return successMessage(type == Consts.DISABLE ? "取消点赞成功" : "点赞成功");
     }
 
     /**
@@ -84,6 +93,7 @@ public class MkFrontCommunityArticleController extends BaseController {
      */
     @PostMapping("/comment")
     public ApiResponse<?> commentAdd(@Valid ArticleCommentAddCondition request) {
+
         return successMessage("评论成功");
     }
 

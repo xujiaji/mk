@@ -13,13 +13,17 @@
     </sql>
 
     <select id="articleCommentPage" resultType="com.github.xujiaji.mk.community.dto.FrontArticleCommentDTO">
-        <include refid="commentDTO"/> AND c.reply_id IS NULL AND c.parent_id IS NULL
+        <include refid="commentDTO"/> AND c.reply_id IS NULL AND c.parent_id IS NOT NULL
         ORDER BY IF(${type} = 1, c.create_time, c.create_time * -1) ASC
     </select>
 
     <select id="selectThreeReplyComment"
             resultType="com.github.xujiaji.mk.community.dto.FrontArticleCommentDTO">
-         <include refid="commentDTO"/> AND c.parent_id = ${commentId}
+        SELECT c.content,
+               u.nickname
+        FROM mk_community_comment c
+                 LEFT JOIN mk_user u ON c.user_id = u.id
+        WHERE c.root_id = ${articleId} AND c.parent_id = ${commentId} AND c.reply_id IS NOT NULL
         LIMIT 3
     </select>
 

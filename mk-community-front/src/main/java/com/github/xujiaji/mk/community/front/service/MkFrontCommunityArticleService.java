@@ -152,20 +152,13 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
         }
     }
 
-    private void buildComments(Long userId, List<FrontArticleCommentDTO> commentDTOS) {
-        for (FrontArticleCommentDTO a : commentDTOS) {
-            if (userId != null) {
-                a.setPraised(praiseService.praiseStatus(a.getId(), userId, Consts.PraiseType.COMMENT));
-            }
-        }
-    }
-
     public IPage<FrontArticleCommentDTO> commentPage(Long userId, Page<FrontArticleCommentDTO> page, Long articleId, Integer type) {
         val commentPage = commentService.getBaseMapper().articleCommentPage(page, articleId, type);
-        buildComments(userId, commentPage.getRecords());
         for (FrontArticleCommentDTO record : commentPage.getRecords()) {
-            record.setChild(commentService.getBaseMapper().selectThreeReplyComment(record.getId()));
-            buildComments(userId, record.getChild());
+            if (userId != null) {
+                record.setPraised(praiseService.praiseStatus(record.getId(), userId, Consts.PraiseType.COMMENT));
+            }
+            record.setChild(commentService.getBaseMapper().selectThreeReplyComment(articleId, record.getId()));
         }
         return commentPage;
     }

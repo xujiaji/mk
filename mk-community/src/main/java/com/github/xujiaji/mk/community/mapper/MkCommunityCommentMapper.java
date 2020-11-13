@@ -3,6 +3,7 @@ package com.github.xujiaji.mk.community.mapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.community.dto.FrontArticleCommentDTO;
+import com.github.xujiaji.mk.community.dto.FrontArticleCommentDetailsDTO;
 import com.github.xujiaji.mk.community.entity.MkCommunityComment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -26,4 +27,6 @@ public interface MkCommunityCommentMapper extends BaseMapper<MkCommunityComment>
     int updatePraiseAdd1(@Param("commentId") Long commentId);
 
     int updatePraiseSub1(@Param("commentId") Long commentId);
+
+    IPage<FrontArticleCommentDetailsDTO> commentDetailsPage(Page<FrontArticleCommentDetailsDTO> page, @Param("commentId") Long commentId);
 }

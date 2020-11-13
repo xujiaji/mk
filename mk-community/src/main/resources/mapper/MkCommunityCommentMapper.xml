@@ -27,6 +27,25 @@
         LIMIT 3
     </select>
 
+    <select id="commentDetailsPage"
+            resultType="com.github.xujiaji.mk.community.dto.FrontArticleCommentDetailsDTO">
+        SELECT
+               c.*,
+               u.nickname,
+               IF(f.state = 0, f.path, NULL) avatar,
+               IF(c.reply_id IS NOT NULL AND c.reply_id != c.parent_id,
+                   (
+                       SELECT inu.nickname
+                       FROM mk_community_comment inc
+                           LEFT JOIN mk_user inu ON inc.user_id = inu.id
+                       WHERE inc.id = c.reply_id),
+                   NULL) reply_nickname
+        FROM mk_community_comment c
+            LEFT JOIN mk_user u ON c.user_id = u.id
+            LEFT JOIN mk_file f ON u.avatar = f.id
+        WHERE c.parent_id = ${commentId}
+    </select>
+
     <update id="updatePraiseAdd1">
         UPDATE mk_community_comment SET praise_num = praise_num + 1 WHERE id = ${articleId}
     </update>

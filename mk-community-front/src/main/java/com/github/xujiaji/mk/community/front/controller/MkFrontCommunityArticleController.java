@@ -4,13 +4,9 @@ package com.github.xujiaji.mk.community.front.controller;
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
 import com.github.xujiaji.mk.common.base.Consts;
-import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
-import com.github.xujiaji.mk.community.dto.FrontArticleCommentDTO;
 import com.github.xujiaji.mk.community.dto.FrontArticleDTO;
-import com.github.xujiaji.mk.community.front.playload.ArticleCommentAddCondition;
-import com.github.xujiaji.mk.community.front.playload.ArticleCommentPageCondition;
 import com.github.xujiaji.mk.community.front.playload.ArticlePageCondition;
 import com.github.xujiaji.mk.community.front.playload.CommunityArticleAddCondition;
 import com.github.xujiaji.mk.community.front.service.MkFrontCommunityArticleService;
@@ -77,6 +73,7 @@ public class MkFrontCommunityArticleController extends BaseController {
         return successMessage(type == Consts.DISABLE ? "取消收藏成功" : "收藏成功");
     }
 
+
     /**
      * 帖子点赞
      * @param articleId 帖子id
@@ -89,38 +86,5 @@ public class MkFrontCommunityArticleController extends BaseController {
         val userId = userUtil.currentUserIdNotNull();
         articleService.articlePraise(userId, articleId, type);
         return successMessage(type == Consts.DISABLE ? "取消点赞成功" : "点赞成功");
-    }
-
-    /**
-     * 评论帖子
-     */
-    @PostMapping("/comment")
-    public ApiResponse<?> commentAdd(@RequestBody @Valid ArticleCommentAddCondition request) {
-        val userId = userUtil.currentUserIdNotNull();
-        articleService.commentAdd(userId, request);
-        return successMessage("评论成功");
-    }
-
-    /**
-     * 评论点赞
-     * @param commentId 评论id
-     * @param type 1点赞 0取消点赞
-     */
-    @PostMapping("/comment/praise")
-    public ApiResponse<?> commentPraise(
-            @NotNull(message = "评论id不能为空") @RequestParam Long commentId,
-            @NotNull(message = "1点赞 0取消点赞") @RequestParam Integer type) {
-        val userId = userUtil.currentUserIdNotNull();
-        articleService.commentPraise(userId, commentId, type);
-        return successMessage(type == Consts.DISABLE ? "取消点赞成功" : "点赞成功");
-    }
-
-    /**
-     * 评论列表
-     */
-    @GetMapping("/comment/page")
-    public ApiResponse<PageVO<FrontArticleCommentDTO>> commentPage(@Valid ArticleCommentPageCondition request) {
-        val userId = userUtil.currentUserIdNullable();
-        return successPage(articleService.commentPage(userId, mapPage(request), request.getArticleId(), request.getType()));
     }
 }

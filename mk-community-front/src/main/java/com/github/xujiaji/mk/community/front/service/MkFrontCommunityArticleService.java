@@ -1,16 +1,18 @@
 package com.github.xujiaji.mk.community.front.service;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.base.Consts;
+import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.util.CommonUtil;
 import com.github.xujiaji.mk.community.dto.FrontArticleDTO;
 import com.github.xujiaji.mk.community.entity.MkCommunityArticle;
+import com.github.xujiaji.mk.community.entity.MkCommunityCollect;
 import com.github.xujiaji.mk.community.entity.MkCommunityArticleFile;
+import com.github.xujiaji.mk.community.entity.MkCommunityPraise;
 import com.github.xujiaji.mk.community.front.playload.CommunityArticleAddCondition;
-import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleCollectServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityCollectServiceImpl;
 import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleFileServiceImpl;
 import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleServiceImpl;
 import com.github.xujiaji.mk.community.service.impl.MkCommunityPraiseServiceImpl;
@@ -38,8 +40,8 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
 
     private final IMkFileService fileService;
     private final MkCommunityArticleFileServiceImpl articleFileService;
-    private final MkCommunityArticleCollectServiceImpl articleCollectService;
     private final MkCommunityPraiseServiceImpl praiseService;
+    private final MkCommunityCollectServiceImpl collectService;
     private final CommonUtil commonUtil;
 
     @Transactional(rollbackFor = Exception.class)
@@ -71,7 +73,7 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
     private void buildArticles(Long userId, List<FrontArticleDTO> articleDTOS) {
         for (FrontArticleDTO a : articleDTOS) {
             if (userId != null) {
-                a.setCollected(articleCollectService.collectStatus(a.getId(), userId));
+                a.setCollected(collectService.collectStatus(a.getId(), userId, Consts.CollectType.ARTICLE));
                 a.setPraised(praiseService.praiseStatus(a.getId(), userId, Consts.PraiseType.ARTICLE));
             }
             a.setBeforeText(commonUtil.getShortTime(a.getUpdateTime()));
@@ -90,5 +92,27 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
         val article = baseMapper.selectArticleDetails(articleId);
         buildArticles(userId, Lists.newArrayList(article));
         return article;
+    }
+
+    public void articleCollect(Long userId, Long articleId) {
+        if (baseMapper.updateCollectAdd1(articleId) == 0) {
+            throw new RequestActionException("没有这个动态");
+        }
+        val collect = new MkCommunityCollect();
+        collect.setCollectedId(articleId);
+        collect.setUserId(userId);
+        collect.setType(Consts.CollectType.ARTICLE);
+        collectService.add(collect);
+    }
+
+    public void articlePraise(Long userId, Long articleId) {
+        if (baseMapper.updatePraiseAdd1(articleId) == 0) {
+            throw new RequestActionException("没有这个动态");
+        }
+        val praise = new MkCommunityPraise();
+        praise.setPraisedId(articleId);
+        praise.setUserId(userId);
+        praise.setType(Consts.PraiseType.ARTICLE);
+        praiseService.add(praise);
     }
 }

@@ -268,7 +268,15 @@ public interface Consts {
     }
 
     /**
-     * 点赞到类型0点赞帖子 1点赞评论
+     * 收藏的类型0点赞帖子 1点赞评论
+     */
+    interface CollectType {
+        int ARTICLE = 0;
+        int COMMENT = 1;
+    }
+
+    /**
+     * 点赞的类型0点赞帖子 1点赞评论
      */
     interface PraiseType {
         int ARTICLE = 0;

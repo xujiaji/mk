@@ -64,6 +64,8 @@ public class MkFrontCommunityArticleController extends BaseController {
      */
     @PostMapping("/collect")
     public ApiResponse<?> articleCollect(@NotNull(message = "帖子id不能为空") @RequestParam Long articleId) {
+        val userId = userUtil.currentUserIdNotNull();
+        articleService.articleCollect(userId, articleId);
         return successMessage("收藏成功");
     }
 
@@ -72,6 +74,8 @@ public class MkFrontCommunityArticleController extends BaseController {
      */
     @PostMapping("/praise")
     public ApiResponse<?> articlePraise(@NotNull(message = "帖子id不能为空") @RequestParam Long articleId) {
+        val userId = userUtil.currentUserIdNotNull();
+        articleService.articlePraise(userId, articleId);
         return successMessage("点赞成功");
     }
 

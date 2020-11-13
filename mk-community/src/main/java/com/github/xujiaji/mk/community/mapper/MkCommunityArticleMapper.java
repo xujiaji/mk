@@ -19,4 +19,8 @@ public interface MkCommunityArticleMapper extends BaseMapper<MkCommunityArticle>
     Page<FrontArticleDTO> articlePage(Page<FrontArticleDTO> page, @Param("categoryId") Long categoryId, @Param("type") Integer type);
 
     FrontArticleDTO selectArticleDetails(@Param("articleId") Long articleId);
+
+    int updateCollectAdd1(@Param("articleId") Long articleId);
+
+    int updatePraiseAdd1(@Param("articleId") Long articleId);
 }

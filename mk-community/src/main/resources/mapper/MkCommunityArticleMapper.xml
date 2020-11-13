@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.community.mapper.MkCommunityArticleMapper">
+    <update id="updateCollectAdd1">
+        UPDATE mk_community_article SET collect_num = collect_num + 1 WHERE id = ${articleId}
+    </update>
+    <update id="updatePraiseAdd1">
+        UPDATE mk_community_article SET praise_num = praise_num + 1 WHERE id = ${articleId}
+    </update>
 
     <select id="articlePage" resultType="com.github.xujiaji.mk.community.dto.FrontArticleDTO">
         SELECT

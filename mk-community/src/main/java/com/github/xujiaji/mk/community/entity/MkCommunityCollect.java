@@ -15,20 +15,24 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@TableName("mk_community_article_collect")
-public class MkCommunityArticleCollect extends BaseEntity {
+@TableName("mk_community_collect")
+public class MkCommunityCollect extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 帖子guid
+     * 被收藏的id
      */
-    private String articleId;
+    private Long collectedId;
 
     /**
      * 用户guid
      */
     private Long userId;
 
+    /**
+     * 0收藏帖子 1收藏留言
+     */
+    private Integer type;
 
 }

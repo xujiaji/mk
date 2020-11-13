@@ -26,4 +26,16 @@ public interface IMkCommonService extends BaseIService<MkCommon> {
      * @return 配置实体列表
      */
     List<MkCommon> entitiesByKeys(String ... keys);
+
+    /**
+     * 基础本地存储地址
+     * @return
+     */
+    String baseLocalPath();
+
+    /**
+     * 基础链接url
+     * @return
+     */
+    String baseFileUrl();
 }

@@ -31,9 +31,9 @@ public class MkCommunityComment extends BaseEntity {
     private Long userId;
 
     /**
-     * 0帖子评论  1评论回复
+     * 顶级id
      */
-    private Integer type;
+    private Long rootId;
 
     /**
      * 评论内容

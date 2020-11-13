@@ -46,7 +46,7 @@ public class MkUserFrontController extends BaseController {
         val userId = userUtil.currentUserIdNotNull();
         val user = mkUserFrontService.getUserHidePhoneAndEmailById(userId);
         val userVO = BeanUtil.copyProperties(user, UserVO.class);
-        userVO.setAvatar(fileService.getPathById(user.getId()));
+        userVO.setAvatar(fileService.getPathById(user.getAvatar()));
         return success(userVO);
     }
 }

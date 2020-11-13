@@ -13,4 +13,12 @@ import com.github.xujiaji.mk.common.base.BaseIService;
  */
 public interface IMkCommunityPraiseService extends BaseIService<MkCommunityPraise> {
 
+    /**
+     * 点赞状态
+     * @param praisedId
+     * @param userId
+     * @param type 0点赞帖子 1点赞评论
+     * @return
+     */
+    int praiseStatus(Long praisedId, Long userId, Integer type);
 }

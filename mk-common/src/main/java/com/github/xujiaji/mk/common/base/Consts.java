@@ -266,4 +266,12 @@ public interface Consts {
         int DISABLE = 1;
         int DELETED = 2;
     }
+
+    /**
+     * 点赞到类型0点赞帖子 1点赞评论
+     */
+    interface PraiseType {
+        int ARTICLE = 0;
+        int COMMENT = 1;
+    }
 }

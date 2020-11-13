@@ -2,6 +2,9 @@ package com.github.xujiaji.mk.community.mapper;
 
 import com.github.xujiaji.mk.community.entity.MkCommunityArticleFile;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MkCommunityArticleFileMapper extends BaseMapper<MkCommunityArticleFile> {
 
+
+    List<String> selectPaths(@Param("articleId") Long articleId, @Param("articleFileType") Integer articleFileType);
 }

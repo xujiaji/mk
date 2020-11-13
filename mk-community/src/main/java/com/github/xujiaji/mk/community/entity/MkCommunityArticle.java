@@ -63,7 +63,6 @@ public class MkCommunityArticle extends BaseEntity {
     /**
      * 收藏数量
      */
-    private Integer collectNum;
-
+    private Long collectNum;
 
 }

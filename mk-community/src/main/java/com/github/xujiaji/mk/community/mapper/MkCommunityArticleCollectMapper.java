@@ -2,6 +2,7 @@ package com.github.xujiaji.mk.community.mapper;
 
 import com.github.xujiaji.mk.community.entity.MkCommunityArticleCollect;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -13,4 +14,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MkCommunityArticleCollectMapper extends BaseMapper<MkCommunityArticleCollect> {
 
+    /**
+     * 是否被收藏
+     * @param articleId
+     * @param userId
+     * @return
+     */
+    int isCollected(@Param("articleId") Long articleId, @Param("userId") Long userId);
 }

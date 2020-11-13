@@ -1,6 +1,7 @@
 package com.github.xujiaji.mk.common.service.impl;
 
 import com.github.xujiaji.mk.common.base.BaseServiceImpl;
+import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.entity.MkCommon;
 import com.github.xujiaji.mk.common.mapper.MkCommonMapper;
 import com.github.xujiaji.mk.common.service.IMkCommonService;
@@ -19,6 +20,7 @@ import java.util.List;
 @Service
 public class MkCommonServiceImpl extends BaseServiceImpl<MkCommonMapper, MkCommon> implements IMkCommonService {
 
+
     @Override
     public String valueByKey(String key) {
         return baseMapper.getConfigValueByKey(key);
@@ -27,5 +29,15 @@ public class MkCommonServiceImpl extends BaseServiceImpl<MkCommonMapper, MkCommo
     @Override
     public List<MkCommon> entitiesByKeys(String... keys) {
         return baseMapper.selectEntitiesByKeys(keys);
+    }
+
+    @Override
+    public String baseLocalPath() {
+        return valueByKey(Consts.ConfigKey.basePath);
+    }
+
+    @Override
+    public String baseFileUrl() {
+        return valueByKey(Consts.ConfigKey.baseFileUrl);
     }
 }

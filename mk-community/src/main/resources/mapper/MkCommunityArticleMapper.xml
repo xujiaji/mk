@@ -2,4 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.community.mapper.MkCommunityArticleMapper">
 
+    <select id="articlePage" resultType="com.github.xujiaji.mk.community.dto.FrontArticleDTO">
+        SELECT
+               a.*,
+               c.title category_title,
+               u.nickname,
+               IF(f.state = 0, f.path, NULL) avatar,
+               (SELECT COUNT(*) FROM mk_community_comment WHERE root_id = a.id) comment_num
+        FROM mk_community_article a
+            LEFT JOIN mk_community_category c ON a.category_id = c.id
+            LEFT JOIN mk_user u ON a.user_id = u.id
+            LEFT JOIN mk_file f ON u.avatar = f.id
+        WHERE a.category_id = ${categoryId}
+        ORDER BY IF(${type} = 1, a.create_time, a.update_time) DESC
+    </select>
+
+    <select id="selectArticleDetails" resultType="com.github.xujiaji.mk.community.dto.FrontArticleDTO">
+        SELECT
+            a.*,
+            c.title category_title,
+            u.nickname,
+            IF(f.state = 0, f.path, NULL) avatar,
+            (SELECT COUNT(*) FROM mk_community_comment WHERE root_id = a.id) comment_num
+        FROM mk_community_article a
+                 LEFT JOIN mk_community_category c ON a.category_id = c.id
+                 LEFT JOIN mk_user u ON a.user_id = u.id
+                 LEFT JOIN mk_file f ON u.avatar = f.id
+        WHERE a.id = ${articleId}
+    </select>
 </mapper>

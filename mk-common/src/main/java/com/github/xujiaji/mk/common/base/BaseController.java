@@ -35,6 +35,7 @@ public class BaseController {
         pv.setList(page.getRecords());
         pv.setTotal(page.getTotal());
         pv.setSize(page.getSize());
+        pv.setPage(page.getCurrent());
         pv.setPages(page.getPages());
         return pv;
     }

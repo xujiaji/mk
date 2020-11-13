@@ -17,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MkCommunityArticleCollectServiceImpl extends BaseServiceImpl<MkCommunityArticleCollectMapper, MkCommunityArticleCollect> implements IMkCommunityArticleCollectService {
 
+    @Override
+    public int collectStatus(Long articleId, Long userId) {
+        return baseMapper.isCollected(articleId, userId);
+    }
 }

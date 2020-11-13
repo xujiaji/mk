@@ -11,5 +11,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class VerifyVO {
     private String verify;
-    private String image;
+    private String imageBase64;
 }

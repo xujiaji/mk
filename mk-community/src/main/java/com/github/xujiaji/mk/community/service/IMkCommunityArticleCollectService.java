@@ -12,5 +12,5 @@ import com.github.xujiaji.mk.common.base.BaseIService;
  * @since 2020-11-12
  */
 public interface IMkCommunityArticleCollectService extends BaseIService<MkCommunityArticleCollect> {
-
+    int collectStatus(Long articleId, Long userId);
 }

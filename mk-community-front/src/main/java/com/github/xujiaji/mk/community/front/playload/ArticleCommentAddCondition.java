@@ -20,6 +20,11 @@ public class ArticleCommentAddCondition {
     private Long articleId;
 
     /**
+     * 回复的回复id
+     */
+    private Long replyId;
+
+    /**
      * 评论内容
      */
     @NotBlank(message = "评论不能为空")

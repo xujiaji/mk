@@ -1,9 +1,9 @@
 package com.github.xujiaji.mk.community.service.impl;
 
+import com.github.xujiaji.mk.common.base.BaseServiceImpl;
 import com.github.xujiaji.mk.community.entity.MkCommunityComment;
 import com.github.xujiaji.mk.community.mapper.MkCommunityCommentMapper;
 import com.github.xujiaji.mk.community.service.IMkCommunityCommentService;
-import com.github.xujiaji.mk.common.base.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

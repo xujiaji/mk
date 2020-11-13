@@ -21,11 +21,6 @@ public class MkCommunityComment extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 父级id
-     */
-    private Long parentId;
-
-    /**
      * 用户id
      */
     private Long userId;
@@ -36,9 +31,23 @@ public class MkCommunityComment extends BaseEntity {
     private Long rootId;
 
     /**
+     * 父级评论id
+     */
+    private Long parentId;
+
+    /**
+     * 回复的回复id
+     */
+    private Long replyId;
+
+    /**
      * 评论内容
      */
     private String content;
 
+    /**
+     * 点赞数
+     */
+    private Long praiseNum;
 
 }

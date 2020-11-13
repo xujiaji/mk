@@ -7,16 +7,12 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.util.CommonUtil;
+import com.github.xujiaji.mk.community.dto.FrontArticleCommentDTO;
 import com.github.xujiaji.mk.community.dto.FrontArticleDTO;
-import com.github.xujiaji.mk.community.entity.MkCommunityArticle;
-import com.github.xujiaji.mk.community.entity.MkCommunityCollect;
-import com.github.xujiaji.mk.community.entity.MkCommunityArticleFile;
-import com.github.xujiaji.mk.community.entity.MkCommunityPraise;
+import com.github.xujiaji.mk.community.entity.*;
+import com.github.xujiaji.mk.community.front.playload.ArticleCommentAddCondition;
 import com.github.xujiaji.mk.community.front.playload.CommunityArticleAddCondition;
-import com.github.xujiaji.mk.community.service.impl.MkCommunityCollectServiceImpl;
-import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleFileServiceImpl;
-import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleServiceImpl;
-import com.github.xujiaji.mk.community.service.impl.MkCommunityPraiseServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.*;
 import com.github.xujiaji.mk.file.service.IMkFileService;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +39,7 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
     private final MkCommunityArticleFileServiceImpl articleFileService;
     private final MkCommunityPraiseServiceImpl praiseService;
     private final MkCommunityCollectServiceImpl collectService;
+    private final MkCommunityCommentServiceImpl commentService;
     private final CommonUtil commonUtil;
 
     @Transactional(rollbackFor = Exception.class)
@@ -131,6 +128,64 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
             praise.setPraisedId(articleId);
             praise.setUserId(userId);
             praise.setType(Consts.PraiseType.ARTICLE);
+            praiseService.add(praise);
+        }
+    }
+
+    public void commentAdd(Long userId, ArticleCommentAddCondition request) {
+        val comment = new MkCommunityComment();
+        comment.setRootId(request.getArticleId());
+        // 如果是回复
+        if (request.getReplyId() != null) {
+            // 获取回复的评论，然后设置父级评论
+            val replyComment = commentService.getById(request.getReplyId());
+            comment.setParentId(replyComment.getParentId());
+            comment.setReplyId(request.getReplyId());
+        }
+        comment.setUserId(userId);
+        comment.setContent(request.getContent());
+        commentService.add(comment);
+        // 如果是评论的帖子，那么设置父级id为自己的id
+        if (request.getReplyId() == null) {
+            comment.setParentId(comment.getId());
+            commentService.updateById(comment);
+        }
+    }
+
+    private void buildComments(Long userId, List<FrontArticleCommentDTO> commentDTOS) {
+        for (FrontArticleCommentDTO a : commentDTOS) {
+            if (userId != null) {
+                a.setPraised(praiseService.praiseStatus(a.getId(), userId, Consts.PraiseType.COMMENT));
+            }
+        }
+    }
+
+    public IPage<FrontArticleCommentDTO> commentPage(Long userId, Page<FrontArticleCommentDTO> page, Long articleId, Integer type) {
+        val commentPage = commentService.getBaseMapper().articleCommentPage(page, articleId, type);
+        buildComments(userId, commentPage.getRecords());
+        for (FrontArticleCommentDTO record : commentPage.getRecords()) {
+            record.setChild(commentService.getBaseMapper().selectThreeReplyComment(record.getId()));
+            buildComments(userId, record.getChild());
+        }
+        return commentPage;
+    }
+
+    public void commentPraise(Long userId, Long commentId, Integer type) {
+        if ((type == Consts.DISABLE ? commentService.getBaseMapper().updatePraiseSub1(commentId) : commentService.getBaseMapper().updatePraiseAdd1(commentId)) == 0) {
+            throw new RequestActionException("没有这个评论");
+        }
+        if (type == Consts.DISABLE) {
+            praiseService.getBaseMapper()
+                    .delete(
+                            new QueryWrapper<MkCommunityPraise>()
+                                    .eq("user_id", userId)
+                                    .eq("praised_id", commentId)
+                                    .eq("type", Consts.PraiseType.COMMENT));
+        } else {
+            val praise = new MkCommunityPraise();
+            praise.setPraisedId(commentId);
+            praise.setUserId(userId);
+            praise.setType(Consts.PraiseType.COMMENT);
             praiseService.add(praise);
         }
     }

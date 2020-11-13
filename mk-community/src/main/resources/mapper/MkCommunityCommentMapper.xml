@@ -2,4 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.community.mapper.MkCommunityCommentMapper">
 
+    <sql id="commentDTO">
+        SELECT c.*,
+               u.nickname,
+               IF(f.state = 0, f.path, NULL) avatar
+        FROM mk_community_comment c
+                 LEFT JOIN mk_user u ON c.user_id = u.id
+                 LEFT JOIN mk_file f ON u.avatar = f.id
+        WHERE c.root_id = ${articleId}
+    </sql>
+
+    <select id="articleCommentPage" resultType="com.github.xujiaji.mk.community.dto.FrontArticleCommentDTO">
+        <include refid="commentDTO"/> AND c.reply_id IS NULL AND c.parent_id IS NULL
+        ORDER BY IF(${type} = 1, c.create_time, c.create_time * -1) ASC
+    </select>
+
+    <select id="selectThreeReplyComment"
+            resultType="com.github.xujiaji.mk.community.dto.FrontArticleCommentDTO">
+         <include refid="commentDTO"/> AND c.parent_id = ${commentId}
+        LIMIT 3
+    </select>
+
+    <update id="updatePraiseAdd1">
+        UPDATE mk_community_comment SET praise_num = praise_num + 1 WHERE id = ${articleId}
+    </update>
+    <update id="updatePraiseSub1">
+        UPDATE mk_community_comment SET praise_num = praise_num - 1 WHERE id = ${articleId}
+    </update>
 </mapper>

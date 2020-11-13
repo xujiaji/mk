@@ -3,7 +3,7 @@
 <mapper namespace="com.github.xujiaji.mk.community.mapper.MkCommunityCategoryMapper">
 
     <select id="selectFrontAll" resultType="com.github.xujiaji.mk.community.dto.FrontCategoryDTO">
-        SELECT c.id, c.title, f.path thumb
+        SELECT c.id, c.title, c.content, f.path thumb
         FROM mk_community_category c
             LEFT JOIN mk_file f
                 ON c.thumb = f.id

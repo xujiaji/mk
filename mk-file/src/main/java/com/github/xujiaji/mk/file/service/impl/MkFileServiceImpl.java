@@ -12,6 +12,7 @@ import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.file.entity.MkFile;
 import com.github.xujiaji.mk.file.mapper.MkFileMapper;
 import com.github.xujiaji.mk.file.service.IMkFileService;
+import com.github.xujiaji.mk.file.util.ImageCropCenterUtil;
 import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -119,6 +120,29 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
     @Override
     public MkFile uploadBase64(Long userId, String base64Image, Integer type) {
         return upload(userId, null, base64Image, type);
+    }
+
+    @Override
+    public MkFile generateThumbnail(MkFile mkFile) {
+        if (mkFile.getFileType() != Consts.FileType.IMAGE) {
+            throw new RequestActionException("非图片无法生成缩略图");
+        }
+        String parentPath = mkCommonService.valueByKey(Consts.ConfigKey.basePath);
+        String path = mkFile.getPath();
+        String thumbnailPath = path.substring(0, path.lastIndexOf(".")) + "_thumbnail" + path.substring(path.lastIndexOf("."));
+        try {
+            ImageCropCenterUtil.cropCenterImage(parentPath + path, parentPath + thumbnailPath, 360);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RequestActionException("缩略图生成失败");
+        }
+        val mkThumbnailFile = new MkFile();
+        mkThumbnailFile.setPath(thumbnailPath);
+        mkThumbnailFile.setFileType(Consts.FileType.IMAGE);
+        mkThumbnailFile.setState(Consts.FileState.ENABLE);
+        mkThumbnailFile.setUserId(mkFile.getUserId());
+        add(mkThumbnailFile);
+        return mkThumbnailFile;
     }
 
     /**

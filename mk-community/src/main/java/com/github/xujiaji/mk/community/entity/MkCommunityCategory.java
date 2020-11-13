@@ -31,6 +31,11 @@ public class MkCommunityCategory extends BaseEntity {
     private String title;
 
     /**
+     * 内容
+     */
+    private String content;
+
+    /**
      * 优先级排序
      */
     private Integer priority;

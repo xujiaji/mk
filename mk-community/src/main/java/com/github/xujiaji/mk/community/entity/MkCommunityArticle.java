@@ -26,6 +26,11 @@ public class MkCommunityArticle extends BaseEntity {
     private Long userId;
 
     /**
+     * 分类id
+     */
+    private Long categoryId;
+
+    /**
      * 标题
      */
     private String title;

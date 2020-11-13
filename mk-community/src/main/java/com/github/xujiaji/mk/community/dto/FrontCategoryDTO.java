@@ -16,6 +16,11 @@ public class FrontCategoryDTO {
     private String title;
 
     /**
+     * 内容
+     */
+    private String content;
+
+    /**
      * 封面
      */
     private String thumb;

@@ -249,6 +249,16 @@ public interface Consts {
     }
 
     /**
+     * 文章文件类型：0图片缩略图，1原图片，2视频缩略图，3视频
+     */
+    interface ArticleFileType {
+        int IMAGE_THUMBNAIL = 0;
+        int IMAGE = 1;
+        int VIDEO_THUMBNAIL = 2;
+        int VIDEO = 3;
+    }
+
+    /**
      * 0可使用，1已禁用，2附件已删除
      */
     interface FileState {

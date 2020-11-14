@@ -13,17 +13,12 @@ import java.time.LocalDateTime;
  * @since 2020-11-04
  */
 @Data
-public class UserVO {
+public class UserSimpleInfoVO {
 
     /**
      * id
      */
     private Long id;
-
-    /**
-     * 用户名
-     */
-    private String username;
 
     /**
      * 用户编号
@@ -51,18 +46,23 @@ public class UserVO {
     private LocalDateTime birthday;
 
     /**
-     * 手机号
-     */
-    private String phone;
-
-    /**
-     * 邮箱
-     */
-    private String email;
-
-    /**
      * 简介个性签名
      */
     private String bio;
+
+    /**
+     * app年龄
+     */
+    private String birthInApp;
+
+    /**
+     * 多少后如90后00后
+     */
+    private String afterYear;
+
+    /**
+     * 星座
+     */
+    private String constellation;
 
 }

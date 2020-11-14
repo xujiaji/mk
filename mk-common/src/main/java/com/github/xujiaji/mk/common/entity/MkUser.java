@@ -47,6 +47,11 @@ public class MkUser extends BaseEntity {
     private Integer sex;
 
     /**
+     * 简介个性签名
+     */
+    private String bio;
+
+    /**
      * 生日
      */
     private LocalDateTime birthday;

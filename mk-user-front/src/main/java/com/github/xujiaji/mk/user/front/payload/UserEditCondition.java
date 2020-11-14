@@ -32,4 +32,9 @@ public class UserEditCondition {
      */
     private LocalDateTime birthday;
 
+    /**
+     * 简介
+     */
+    private String bio;
+
 }

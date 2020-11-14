@@ -8,10 +8,13 @@ import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.file.service.impl.MkFileServiceImpl;
 import com.github.xujiaji.mk.user.front.payload.UserEditCondition;
 import com.github.xujiaji.mk.user.front.service.MkUserFrontService;
+import com.github.xujiaji.mk.user.front.vo.UserSimpleInfoVO;
 import com.github.xujiaji.mk.user.front.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @menu 前端-用户查看或编辑自己的信息
@@ -48,5 +51,13 @@ public class MkUserFrontController extends BaseController {
         val userVO = BeanUtil.copyProperties(user, UserVO.class);
         userVO.setAvatar(fileService.getPathById(user.getAvatar()));
         return success(userVO);
+    }
+
+    /**
+     * 用户简要信息
+     */
+    @GetMapping("/simple/info")
+    public ApiResponse<UserSimpleInfoVO> simpleInfo(@NotNull(message = "请传入用户ID") Long userId) {
+        return success(mkUserFrontService.simpleInfo(userId));
     }
 }

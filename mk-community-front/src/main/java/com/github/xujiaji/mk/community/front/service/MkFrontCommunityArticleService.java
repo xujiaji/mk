@@ -8,11 +8,13 @@ import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.util.CommonUtil;
 import com.github.xujiaji.mk.community.dto.FrontArticleDTO;
+import com.github.xujiaji.mk.community.dto.FrontArticleImageDTO;
 import com.github.xujiaji.mk.community.entity.MkCommunityArticle;
 import com.github.xujiaji.mk.community.entity.MkCommunityArticleFile;
 import com.github.xujiaji.mk.community.entity.MkCommunityCollect;
 import com.github.xujiaji.mk.community.entity.MkCommunityPraise;
 import com.github.xujiaji.mk.community.front.playload.CommunityArticleAddCondition;
+import com.github.xujiaji.mk.community.front.playload.UserArticlePageCondition;
 import com.github.xujiaji.mk.community.service.impl.*;
 import com.github.xujiaji.mk.file.service.IMkFileService;
 import com.google.common.collect.Lists;
@@ -85,6 +87,25 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
         val articlePage = baseMapper.articlePage(page, categoryId, type);
         buildArticles(userId, articlePage.getRecords());
         return articlePage;
+    }
+
+
+    public IPage<FrontArticleDTO> articleOwnPage(Long currentUserId, Page<FrontArticleDTO> page, Long ownUserId, Integer type) {
+        val articlePage =  (type == UserArticlePageCondition.Type.OWN)
+                ? baseMapper.ownArticlePage(page, ownUserId)
+                : baseMapper.collectArticlePage(page, ownUserId);
+        buildArticles(currentUserId, articlePage.getRecords());
+        return articlePage;
+    }
+
+    public IPage<FrontArticleImageDTO> imagePage(Long userId, Page<FrontArticleImageDTO> page) {
+        val imagePage = baseMapper.articleImagePage(page, userId);
+
+        for (FrontArticleImageDTO record : imagePage.getRecords()) {
+            record.setThumbnails(articleFileService.getUrlsByYearMonth(record.getYearMonth(), Consts.ArticleFileType.IMAGE_THUMBNAIL));
+            record.setImages(articleFileService.getUrlsByYearMonth(record.getYearMonth(), Consts.ArticleFileType.IMAGE));
+        }
+        return imagePage;
     }
 
     public FrontArticleDTO details(@Nullable Long userId, Long articleId) {

@@ -4,11 +4,15 @@ package com.github.xujiaji.mk.community.front.controller;
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
 import com.github.xujiaji.mk.common.base.Consts;
+import com.github.xujiaji.mk.common.payload.PageCondition;
+import com.github.xujiaji.mk.common.payload.UserPageCondition;
 import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.community.dto.FrontArticleDTO;
+import com.github.xujiaji.mk.community.dto.FrontArticleImageDTO;
 import com.github.xujiaji.mk.community.front.playload.ArticlePageCondition;
 import com.github.xujiaji.mk.community.front.playload.CommunityArticleAddCondition;
+import com.github.xujiaji.mk.community.front.playload.UserArticlePageCondition;
 import com.github.xujiaji.mk.community.front.service.MkFrontCommunityArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -48,6 +52,23 @@ public class MkFrontCommunityArticleController extends BaseController {
     public ApiResponse<PageVO<FrontArticleDTO>> page(@Valid ArticlePageCondition request) {
         val userId = userUtil.currentUserIdNullable();
         return successPage(articleService.articlePage(userId, mapPage(request), request.getCategoryId(), request.getType()));
+    }
+
+    /**
+     * 查询某个人的动态文章和收藏的动态文章
+     */
+    @GetMapping("/own/page")
+    public ApiResponse<PageVO<FrontArticleDTO>> page(@Valid UserArticlePageCondition request) {
+        val userId = userUtil.currentUserIdNullable();
+        return successPage(articleService.articleOwnPage(userId, mapPage(request), request.getUserId(), request.getType()));
+    }
+
+    /**
+     * 获取某人的文章图集
+     */
+    @GetMapping("/image/page")
+    public ApiResponse<PageVO<FrontArticleImageDTO>> imagePage(@Valid UserPageCondition request) {
+        return successPage(articleService.imagePage(request.getUserId(), mapPage(request)));
     }
 
     /**

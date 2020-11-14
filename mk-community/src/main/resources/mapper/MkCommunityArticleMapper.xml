@@ -14,19 +14,45 @@
         UPDATE mk_community_article SET praise_num = praise_num - 1 WHERE id = ${articleId}
     </update>
 
-    <select id="articlePage" resultType="com.github.xujiaji.mk.community.dto.FrontArticleDTO">
+    <sql id="articleSql">
         SELECT
-               a.*,
-               c.title category_title,
-               u.nickname,
-               IF(f.state = 0, f.path, NULL) avatar,
-               (SELECT COUNT(*) FROM mk_community_comment WHERE root_id = a.id) comment_num
+            a.*,
+            c.title category_title,
+            u.nickname,
+            IF(f.state = 0, f.path, NULL) avatar,
+            (SELECT COUNT(*) FROM mk_community_comment WHERE root_id = a.id) comment_num
         FROM mk_community_article a
-            LEFT JOIN mk_community_category c ON a.category_id = c.id
-            LEFT JOIN mk_user u ON a.user_id = u.id
-            LEFT JOIN mk_file f ON u.avatar = f.id
+                 LEFT JOIN mk_community_category c ON a.category_id = c.id
+                 LEFT JOIN mk_user u ON a.user_id = u.id
+                 LEFT JOIN mk_file f ON u.avatar = f.id
+    </sql>
+
+    <select id="articlePage" resultType="com.github.xujiaji.mk.community.dto.FrontArticleDTO">
+        <include refid="articleSql"/>
         WHERE a.category_id = ${categoryId}
         ORDER BY IF(${type} = 1, a.create_time, a.update_time) DESC
+    </select>
+
+    <select id="ownArticlePage" resultType="com.github.xujiaji.mk.community.dto.FrontArticleDTO">
+        <include refid="articleSql"/>
+        WHERE a.user_id = ${userId}
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="collectArticlePage" resultType="com.github.xujiaji.mk.community.dto.FrontArticleDTO">
+        <include refid="articleSql"/>
+        RIGHT JOIN mk_community_collect collect ON collect.collected_id = a.id
+        WHERE collect.type = 0 AND collect.user_id = ${userId}
+        ORDER BY collect.create_time DESC
+    </select>
+
+    <select id="articleImagePage" resultType="com.github.xujiaji.mk.community.dto.FrontArticleImageDTO">
+        SELECT
+               DATE_FORMAT(af.create_time, '%Y-%m')  `year_month`
+        FROM mk_community_article_file af
+            LEFT JOIN mk_file f ON af.file_id = f.id
+        WHERE f.user_id = ${userId} AND f.state = 0
+        GROUP BY DATE_FORMAT(af.create_time, '%Y-%m')
     </select>
 
     <select id="selectArticleDetails" resultType="com.github.xujiaji.mk.community.dto.FrontArticleDTO">

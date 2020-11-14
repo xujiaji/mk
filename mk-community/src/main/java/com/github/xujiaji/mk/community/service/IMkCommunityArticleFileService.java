@@ -22,4 +22,11 @@ public interface IMkCommunityArticleFileService extends BaseIService<MkCommunity
      */
     List<String> getUrlsByArticleId(Long articleId, Integer articleFileType);
 
+    /**
+     * 通过年月获取图片
+     * @param yearMonth
+     * @param articleFileType
+     * @return
+     */
+    List<String> getUrlsByYearMonth(String yearMonth, Integer articleFileType);
 }

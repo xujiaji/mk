@@ -9,4 +9,12 @@
         WHERE f.state = 0 AND af.type = ${articleFileType} AND af.article_id = ${articleId}
         ORDER BY af.order_num
     </select>
+
+    <select id="selectPathsByYearMonth" resultType="java.lang.String">
+        SELECT f.path
+        FROM mk_community_article_file af
+                 LEFT JOIN mk_file f ON af.file_id = f.id
+        WHERE f.state = 0 AND af.type = ${articleFileType} AND DATE_FORMAT(af.create_time, '%Y-%m') = #{yearMonth}
+        ORDER BY af.order_num
+    </select>
 </mapper>

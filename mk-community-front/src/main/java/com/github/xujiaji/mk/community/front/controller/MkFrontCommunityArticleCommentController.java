@@ -74,4 +74,6 @@ public class MkFrontCommunityArticleCommentController extends BaseController {
         val userId = userUtil.currentUserIdNullable();
         return successPage(articleCommentService.commentDetailsPage(userId, mapPage(request), request.getCommentId()));
     }
+
+
 }

@@ -50,6 +50,9 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
         if (request.getReplyId() != null) {
             // 获取回复的评论，然后设置父级评论
             val replyComment = commentService.getById(request.getReplyId());
+            if (replyComment == null) {
+                throw new RequestActionException("没有这个评论");
+            }
             comment.setParentId(replyComment.getParentId());
             comment.setReplyId(request.getReplyId());
         }

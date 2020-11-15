@@ -15,7 +15,10 @@ import com.github.xujiaji.mk.community.entity.MkCommunityCollect;
 import com.github.xujiaji.mk.community.entity.MkCommunityPraise;
 import com.github.xujiaji.mk.community.front.playload.CommunityArticleAddCondition;
 import com.github.xujiaji.mk.community.front.playload.UserArticlePageCondition;
-import com.github.xujiaji.mk.community.service.impl.*;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleFileServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityCollectServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityPraiseServiceImpl;
 import com.github.xujiaji.mk.file.service.IMkFileService;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +45,6 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
     private final MkCommunityArticleFileServiceImpl articleFileService;
     private final MkCommunityPraiseServiceImpl praiseService;
     private final MkCommunityCollectServiceImpl collectService;
-    private final MkCommunityCommentServiceImpl commentService;
     private final CommonUtil commonUtil;
 
     @Transactional(rollbackFor = Exception.class)

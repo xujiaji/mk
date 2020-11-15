@@ -56,4 +56,9 @@ public class FrontArticleCommentDTO {
      * 子评论
      */
     private List<FrontArticleCommentDTO> child;
+
+    /**
+     * 子评论总共条数
+     */
+    private Long childAllNum;
 }

@@ -24,6 +24,8 @@ public interface MkCommunityCommentMapper extends BaseMapper<MkCommunityComment>
 
     List<FrontArticleCommentDTO> selectThreeReplyComment(@Param("articleId") Long articleId, @Param("commentId") Long commentId);
 
+    long countAllReplyComment(@Param("commentId") Long commentId);
+
     int updatePraiseAdd1(@Param("commentId") Long commentId);
 
     int updatePraiseSub1(@Param("commentId") Long commentId);

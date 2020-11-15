@@ -1,28 +1,21 @@
 package com.github.xujiaji.mk.community.front.service;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
-import com.github.xujiaji.mk.common.util.CommonUtil;
 import com.github.xujiaji.mk.community.dto.FrontArticleCommentDTO;
 import com.github.xujiaji.mk.community.dto.FrontArticleCommentDetailsDTO;
-import com.github.xujiaji.mk.community.dto.FrontArticleDTO;
-import com.github.xujiaji.mk.community.entity.*;
+import com.github.xujiaji.mk.community.entity.MkCommunityComment;
+import com.github.xujiaji.mk.community.entity.MkCommunityPraise;
 import com.github.xujiaji.mk.community.front.playload.ArticleCommentAddCondition;
-import com.github.xujiaji.mk.community.front.playload.CommunityArticleAddCondition;
-import com.github.xujiaji.mk.community.service.impl.*;
-import com.github.xujiaji.mk.file.service.IMkFileService;
-import com.google.common.collect.Lists;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityCommentServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityPraiseServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.Nullable;
-import java.util.List;
 
 /**
  * <p>
@@ -36,10 +29,7 @@ import java.util.List;
 @Service
 public class MkFrontCommunityArticleCommentService extends MkCommunityArticleServiceImpl {
 
-    private final IMkFileService fileService;
-    private final MkCommunityArticleFileServiceImpl articleFileService;
     private final MkCommunityPraiseServiceImpl praiseService;
-    private final MkCommunityCollectServiceImpl collectService;
     private final MkCommunityCommentServiceImpl commentService;
 
 
@@ -73,6 +63,7 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
                 record.setPraised(praiseService.praiseStatus(record.getId(), userId, Consts.PraiseType.COMMENT));
             }
             record.setChild(commentService.getBaseMapper().selectThreeReplyComment(articleId, record.getId()));
+            record.setChildAllNum(commentService.getBaseMapper().countAllReplyComment(record.getId()));
         }
         return commentPage;
     }
@@ -100,7 +91,9 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
     public IPage<FrontArticleCommentDetailsDTO> commentDetailsPage(Long userId, Page<FrontArticleCommentDetailsDTO> page, Long commentId) {
         val commentDetailsPage = commentService.getBaseMapper().commentDetailsPage(page, commentId);
         if (userId != null) {
-            commentDetailsPage.getRecords().get(0).setPraised(praiseService.praiseStatus(commentDetailsPage.getRecords().get(0).getId(), userId, Consts.PraiseType.COMMENT));
+            for (FrontArticleCommentDetailsDTO record : commentDetailsPage.getRecords()) {
+                record.setPraised(praiseService.praiseStatus(record.getId(), userId, Consts.PraiseType.COMMENT));
+            }
         }
         return commentDetailsPage;
     }

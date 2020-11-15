@@ -46,10 +46,14 @@
         WHERE c.parent_id = ${commentId}
     </select>
 
+    <select id="countAllReplyComment" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM mk_community_comment WHERE parent_id = ${commentId} AND reply_id IS NOT NULL
+    </select>
+
     <update id="updatePraiseAdd1">
-        UPDATE mk_community_comment SET praise_num = praise_num + 1 WHERE id = ${articleId}
+        UPDATE mk_community_comment SET praise_num = praise_num + 1 WHERE id = ${commentId}
     </update>
     <update id="updatePraiseSub1">
-        UPDATE mk_community_comment SET praise_num = praise_num - 1 WHERE id = ${articleId}
+        UPDATE mk_community_comment SET praise_num = praise_num - 1 WHERE id = ${commentId}
     </update>
 </mapper>

@@ -73,6 +73,17 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
 
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteArticleById(Long userId, Long articleId) {
+        val article = baseMapper.selectArticleBy(userId, articleId);
+        if (article == null) {
+            throw new RequestActionException("您没有这个帖子");
+        }
+        articleFileService.getBaseMapper().updateFileDeleted(articleId);
+        articleFileService.getBaseMapper().deleteByArticleId(articleId);
+        baseMapper.deleteById(articleId);
+    }
+
     private void buildArticles(Long userId, List<FrontArticleDTO> articleDTOS) {
         for (FrontArticleDTO a : articleDTOS) {
             if (userId != null) {

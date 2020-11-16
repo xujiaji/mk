@@ -46,6 +46,16 @@ public class MkFrontCommunityArticleController extends BaseController {
     }
 
     /**
+     * 删除帖子
+     */
+    @DeleteMapping
+    public ApiResponse<?> delete(@NotNull(message = "请传入需要删除的帖子ID") Long articleId) {
+        val userId = userUtil.currentUserIdNotNull();
+        articleService.deleteArticleById(userId, articleId);
+        return successDelete();
+    }
+
+    /**
      * 帖子列表
      */
     @GetMapping("/page")

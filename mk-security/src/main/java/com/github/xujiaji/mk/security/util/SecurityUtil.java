@@ -5,6 +5,7 @@ import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.base.Status;
 import com.github.xujiaji.mk.common.exception.StatusException;
 import com.github.xujiaji.mk.security.vo.UserPrincipal;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -40,9 +41,12 @@ public class SecurityUtil {
      * @return 当前登录用户信息，匿名登录时，为null
      */
     public static UserPrincipal getCurrentUser() {
-        Object userInfo = SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal();
+        Authentication authentication = SecurityContextHolder.getContext()
+                .getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+        Object userInfo = authentication.getPrincipal();
         if (userInfo instanceof UserDetails) {
             return (UserPrincipal) userInfo;
         }

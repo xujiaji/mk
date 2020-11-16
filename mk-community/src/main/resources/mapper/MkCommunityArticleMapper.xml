@@ -68,4 +68,7 @@
                  LEFT JOIN mk_file f ON u.avatar = f.id
         WHERE a.id = ${articleId}
     </select>
+    <select id="selectArticleBy" resultType="com.github.xujiaji.mk.community.entity.MkCommunityArticle">
+        SELECT * FROM mk_community_article WHERE user_id = ${userId} AND id = ${articleId}
+    </select>
 </mapper>

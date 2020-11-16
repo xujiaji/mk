@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.community.mapper.MkCommunityArticleFileMapper">
+    <update id="updateFileDeleted">
+        UPDATE mk_file SET state = 1 WHERE id IN (SELECT file_id FROM mk_community_article_file WHERE article_id = ${articleId})
+    </update>
+
+    <delete id="deleteByArticleId">
+        DELETE FROM mk_community_article_file WHERE article_id = ${articleId}
+    </delete>
 
     <select id="selectPaths" resultType="java.lang.String">
         SELECT f.path

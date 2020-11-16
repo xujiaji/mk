@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 
 /**
  * <p>
@@ -24,7 +23,7 @@ import java.util.stream.Stream;
 @Service
 public class MkUserIdNumberServiceImpl extends BaseServiceImpl<MkUserIdNumberMapper, MkUserIdNumber> implements IMkUserIdNumberService {
 
-    private final Stream<Map.Entry<String, String>> goodRegex = MapUtil.<String, String>builder()
+    private final Set<Map.Entry<String, String>> goodRegex = MapUtil.<String, String>builder()
             .put("业务相关的号", "^\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$")
             .put("业务相关的号", "^\\d*(1688|2688|2088|2008|5188|10010|10001|666|888|668|686|688|866|868|886|999)\\d*$")
             .put("AAABBB", "^\\d*(\\d)\\1\\1(\\d)\\2\\2\\d*$")
@@ -37,7 +36,7 @@ public class MkUserIdNumberServiceImpl extends BaseServiceImpl<MkUserIdNumberMap
             .put("ABBABB", "^(\\d)(\\d)\\2\\1\\2\\2$")
             .put("AABAAB", "^(\\d)\\1(\\d)\\1\\1\\2$")
             .put("递增或者递减号", "(?:(?:0(?=1)|1(?=2)|2(?=3)|3(?=4)|4(?=5)|5(?=6)|6(?=7)|7(?=8)|8(?=9)|9(?=0)){2,}|(?:0(?=9)|9(?=8)|8(?=7)|7(?=6)|6(?=5)|5(?=4)|4(?=3)|3(?=2)|2(?=1)|1(?=0)){2,})\\d")
-            .build().entrySet().stream();
+            .build().entrySet();
     private final Set<Long> allIdNumber = new ConcurrentHashSet<>();
 
     private MkUserIdNumber nextId(Long lastId) {
@@ -54,7 +53,7 @@ public class MkUserIdNumberServiceImpl extends BaseServiceImpl<MkUserIdNumberMap
         allIdNumber.add(lastId);
         val newIdNumber = new MkUserIdNumber();
         newIdNumber.setId(newId);
-        val first = goodRegex.filter(p -> String.valueOf(newId).matches(p.getValue()))
+        val first = goodRegex.stream().filter(p -> String.valueOf(newId).matches(p.getValue()))
                 .findFirst();
         if (first.isPresent()) {
             newIdNumber.setGood(first.get().getKey());

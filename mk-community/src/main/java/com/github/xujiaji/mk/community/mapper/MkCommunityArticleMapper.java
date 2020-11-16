@@ -34,4 +34,6 @@ public interface MkCommunityArticleMapper extends BaseMapper<MkCommunityArticle>
     int updateCollectSub1(@Param("articleId") Long articleId);
 
     int updatePraiseSub1(@Param("articleId") Long articleId);
+
+    MkCommunityArticle selectArticleBy(@Param("userId") Long userId, @Param("articleId") Long articleId);
 }

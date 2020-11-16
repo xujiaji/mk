@@ -30,8 +30,13 @@ public class MkUserLoginLogServiceImpl extends BaseServiceImpl<MkUserLoginLogMap
     @Override
     public void insertLog(Long userId, Integer loginType, HttpServletRequest request) {
         val log = new MkUserLoginLog();
-        log.setLoginIp(ipUtil.getClientIpAddress(request));
-        log.setLoginLocation(ipUtil.getCityInfo(log.getLoginIp()));
+        String loginIp = ipUtil.getClientIpAddress(request);
+        if (loginIp != null && loginIp.contains(":")) {
+            loginIp = loginIp.substring(0, loginIp.indexOf(":"));
+        }
+        log.setLoginIp(loginIp);
+        String cityInfo = ipUtil.getCityInfo(log.getLoginIp());
+        log.setLoginLocation(cityInfo != null ? cityInfo : "未获取到位置信息");
         log.setLoginType(loginType);
         log.setLoginDevice(request.getHeader("User-Agent"));
         log.setUserId(userId);

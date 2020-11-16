@@ -11,6 +11,7 @@ import com.github.xujiaji.mk.security.vo.UserPrincipal;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -66,6 +67,10 @@ public class RbacAuthorityService {
                     // 过滤 METHOD 为空
                     .filter(permission -> StrUtil.isNotBlank(permission.getMethod()))
                     .collect(Collectors.toList());
+            val p = new MkSecPermission();
+            p.setMethod("GET");
+            p.setPath("/admin/sec/permission/user/tree");
+            btnPerms.add(p);
 
             for (MkSecPermission btnPerm : btnPerms) {
                 AntPathRequestMatcher antPathMatcher = new AntPathRequestMatcher(btnPerm.getPath(), btnPerm.getMethod());

@@ -172,6 +172,16 @@ public interface Consts {
          * qq app key
          */
         String qqSecret = "qqSecret";
+
+        /**
+         * iOS包名
+         */
+        String iOSBundleId = "iOSBundleId";
+
+        /**
+         * android包名
+         */
+        String androidBundleId = "androidBundleId";
     }
 
     /**

@@ -31,11 +31,6 @@ public class ThirdLoginCondition {
     private String jwt;
 
     /**
-     * iOS包名
-     */
-    private String aud = "com.baozao.yunyu";
-
-    /**
      * 苹果对应的唯一用户标识
      */
     private String sub;

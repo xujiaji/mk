@@ -28,14 +28,23 @@ import com.github.xujiaji.mk.user.front.util.WXBizDataCrypt;
 import com.github.xujiaji.mk.user.service.impl.MkSmsServiceImpl;
 import com.github.xujiaji.mk.user.service.impl.MkUserIdNumberServiceImpl;
 import com.github.xujiaji.mk.user.service.impl.MkUserServiceImpl;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nullable;
+import java.math.BigInteger;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.RSAPublicKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -198,7 +207,119 @@ public class MkAuthUserService extends MkUserServiceImpl {
         return getUserDOByWxUnionId(decrypt.getOpenId(), decrypt.getUnionId());
     }
 
+    private AppleKeys appleKeys;
+    /**
+     * 通过iOS认证登录
+     * @return
+     */
     public MkUser authIOS(ThirdLoginCondition request, MkUser currentUser) {
+        String iosBundleId = mkCommonService.valueByKey(Consts.ConfigKey.iOSBundleId);
+        if (StrUtil.isEmpty(request.getJwt()) || StrUtil.isEmpty(iosBundleId) || StrUtil.isEmpty(request.getSub())) {
+            throw new RequestActionException("参数错误");
+        }
+        if (appleKeys == null) {
+            final String url = "https://appleid.apple.com/auth/keys";
+            final String jsonData = HttpUtil.get(url);
+            appleKeys = JSONUtil.toBean(jsonData, AppleKeys.class); // 将json字符串转化为JSONObject
+        }
+
+        String n = "";
+        String ee = "";
+
+        String jwtKid = getKid(request.getJwt());
+        for (AppleKeys.Keys key : appleKeys.getKeys()) {
+            if (StringUtils.equals(key.getKid(), jwtKid)) {
+                // 注意获得kid匹配的key
+                n = key.getN();
+                ee = key.getE();
+                log.info("[苹果登录日志]jwt:{},aud:{},sub:{}", request.getJwt(), iosBundleId, request.getSub());
+                break;
+            }
+        }
+        try {
+            final PublicKey kPublicKey = createPublicKey(n, ee);
+            Jws<Claims> claimsJws = verify(kPublicKey, request.getJwt(), iosBundleId, request.getSub());
+            log.info("success claimsJws = {}", claimsJws);
+
+            val selectUser = baseMapper.selectOne(new QueryWrapper<MkUser>().eq("ios_id", request.getSub()));
+
+            if (currentUser == null) {
+                // 用三方来登录的时候
+                if (selectUser != null) {
+                    return selectUser;
+                }
+                return createUser(null, null, null, request.getSub(), null, null);
+            } else {
+                // 绑定三方登录的时候
+                if (selectUser == null) {
+                    currentUser.setIosId(request.getSub());
+                    return currentUser;
+                } else {
+                    throw new RequestActionException("当前微信已绑定其它账号");
+                }
+            }
+
+            // log.info("获取公钥结果:" + result + ";" + kPublicKey.toString());
+        } catch (final NoSuchAlgorithmException | InvalidKeySpecException e) {
+            throw new RequestActionException(e.getMessage());
+        }
+    }
+
+    public String getKid(String identityToken) {
+        String[] arr = identityToken.split("\\.");
+        String deHeader = new String(org.apache.commons.codec.binary.Base64.decodeBase64(arr[0]));
+        return JSONUtil.parseObj(deHeader).getStr("kid");
+    }
+
+
+    public Jws<Claims> verify(final PublicKey key, final String jwt, final String audience, final String subject) {
+        final JwtParser jwtParser = Jwts.parser().setSigningKey(key);
+        jwtParser.requireIssuer("https://appleid.apple.com");
+        jwtParser.requireAudience(audience);
+        jwtParser.requireSubject(subject);
+        try {
+            final Jws<Claims> claim = jwtParser.parseClaimsJws(jwt);
+            if (claim != null && claim.getBody().containsKey("auth_time")) {
+                log.info("[Apple登录解密结果]header:{},body:{},signature:{}", claim.getHeader(), claim.getBody(),
+                        claim.getSignature());
+                return claim;
+            }
+            throw new RequestActionException("解析失败");
+        } catch (final ExpiredJwtException e) {
+            log.error("apple identityToken expired");
+            throw new RequestActionException("apple identityToken expired");
+        } catch (final Exception e) {
+            log.error("apple identityToken illegal");
+            throw new RequestActionException("apple identityToken illegal");
+        }
+    }
+
+
+    /**
+     * 从hex string生成公钥
+     *
+     * @param stringN
+     * @param stringE
+     * @return 构造好的公钥
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public static PublicKey createPublicKey(final String stringN, final String stringE)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
+        try {
+            // BigInteger N = new BigInteger(stringN, 16); // hex base
+            // BigInteger E = new BigInteger(stringE, 16); // hex base
+
+            final BigInteger modulus = new BigInteger(1, Base64.decodeBase64(stringN));
+            final BigInteger publicExponent = new BigInteger(1, Base64.decodeBase64(stringE));
+
+            final RSAPublicKeySpec spec = new RSAPublicKeySpec(modulus, publicExponent);
+            final KeyFactory kf = KeyFactory.getInstance("RSA");
+            return kf.generatePublic(spec);
+        } catch (final Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 

@@ -1,5 +1,8 @@
 package com.github.xujiaji.mk.security.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.xujiaji.mk.security.dto.RoleDTO;
 import com.github.xujiaji.mk.security.entity.MkSecRole;
 import com.github.xujiaji.mk.common.base.BaseIService;
 
@@ -27,4 +30,6 @@ public interface IMkSecRoleService extends BaseIService<MkSecRole> {
      * @param id 角色ID
      */
     void deleteRoleById(Long id);
+
+    IPage<RoleDTO> rolePage(Page<RoleDTO> page);
 }

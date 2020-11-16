@@ -7,9 +7,11 @@ import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.admin.payload.RoleAddCondition;
 import com.github.xujiaji.mk.security.admin.payload.RoleEditCondition;
 import com.github.xujiaji.mk.security.admin.payload.RoleSetPermissionsCondition;
+import com.github.xujiaji.mk.security.dto.RoleDTO;
 import com.github.xujiaji.mk.security.entity.MkSecRole;
 import com.github.xujiaji.mk.security.service.impl.MkSecRoleServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,8 +33,9 @@ public class MkSecAdminRoleController extends BaseController {
      * 角色列表
      */
     @GetMapping("/page")
-    public ApiResponse<PageVO<MkSecRole>> page(@Valid PageCondition request) {
-        return successPage(secRoleService.page(mapPage(request)));
+    public ApiResponse<PageVO<RoleDTO>> page(@Valid PageCondition request) {
+        val page = secRoleService.rolePage(mapPage(request));
+        return successPage(page);
     }
 
     /**

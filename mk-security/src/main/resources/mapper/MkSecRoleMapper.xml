@@ -17,4 +17,7 @@
           AND mk_sec_role.id = mk_sec_user_role.role_id
           AND mk_sec_user.id = ${secUserId}
     </select>
+    <select id="rolePage" resultType="com.github.xujiaji.mk.security.dto.RoleDTO">
+        SELECT * FROM mk_sec_role
+    </select>
 </mapper>

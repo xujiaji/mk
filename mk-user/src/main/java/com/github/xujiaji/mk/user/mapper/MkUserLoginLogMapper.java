@@ -1,6 +1,6 @@
 package com.github.xujiaji.mk.user.mapper;
 
-import com.github.xujiaji.mk.user.entity.MkUserLoginLog;
+import com.github.xujiaji.mk.common.entity.MkUserLoginLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,4 +15,6 @@ import org.apache.ibatis.annotations.Param;
 public interface MkUserLoginLogMapper extends BaseMapper<MkUserLoginLog> {
 
     int countTodayLog(@Param("userId") Long userId);
+
+    MkUserLoginLog lastLoginLogBy(@Param("userId") Long userId);
 }

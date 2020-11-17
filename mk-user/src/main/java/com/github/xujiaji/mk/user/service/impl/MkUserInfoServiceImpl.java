@@ -3,9 +3,11 @@ package com.github.xujiaji.mk.user.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.entity.MkUser;
+import com.github.xujiaji.mk.common.entity.MkUserLoginLog;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.service.IPasswordService;
 import com.github.xujiaji.mk.common.service.IUserInfoService;
+import com.github.xujiaji.mk.user.mapper.MkUserLoginLogMapper;
 import com.github.xujiaji.mk.user.mapper.MkUserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -24,6 +26,7 @@ import java.util.List;
 public class MkUserInfoServiceImpl implements IUserInfoService {
 
     private final MkUserMapper mkUserMapper;
+    private final MkUserLoginLogMapper mkUserLoginLogMapper;
     private final IPasswordService passwordService;
 
 
@@ -56,5 +59,15 @@ public class MkUserInfoServiceImpl implements IUserInfoService {
             throw new RequestActionException("用户创建失败");
         }
         return mkUser;
+    }
+
+    @Override
+    public int updateUser(MkUser user) {
+        return mkUserMapper.updateById(user);
+    }
+
+    @Override
+    public MkUserLoginLog lastLoginLogBy(Long userId) {
+        return mkUserLoginLogMapper.lastLoginLogBy(userId);
     }
 }

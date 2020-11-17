@@ -8,4 +8,11 @@
         WHERE user_id = ${userId}
           AND TO_DAYS(create_time) = TO_DAYS(NOW())
     </select>
+    <select id="lastLoginLogBy" resultType="com.github.xujiaji.mk.common.entity.MkUserLoginLog">
+        SELECT *
+        FROM mk_user_login_log
+        WHERE user_id = ${userId}
+        ORDER BY update_time DESC
+        LIMIT 1
+    </select>
 </mapper>

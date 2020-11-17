@@ -20,6 +20,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.github.xujiaji.mk</groupId>
+			<artifactId>mk-file</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>

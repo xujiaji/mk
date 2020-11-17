@@ -1,10 +1,9 @@
 package com.github.xujiaji.mk.user.service.impl;
 
 import com.github.xujiaji.mk.common.base.BaseServiceImpl;
-import com.github.xujiaji.mk.common.entity.MkUser;
 import com.github.xujiaji.mk.common.service.IUserLoginLogService;
 import com.github.xujiaji.mk.common.util.IPUtil;
-import com.github.xujiaji.mk.user.entity.MkUserLoginLog;
+import com.github.xujiaji.mk.common.entity.MkUserLoginLog;
 import com.github.xujiaji.mk.user.mapper.MkUserLoginLogMapper;
 import com.github.xujiaji.mk.user.service.IMkUserLoginLogService;
 import lombok.RequiredArgsConstructor;

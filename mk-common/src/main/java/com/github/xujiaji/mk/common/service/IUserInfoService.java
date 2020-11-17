@@ -1,6 +1,7 @@
 package com.github.xujiaji.mk.common.service;
 
 import com.github.xujiaji.mk.common.entity.MkUser;
+import com.github.xujiaji.mk.common.entity.MkUserLoginLog;
 
 import java.util.List;
 
@@ -45,4 +46,13 @@ public interface IUserInfoService {
      * @return 返回创建的用户
      */
     MkUser createUserByUsername(String username, String password);
+
+    int updateUser(MkUser user);
+
+    /**
+     * 通过用户id获取登录日志
+     * @param userId
+     * @return
+     */
+    MkUserLoginLog lastLoginLogBy(Long userId);
 }

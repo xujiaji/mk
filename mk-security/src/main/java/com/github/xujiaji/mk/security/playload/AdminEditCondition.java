@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * @date 2020/10/30 13:47
  */
 @Data
-public class AdminAddCondition {
+public class AdminEditCondition {
 
     /**
      * 用户名
@@ -30,8 +30,12 @@ public class AdminAddCondition {
     private Long roleId;
 
     /**
+     * 头像文件id
+     */
+    private Long avatarId;
+
+    /**
      * 密码
      */
-    @NotNull(message = "密码不能为空")
     private String password;
 }

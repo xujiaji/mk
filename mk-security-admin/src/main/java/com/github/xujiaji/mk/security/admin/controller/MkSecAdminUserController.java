@@ -13,6 +13,7 @@ import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
+import com.github.xujiaji.mk.security.playload.AdminEditCondition;
 import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
 import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
@@ -96,8 +97,17 @@ public class MkSecAdminUserController extends BaseController {
      */
     @PostMapping("/add")
     public ApiResponse<?> add(@RequestBody @Valid AdminAddCondition request) {
-        secUserService.addAdmin(request.getUsername(), request.getRoleId(), request.getPassword());
+        secUserService.adminAdd(request);
         return successAdd();
+    }
+
+    /**
+     * 管理员编辑
+     */
+    @PutMapping("/edit")
+    public ApiResponse<?> edit(@RequestBody @Valid AdminEditCondition request) {
+        secUserService.adminEdit(request);
+        return successUpdate();
     }
 
     /**

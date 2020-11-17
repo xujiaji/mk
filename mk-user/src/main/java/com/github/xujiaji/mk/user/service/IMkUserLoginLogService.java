@@ -1,6 +1,6 @@
 package com.github.xujiaji.mk.user.service;
 
-import com.github.xujiaji.mk.user.entity.MkUserLoginLog;
+import com.github.xujiaji.mk.common.entity.MkUserLoginLog;
 import com.github.xujiaji.mk.common.base.BaseIService;
 
 /**

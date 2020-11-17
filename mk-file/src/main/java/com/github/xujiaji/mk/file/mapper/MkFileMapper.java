@@ -15,4 +15,6 @@ import org.apache.ibatis.annotations.Param;
 public interface MkFileMapper extends BaseMapper<MkFile> {
 
     String getPathById(@Param("fileId") Long fileId);
+
+    MkFile selectByPath(@Param("path") String path);
 }

@@ -5,4 +5,8 @@
     <select id="getPathById" resultType="java.lang.String">
         SELECT path FROM mk_file WHERE id = ${fileId}
     </select>
+
+    <select id="selectByPath" resultType="com.github.xujiaji.mk.file.entity.MkFile">
+        SELECT * FROM mk_file WHERE path = ${path}
+    </select>
 </mapper>

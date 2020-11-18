@@ -87,8 +87,8 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
     private void buildArticles(Long userId, List<FrontArticleDTO> articleDTOS) {
         for (FrontArticleDTO a : articleDTOS) {
             if (userId != null) {
-                a.setCollected(collectService.collectStatus(a.getId(), userId, Consts.CollectType.ARTICLE));
-                a.setPraised(praiseService.praiseStatus(a.getId(), userId, Consts.PraiseType.ARTICLE));
+                a.setCollected(collectService.collectStatus(a.getId(), userId, Consts.CollectType.ARTICLE) > 0 ? Consts.POSITIVE : Consts.NEGATIVE);
+                a.setPraised(praiseService.praiseStatus(a.getId(), userId, Consts.PraiseType.ARTICLE) > 0 ? Consts.POSITIVE : Consts.NEGATIVE);
             }
             a.setBeforeText(commonUtil.getShortTime(a.getUpdateTime()));
             a.setThumbnails(articleFileService.getUrlsByArticleId(a.getId(), Consts.ArticleFileType.IMAGE_THUMBNAIL));
@@ -115,8 +115,8 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
         val imagePage = baseMapper.articleImagePage(page, userId);
 
         for (FrontArticleImageDTO record : imagePage.getRecords()) {
-            record.setThumbnails(articleFileService.getUrlsByYearMonth(record.getYearMonth(), Consts.ArticleFileType.IMAGE_THUMBNAIL));
-            record.setImages(articleFileService.getUrlsByYearMonth(record.getYearMonth(), Consts.ArticleFileType.IMAGE));
+            record.setThumbnails(articleFileService.getUrlsByYearMonth(userId, record.getYearMonth(), Consts.ArticleFileType.IMAGE_THUMBNAIL));
+            record.setImages(articleFileService.getUrlsByYearMonth(userId, record.getYearMonth(), Consts.ArticleFileType.IMAGE));
         }
         return imagePage;
     }
@@ -131,7 +131,11 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
         if ((type == Consts.DISABLE ? baseMapper.updateCollectSub1(articleId) : baseMapper.updateCollectAdd1(articleId)) == 0) {
             throw new RequestActionException("没有这个动态");
         }
+        int status = collectService.collectStatus(articleId, userId, type);
         if (type == Consts.DISABLE) {
+            if (status <= 0) {
+                throw new RequestActionException("您还没有收藏");
+            }
             collectService.getBaseMapper()
                     .delete(
                             new QueryWrapper<MkCommunityCollect>()
@@ -139,6 +143,9 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
                                     .eq("collected_id", articleId)
                                     .eq("type", Consts.CollectType.ARTICLE));
         } else {
+            if (status > 0) {
+                throw new RequestActionException("您已收藏");
+            }
             val collect = new MkCommunityCollect();
             collect.setCollectedId(articleId);
             collect.setUserId(userId);

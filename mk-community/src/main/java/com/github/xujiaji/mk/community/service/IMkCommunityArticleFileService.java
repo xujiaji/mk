@@ -28,5 +28,5 @@ public interface IMkCommunityArticleFileService extends BaseIService<MkCommunity
      * @param articleFileType
      * @return
      */
-    List<String> getUrlsByYearMonth(String yearMonth, Integer articleFileType);
+    List<String> getUrlsByYearMonth(Long userId, String yearMonth, Integer articleFileType);
 }

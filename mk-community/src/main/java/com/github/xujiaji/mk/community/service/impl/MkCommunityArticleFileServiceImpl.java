@@ -33,8 +33,8 @@ public class MkCommunityArticleFileServiceImpl extends BaseServiceImpl<MkCommuni
     }
 
     @Override
-    public List<String> getUrlsByYearMonth(String yearMonth, Integer articleFileType) {
+    public List<String> getUrlsByYearMonth(Long userId, String yearMonth, Integer articleFileType) {
         val baseFileUrl = commonService.baseFileUrl();
-        return baseMapper.selectPathsByYearMonth(yearMonth, articleFileType).stream().map(p -> baseFileUrl + p).collect(Collectors.toList());
+        return baseMapper.selectPathsByYearMonth(userId, yearMonth, articleFileType).stream().map(p -> baseFileUrl + p).collect(Collectors.toList());
     }
 }

@@ -3,6 +3,7 @@ package com.github.xujiaji.mk.common.service;
 import com.github.xujiaji.mk.common.entity.MkUser;
 import com.github.xujiaji.mk.common.entity.MkUserLoginLog;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -45,7 +46,7 @@ public interface IUserInfoService {
      * @param password 用户名
      * @return 返回创建的用户
      */
-    MkUser createUserByUsername(String username, String password);
+    MkUser createUserByUsername(String username, String password, @Nullable Long avatar);
 
     int updateUser(MkUser user);
 

@@ -19,7 +19,7 @@ public interface MkCommunityArticleFileMapper extends BaseMapper<MkCommunityArti
 
     List<String> selectPaths(@Param("articleId") Long articleId, @Param("articleFileType") Integer articleFileType);
 
-    List<String> selectPathsByYearMonth(@Param("yearMonth") String yearMonth, @Param("articleFileType") Integer articleFileType);
+    List<String> selectPathsByYearMonth(@Param("userId") Long userId, @Param("yearMonth") String yearMonth, @Param("articleFileType") Integer articleFileType);
 
     int updateFileDeleted(@Param("articleId") Long articleId);
 

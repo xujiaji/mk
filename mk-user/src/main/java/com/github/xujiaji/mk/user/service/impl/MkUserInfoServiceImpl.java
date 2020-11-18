@@ -51,9 +51,10 @@ public class MkUserInfoServiceImpl implements IUserInfoService {
     }
 
     @Override
-    public MkUser createUserByUsername(String username, String password) {
+    public MkUser createUserByUsername(String username, String password, Long avatar) {
         val mkUser = new MkUser();
         mkUser.setUsername(username);
+        mkUser.setAvatar(avatar);
         mkUser.setPassword(passwordService.encode(password));
         if (mkUserMapper.insert(mkUser) == Consts.NEGATIVE) {
             throw new RequestActionException("用户创建失败");

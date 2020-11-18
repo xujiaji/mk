@@ -107,7 +107,7 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
         MkUser mkUser = userInfoService.getUserByUsername(request.getUsername());
 
         if (mkUser == null) { // 这个用户不存在，那么创建这个用户
-            mkUser = userInfoService.createUserByUsername(request.getUsername(), request.getPassword());
+            mkUser = userInfoService.createUserByUsername(request.getUsername(), request.getPassword(), request.getAvatarId());
         }
 
         if (baseMapper.selectCount(new QueryWrapper<MkSecUser>().eq("user_id", mkUser.getId())) > 0) {

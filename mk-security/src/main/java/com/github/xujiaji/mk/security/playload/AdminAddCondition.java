@@ -30,6 +30,11 @@ public class AdminAddCondition {
     private Long roleId;
 
     /**
+     * 头像文件id
+     */
+    private Long avatarId;
+
+    /**
      * 密码
      */
     @NotNull(message = "密码不能为空")

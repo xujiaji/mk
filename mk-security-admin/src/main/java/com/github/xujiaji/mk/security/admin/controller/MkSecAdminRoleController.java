@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @menu 权限-角色管理
@@ -36,6 +37,14 @@ public class MkSecAdminRoleController extends BaseController {
     public ApiResponse<PageVO<RoleDTO>> page(@Valid PageCondition request) {
         val page = secRoleService.rolePage(mapPage(request));
         return successPage(page);
+    }
+
+    /**
+     * 所有角色
+     */
+    @GetMapping("/all")
+    public ApiResponse<List<MkSecRole>> all() {
+        return success(secRoleService.list());
     }
 
     /**

@@ -75,6 +75,7 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
         for (MkSecUser record : secUserPage.getRecords()) {
             val mkUser = userDetailsList.stream().filter(f -> f.getId().equals(record.getUserId())).findFirst().orElseGet(MkUser::new);
             val mkAdminUser = BeanUtil.copyProperties(mkUser, MkAdminUser.class);
+            mkAdminUser.setPassword(null);
             mkAdminUser.setStatus(record.getStatus());
             mkAdminUser.setSecUserId(record.getId());
             mkAdminUser.setRole(SecurityUtil.getCurrentUser().getRoles().stream().reduce((s1, s2) -> s1 + "," + s2).get());

@@ -31,7 +31,8 @@ public class UserMysqlGenerator extends CommonMysqlGenerator {
 //                "mk_user_login_log_admin_view"
 //                "mk_user_view"
 //                "mk_user_id_number"
-                "mk_sms"
+//                "mk_sms"
+                "mk_app_version"
         );
     }
 }

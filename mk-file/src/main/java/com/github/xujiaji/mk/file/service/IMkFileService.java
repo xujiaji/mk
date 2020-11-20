@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface IMkFileService extends BaseIService<MkFile> {
 
+    MkFile getByPath(String path);
+
     String getPathById(Long id);
 
     MkFile upload(MultipartFile multipartFile, Integer type);

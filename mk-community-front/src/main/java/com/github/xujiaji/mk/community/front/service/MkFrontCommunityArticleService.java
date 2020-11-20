@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
+import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
 import com.github.xujiaji.mk.common.util.CommonUtil;
 import com.github.xujiaji.mk.community.dto.FrontArticleDTO;
 import com.github.xujiaji.mk.community.dto.FrontArticleImageDTO;
@@ -15,7 +16,11 @@ import com.github.xujiaji.mk.community.entity.MkCommunityCollect;
 import com.github.xujiaji.mk.community.entity.MkCommunityPraise;
 import com.github.xujiaji.mk.community.front.playload.CommunityArticleAddCondition;
 import com.github.xujiaji.mk.community.front.playload.UserArticlePageCondition;
-import com.github.xujiaji.mk.community.service.impl.*;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleFileServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityCollectServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.MkCommunityPraiseServiceImpl;
+import com.github.xujiaji.mk.file.entity.MkFile;
 import com.github.xujiaji.mk.file.service.IMkFileService;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
@@ -44,15 +49,30 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
     private final MkCommunityCollectServiceImpl collectService;
     private final CommonUtil commonUtil;
     private final MkFrontCommunityNoticeService noticeService;
+    private final MkCommonServiceImpl commonService;
 
     @Transactional(rollbackFor = Exception.class)
     public void addByRequest(Long userId, CommunityArticleAddCondition request) {
+        val baseFileUrl = commonService.baseFileUrl();
         val article = BeanUtil.copyProperties(request, MkCommunityArticle.class);
         article.setUserId(userId);
         // 添加文章到数据库
         add(article);
         for (int i = 0; i < request.getImages().size(); i++) {
-            val mkFile = fileService.uploadBase64(userId, request.getImages().get(i), Consts.FileType.IMAGE);
+            val image = request.getImages().get(i);
+            // 如果开头的是文件url开头的那么就是图片链接
+            MkFile mkFile;
+            if (image.startsWith(baseFileUrl)) {
+                val newFile = BeanUtil.copyProperties(fileService.getByPath(image.replace(baseFileUrl, "")), MkFile.class);
+                newFile.setId(null);
+                newFile.setCreateTime(null);
+                newFile.setUpdateTime(null);
+                fileService.add(newFile);
+                mkFile = newFile;
+            } else {
+                mkFile = fileService.uploadBase64(userId, image, Consts.FileType.IMAGE);
+            }
+
             val articleFile = new MkCommunityArticleFile();
             articleFile.setArticleId(article.getId());
             articleFile.setFileId(mkFile.getId());

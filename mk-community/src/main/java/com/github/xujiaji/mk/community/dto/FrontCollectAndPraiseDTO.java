@@ -27,7 +27,7 @@ public class FrontCollectAndPraiseDTO {
     private Long commentId;
 
     /**
-     * 类型0帖子 1评论
+     * 类型0帖子评论，1评论回复，2帖子点赞，3回复点赞，4帖子收藏，5评论收藏
      */
     private Integer type;
 

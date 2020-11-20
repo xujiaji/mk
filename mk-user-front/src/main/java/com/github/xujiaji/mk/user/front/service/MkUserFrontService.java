@@ -5,6 +5,7 @@ import com.github.xujiaji.mk.common.entity.MkUser;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.util.CommonUtil;
 import com.github.xujiaji.mk.common.util.ConstellationUtil;
+import com.github.xujiaji.mk.file.service.impl.MkFileServiceImpl;
 import com.github.xujiaji.mk.user.front.vo.UserSimpleInfoVO;
 import com.github.xujiaji.mk.user.service.impl.MkUserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ import java.time.LocalDateTime;
 public class MkUserFrontService extends MkUserServiceImpl {
 
     private final CommonUtil commonUtil;
+    private final MkFileServiceImpl fileService;
 
     public MkUser getUserHidePhoneAndEmailById(Long id) {
         val userView = getById(id);
@@ -37,6 +39,9 @@ public class MkUserFrontService extends MkUserServiceImpl {
             throw new RequestActionException("没有这个用户");
         }
         val userSimpleInfo = BeanUtil.copyProperties(user, UserSimpleInfoVO.class);
+        if (user.getAvatar() != null) {
+            userSimpleInfo.setAvatar(fileService.getPathById(user.getAvatar()));
+        }
         userSimpleInfo.setBirthInApp(Duration.between(user.getCreateTime(), LocalDateTime.now()).toDays() + "天");
         if (userSimpleInfo.getBirthday() != null) {
             int year = userSimpleInfo.getBirthday().getYear();

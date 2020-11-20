@@ -2,7 +2,8 @@ package com.github.xujiaji.mk.community.mapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.github.xujiaji.mk.community.dto.CommentNoticeDTO;
+import com.github.xujiaji.mk.community.dto.FrontCollectAndPraiseDTO;
+import com.github.xujiaji.mk.community.dto.FrontCommentNoticeDTO;
 import com.github.xujiaji.mk.community.entity.MkCommunityNotice;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
@@ -17,5 +18,8 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface MkCommunityNoticeMapper extends BaseMapper<MkCommunityNotice> {
 
-    IPage<CommentNoticeDTO> selectCommentNotice(@Param("userId") Long userId, Page<CommentNoticeDTO> page);
+    IPage<FrontCommentNoticeDTO> selectCommentNotice(@Param("userId") Long userId, Page<FrontCommentNoticeDTO> page);
+
+    IPage<FrontCollectAndPraiseDTO> selectCollectAndPraiseNotice(@Param("userId") Long userId, Page<FrontCollectAndPraiseDTO> page);
+
 }

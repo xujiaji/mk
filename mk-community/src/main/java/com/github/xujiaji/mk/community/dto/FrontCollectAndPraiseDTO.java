@@ -6,10 +6,10 @@ import java.time.LocalDateTime;
 
 /**
  * @author jiajixu
- * @date 2020/11/19 17:45
+ * @date 2020/11/20 12:58
  */
 @Data
-public class CommentNoticeDTO {
+public class FrontCollectAndPraiseDTO {
 
     /**
      * 通知id
@@ -53,23 +53,4 @@ public class CommentNoticeDTO {
 
     private LocalDateTime createTime;
 
-    /**
-     * 内容
-     */
-    private String content;
-
-    /**
-     * 回复的目标用户id
-     */
-    private Long targetUserId;
-
-    /**
-     * 回复的目标用户
-     */
-    private String targetUserName;
-
-    /**
-     * 回复的目标内容
-     */
-    private String targetContent;
 }

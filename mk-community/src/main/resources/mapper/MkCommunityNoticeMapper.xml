@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.community.mapper.MkCommunityNoticeMapper">
 
-    <select id="selectCommentNotice" resultType="com.github.xujiaji.mk.community.dto.CommentNoticeDTO">
+    <select id="selectCommentNotice" resultType="com.github.xujiaji.mk.community.dto.FrontCommentNoticeDTO">
         SELECT
             cn.*,
             cn.from_user_id user_id,
@@ -20,5 +20,18 @@
                  LEFT JOIN mk_community_article ca ON ca.id = cn.target_id
                  LEFT JOIN mk_community_comment cc ON cc.id = cn.target_id
         WHERE cn.to_user_id = ${userId} AND (cn.type = 0 OR cn.type = 1) ORDER BY cn.create_time DESC
+    </select>
+    <select id="selectCollectAndPraiseNotice"
+            resultType="com.github.xujiaji.mk.community.dto.FrontCollectAndPraiseDTO">
+        SELECT
+            cn.*,
+            cn.from_user_id user_id,
+            IF(f.state = 0, f.path, NULL) avatar,
+            u.nickname,
+            IF(cn.type = 2,'赞了你的故事',IF(cn.type = 3,'赞了你的留言','收藏了你的故事')) description
+        FROM mk_community_notice cn
+                 LEFT JOIN mk_user u ON cn.from_user_id = u.id
+                 LEFT JOIN mk_file f ON u.avatar = f.id
+        WHERE cn.to_user_id = ${userId} AND (cn.type = 2 OR cn.type = 3 OR cn.type = 4) ORDER BY cn.create_time DESC
     </select>
 </mapper>

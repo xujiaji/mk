@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.common.mapper.MkCommonMapper">
+    <update id="updateValueByKey">
+        UPDATE mk_common SET config_value = ${value} WHERE config_key = ${key}
+    </update>
 
     <select id="getConfigValueByKey" resultType="java.lang.String">
         SELECT config_value FROM mk_common WHERE config_key = #{key}

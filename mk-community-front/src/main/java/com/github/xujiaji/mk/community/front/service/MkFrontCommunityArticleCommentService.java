@@ -10,6 +10,7 @@ import com.github.xujiaji.mk.community.dto.FrontArticleCommentDetailsDTO;
 import com.github.xujiaji.mk.community.entity.MkCommunityComment;
 import com.github.xujiaji.mk.community.entity.MkCommunityPraise;
 import com.github.xujiaji.mk.community.front.playload.ArticleCommentAddCondition;
+import com.github.xujiaji.mk.community.mapper.MkCommunityArticleMapper;
 import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleServiceImpl;
 import com.github.xujiaji.mk.community.service.impl.MkCommunityCommentServiceImpl;
 import com.github.xujiaji.mk.community.service.impl.MkCommunityPraiseServiceImpl;
@@ -31,15 +32,17 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
 
     private final MkCommunityPraiseServiceImpl praiseService;
     private final MkCommunityCommentServiceImpl commentService;
-
+    private final MkFrontCommunityNoticeService noticeService;
+    private final MkCommunityArticleMapper articleMapper;
 
     public void commentAdd(Long userId, ArticleCommentAddCondition request) {
         val comment = new MkCommunityComment();
         comment.setRootId(request.getArticleId());
         // 如果是回复
+        MkCommunityComment replyComment = null;
         if (request.getReplyId() != null) {
             // 获取回复的评论，然后设置父级评论
-            val replyComment = commentService.getById(request.getReplyId());
+            replyComment = commentService.getById(request.getReplyId());
             if (replyComment == null) {
                 throw new RequestActionException("没有这个评论");
             }
@@ -53,6 +56,10 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
         if (request.getReplyId() == null) {
             comment.setParentId(comment.getId());
             commentService.updateById(comment);
+            noticeService.addNotice(userId, articleMapper.selectAuthorIdByArticleId(request.getArticleId()), comment.getId(), Consts.NoticeType.ARTICLE_COMMENT);
+        } else {
+            assert replyComment != null;
+            noticeService.addNotice(userId, replyComment.getUserId(), comment.getId(), Consts.NoticeType.COMMENT_REPLY);
         }
     }
 
@@ -85,6 +92,7 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
             praise.setUserId(userId);
             praise.setType(Consts.PraiseType.COMMENT);
             praiseService.add(praise);
+            noticeService.addNotice(userId, commentService.getBaseMapper().selectAuthorIdByCommentId(commentId), commentId, Consts.NoticeType.COMMENT_PRAISE);
         }
     }
 

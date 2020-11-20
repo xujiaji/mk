@@ -292,4 +292,17 @@ public interface Consts {
         int ARTICLE = 0;
         int COMMENT = 1;
     }
+
+    /**
+     * 通知类型
+     * 0帖子评论，1评论回复，2帖子点赞，3回复点赞，4帖子收藏，5评论收藏
+     */
+    interface NoticeType {
+        int ARTICLE_COMMENT = 0;
+        int COMMENT_REPLY = 1;
+        int ARTICLE_PRAISE = 2;
+        int COMMENT_PRAISE = 3;
+        int ARTICLE_COLLECT = 4;
+        int COMMENT_COLLECT = 5;
+    }
 }

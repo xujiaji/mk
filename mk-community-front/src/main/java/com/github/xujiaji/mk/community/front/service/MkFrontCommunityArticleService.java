@@ -15,10 +15,7 @@ import com.github.xujiaji.mk.community.entity.MkCommunityCollect;
 import com.github.xujiaji.mk.community.entity.MkCommunityPraise;
 import com.github.xujiaji.mk.community.front.playload.CommunityArticleAddCondition;
 import com.github.xujiaji.mk.community.front.playload.UserArticlePageCondition;
-import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleFileServiceImpl;
-import com.github.xujiaji.mk.community.service.impl.MkCommunityArticleServiceImpl;
-import com.github.xujiaji.mk.community.service.impl.MkCommunityCollectServiceImpl;
-import com.github.xujiaji.mk.community.service.impl.MkCommunityPraiseServiceImpl;
+import com.github.xujiaji.mk.community.service.impl.*;
 import com.github.xujiaji.mk.file.service.IMkFileService;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +43,7 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
     private final MkCommunityPraiseServiceImpl praiseService;
     private final MkCommunityCollectServiceImpl collectService;
     private final CommonUtil commonUtil;
+    private final MkFrontCommunityNoticeService noticeService;
 
     @Transactional(rollbackFor = Exception.class)
     public void addByRequest(Long userId, CommunityArticleAddCondition request) {
@@ -151,6 +149,7 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
             collect.setUserId(userId);
             collect.setType(Consts.CollectType.ARTICLE);
             collectService.add(collect);
+            noticeService.addNotice(userId, baseMapper.selectAuthorIdByArticleId(articleId), articleId, Consts.NoticeType.ARTICLE_COLLECT);
         }
     }
 
@@ -171,6 +170,7 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
             praise.setUserId(userId);
             praise.setType(Consts.PraiseType.ARTICLE);
             praiseService.add(praise);
+            noticeService.addNotice(userId, baseMapper.selectAuthorIdByArticleId(articleId), articleId, Consts.NoticeType.ARTICLE_PRAISE);
         }
     }
 

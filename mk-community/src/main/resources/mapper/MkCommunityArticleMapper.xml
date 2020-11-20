@@ -71,4 +71,7 @@
     <select id="selectArticleBy" resultType="com.github.xujiaji.mk.community.entity.MkCommunityArticle">
         SELECT * FROM mk_community_article WHERE user_id = ${userId} AND id = ${articleId}
     </select>
+    <select id="selectAuthorIdByArticleId" resultType="java.lang.Long">
+        SELECT user_id FROM mk_community_article WHERE id = ${articleId}
+    </select>
 </mapper>

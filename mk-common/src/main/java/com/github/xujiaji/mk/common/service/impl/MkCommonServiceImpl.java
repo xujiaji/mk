@@ -27,6 +27,11 @@ public class MkCommonServiceImpl extends BaseServiceImpl<MkCommonMapper, MkCommo
     }
 
     @Override
+    public int updateValueByKey(String key, String value) {
+        return baseMapper.updateValueByKey(key, value);
+    }
+
+    @Override
     public List<MkCommon> entitiesByKeys(String... keys) {
         return baseMapper.selectEntitiesByKeys(keys);
     }

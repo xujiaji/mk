@@ -26,14 +26,15 @@ public class CommunityMysqlGenerator extends CommonMysqlGenerator {
 
     public static void main(String[] args) {
         new CommunityMysqlGenerator().runs(
-                "mk_community_article",
-                "mk_community_article_category",
-                "mk_community_article_collect",
-                "mk_community_article_file",
-                "mk_community_article_topic",
-                "mk_community_comment",
-                "mk_community_follow",
-                "mk_community_praise"
+//                "mk_community_article",
+//                "mk_community_article_category",
+//                "mk_community_article_collect",
+//                "mk_community_article_file",
+//                "mk_community_article_topic",
+//                "mk_community_comment",
+//                "mk_community_follow",
+//                "mk_community_praise",
+                "mk_community_notice"
         );
     }
 }

@@ -29,4 +29,12 @@ public interface MkCommonMapper extends BaseMapper<MkCommon> {
      * @return 配置实体列表
      */
     List<MkCommon> selectEntitiesByKeys(@Param("keys") String[] keys);
+
+    /**
+     * 通过key修改value
+     * @param key
+     * @param value
+     * @return
+     */
+    int updateValueByKey(@Param("key") String key, @Param("value") String value);
 }

@@ -21,6 +21,12 @@ public interface IMkCommonService extends BaseIService<MkCommon> {
     String valueByKey(String key);
 
     /**
+     * 通过key修改值
+     * @return 修改成功数量
+     */
+    int updateValueByKey(String key, String value);
+
+    /**
      * 通过key获取配置实体列表
      * @param keys key列表
      * @return 配置实体列表

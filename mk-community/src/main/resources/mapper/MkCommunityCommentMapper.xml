@@ -49,6 +49,9 @@
     <select id="countAllReplyComment" resultType="java.lang.Long">
         SELECT COUNT(*) FROM mk_community_comment WHERE parent_id = ${commentId} AND reply_id IS NOT NULL
     </select>
+    <select id="selectAuthorIdByCommentId" resultType="java.lang.Long">
+        SELECT user_id FROM mk_community_comment WHERE id = ${commentId}
+    </select>
 
     <update id="updatePraiseAdd1">
         UPDATE mk_community_comment SET praise_num = praise_num + 1 WHERE id = ${commentId}

@@ -31,4 +31,6 @@ public interface MkCommunityCommentMapper extends BaseMapper<MkCommunityComment>
     int updatePraiseSub1(@Param("commentId") Long commentId);
 
     IPage<FrontArticleCommentDetailsDTO> commentDetailsPage(Page<FrontArticleCommentDetailsDTO> page, @Param("commentId") Long commentId);
+
+    Long selectAuthorIdByCommentId(@Param("commentId") Long commentId);
 }

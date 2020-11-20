@@ -60,7 +60,7 @@ public class MkFrontCommunityNoticeController extends BaseController {
     }
 
     /**
-     * 标记一看全部消息
+     * 标记已看过全部消息
      */
     @PutMapping("/read/all")
     public ApiResponse<?> readAll() {

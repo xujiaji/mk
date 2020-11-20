@@ -39,4 +39,5 @@ public interface MkCommunityArticleMapper extends BaseMapper<MkCommunityArticle>
 
     Long selectAuthorIdByArticleId(@Param("articleId") Long articleId);
 
+    int countArticleImage(@Param("articleId") Long articleId);
 }

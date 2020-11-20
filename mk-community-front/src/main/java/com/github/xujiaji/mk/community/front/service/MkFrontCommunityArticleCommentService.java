@@ -56,10 +56,10 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
         if (request.getReplyId() == null) {
             comment.setParentId(comment.getId());
             commentService.updateById(comment);
-            noticeService.addNotice(userId, articleMapper.selectAuthorIdByArticleId(request.getArticleId()), comment.getId(), Consts.NoticeType.ARTICLE_COMMENT);
+            noticeService.addNotice(userId, articleMapper.selectAuthorIdByArticleId(request.getArticleId()), request.getArticleId(), comment.getId(), Consts.NoticeType.ARTICLE_COMMENT);
         } else {
             assert replyComment != null;
-            noticeService.addNotice(userId, replyComment.getUserId(), comment.getId(), Consts.NoticeType.COMMENT_REPLY);
+            noticeService.addNotice(userId, replyComment.getUserId(), request.getArticleId(), comment.getId(), Consts.NoticeType.COMMENT_REPLY);
         }
     }
 
@@ -92,7 +92,7 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
             praise.setUserId(userId);
             praise.setType(Consts.PraiseType.COMMENT);
             praiseService.add(praise);
-            noticeService.addNotice(userId, commentService.getBaseMapper().selectAuthorIdByCommentId(commentId), commentId, Consts.NoticeType.COMMENT_PRAISE);
+            noticeService.addNotice(userId, commentService.getBaseMapper().selectAuthorIdByCommentId(commentId), null, commentId, Consts.NoticeType.COMMENT_PRAISE);
         }
     }
 

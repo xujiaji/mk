@@ -149,7 +149,7 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
             collect.setUserId(userId);
             collect.setType(Consts.CollectType.ARTICLE);
             collectService.add(collect);
-            noticeService.addNotice(userId, baseMapper.selectAuthorIdByArticleId(articleId), articleId, Consts.NoticeType.ARTICLE_COLLECT);
+            noticeService.addNotice(userId, baseMapper.selectAuthorIdByArticleId(articleId), articleId, null, Consts.NoticeType.ARTICLE_COLLECT);
         }
     }
 
@@ -170,7 +170,7 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
             praise.setUserId(userId);
             praise.setType(Consts.PraiseType.ARTICLE);
             praiseService.add(praise);
-            noticeService.addNotice(userId, baseMapper.selectAuthorIdByArticleId(articleId), articleId, Consts.NoticeType.ARTICLE_PRAISE);
+            noticeService.addNotice(userId, baseMapper.selectAuthorIdByArticleId(articleId), articleId, null, Consts.NoticeType.ARTICLE_PRAISE);
         }
     }
 

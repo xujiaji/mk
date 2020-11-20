@@ -19,12 +19,13 @@ import org.springframework.stereotype.Service;
 public class MkCommunityNoticeServiceImpl extends BaseServiceImpl<MkCommunityNoticeMapper, MkCommunityNotice> implements IMkCommunityNoticeService {
 
     @Override
-    public void addNotice(Long fromUserId, Long toUserId, Long targetId, int type) {
+    public void addNotice(Long fromUserId, Long toUserId, Long articleId, Long commentId, int type) {
         val notice = new MkCommunityNotice();
         notice.setFromUserId(fromUserId);
         notice.setToUserId(toUserId);
         notice.setType(type);
-        notice.setTargetId(targetId);
+        notice.setArticleId(articleId);
+        notice.setCommentId(commentId);
         add(notice);
     }
 }

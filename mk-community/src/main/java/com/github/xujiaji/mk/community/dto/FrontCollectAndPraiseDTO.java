@@ -17,9 +17,14 @@ public class FrontCollectAndPraiseDTO {
     private Long id;
 
     /**
-     * 目标id
+     * 帖子id
      */
-    private Long targetId;
+    private Long articleId;
+
+    /**
+     * 评论id
+     */
+    private Long commentId;
 
     /**
      * 类型0帖子 1评论

@@ -31,9 +31,14 @@ public class MkCommunityNotice extends BaseEntity {
     private Long toUserId;
 
     /**
-     * 目标id（帖子或评论等的id）
+     * 帖子id
      */
-    private Long targetId;
+    private Long articleId;
+
+    /**
+     * 评论id
+     */
+    private Long commentId;
 
     /**
      * 0未读，1已读

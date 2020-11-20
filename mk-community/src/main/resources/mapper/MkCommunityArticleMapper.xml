@@ -74,4 +74,7 @@
     <select id="selectAuthorIdByArticleId" resultType="java.lang.Long">
         SELECT user_id FROM mk_community_article WHERE id = ${articleId}
     </select>
+    <select id="countArticleImage" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM mk_community_article_file WHERE article_id = ${articleId} AND type = 0
+    </select>
 </mapper>

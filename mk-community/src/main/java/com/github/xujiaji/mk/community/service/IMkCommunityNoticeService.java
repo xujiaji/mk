@@ -17,8 +17,9 @@ public interface IMkCommunityNoticeService extends BaseIService<MkCommunityNotic
      * 添加通知
      * @param fromUserId
      * @param toUserId
-     * @param targetId
+     * @param articleId
+     * @param commentId
      * @param type
      */
-    void addNotice(Long fromUserId, Long toUserId, Long targetId, int type);
+    void addNotice(Long fromUserId, Long toUserId, Long articleId, Long commentId, int type);
 }

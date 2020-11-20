@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.community.mapper.MkCommunityNoticeMapper">
+    <update id="readAll">
+        UPDATE mk_community_notice SET state = 1 WHERE to_user_id = ${userId}
+    </update>
 
     <select id="selectCommentNotice" resultType="com.github.xujiaji.mk.community.dto.FrontCommentNoticeDTO">
         SELECT
@@ -33,5 +36,8 @@
                  LEFT JOIN mk_user u ON cn.from_user_id = u.id
                  LEFT JOIN mk_file f ON u.avatar = f.id
         WHERE cn.to_user_id = ${userId} AND (cn.type = 2 OR cn.type = 3 OR cn.type = 4) ORDER BY cn.create_time DESC
+    </select>
+    <select id="selectUnreadNum" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM mk_community_notice WHERE to_user_id = ${userId} AND state = 0
     </select>
 </mapper>

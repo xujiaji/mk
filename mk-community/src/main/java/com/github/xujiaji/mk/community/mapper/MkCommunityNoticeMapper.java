@@ -22,4 +22,7 @@ public interface MkCommunityNoticeMapper extends BaseMapper<MkCommunityNotice> {
 
     IPage<FrontCollectAndPraiseDTO> selectCollectAndPraiseNotice(@Param("userId") Long userId, Page<FrontCollectAndPraiseDTO> page);
 
+    Long selectUnreadNum(@Param("userId") Long userId);
+
+    void readAll(@Param("userId") Long userId);
 }

@@ -11,6 +11,7 @@ import com.github.xujiaji.mk.community.dto.FrontCommentNoticeDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,5 +48,24 @@ public class MkFrontCommunityNoticeController extends BaseController {
     public ApiResponse<PageVO<FrontCollectAndPraiseDTO>> collectAndPraise(@Valid PageCondition request) {
         val userId = userUtil.currentUserIdNotNull();
         return successPage(frontCommunityNoticeService.collectAndPraise(userId, mapPage(request)));
+    }
+
+    /**
+     * 获取未看消息数量
+     */
+    @GetMapping("/unread/num")
+    public ApiResponse<Long> unreadNum() {
+        val userId = userUtil.currentUserIdNotNull();
+        return success(frontCommunityNoticeService.unreadNum(userId));
+    }
+
+    /**
+     * 标记一看全部消息
+     */
+    @PutMapping("/read/all")
+    public ApiResponse<?> readAll() {
+        val userId = userUtil.currentUserIdNotNull();
+        frontCommunityNoticeService.readAll(userId);
+        return successMessage("阅读了所有消息");
     }
 }

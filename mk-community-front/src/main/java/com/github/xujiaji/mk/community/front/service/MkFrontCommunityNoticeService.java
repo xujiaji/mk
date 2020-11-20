@@ -35,4 +35,12 @@ public class MkFrontCommunityNoticeService extends MkCommunityNoticeServiceImpl 
         }
         return result;
     }
+
+    public Long unreadNum(Long userId) {
+        return baseMapper.selectUnreadNum(userId);
+    }
+
+    public void readAll(Long userId) {
+        baseMapper.readAll(userId);
+    }
 }

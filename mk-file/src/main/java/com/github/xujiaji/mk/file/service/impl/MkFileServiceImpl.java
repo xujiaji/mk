@@ -1,6 +1,8 @@
 package com.github.xujiaji.mk.file.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.BaseServiceImpl;
@@ -114,6 +116,21 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
     @Override
     public String getPathById(Long id) {
         return baseMapper.getPathById(id);
+    }
+
+    @Override
+    public MkFile cloneNewFile(MkFile mkFile) {
+        val baseLocalPath = mkCommonService.baseLocalPath();
+        val srcPath = mkFile.getPath();
+        val destPath = srcPath.substring(0, srcPath.lastIndexOf(".")) + "_clone" + srcPath.substring(srcPath.lastIndexOf("."));
+        FileUtil.copyFile(baseLocalPath + srcPath, baseLocalPath + destPath);
+        val cloneMkFile = new MkFile();
+        cloneMkFile.setState(Consts.FileState.ENABLE);
+        cloneMkFile.setUserId(mkFile.getUserId());
+        cloneMkFile.setFileType(mkFile.getFileType());
+        cloneMkFile.setPath(destPath);
+        add(cloneMkFile);
+        return cloneMkFile;
     }
 
     @Override

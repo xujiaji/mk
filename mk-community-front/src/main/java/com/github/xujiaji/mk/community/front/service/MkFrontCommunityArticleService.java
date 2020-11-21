@@ -63,12 +63,7 @@ public class MkFrontCommunityArticleService extends MkCommunityArticleServiceImp
             // 如果开头的是文件url开头的那么就是图片链接
             MkFile mkFile;
             if (image.startsWith(baseFileUrl)) {
-                val newFile = BeanUtil.copyProperties(fileService.getByPath(image.replace(baseFileUrl, "")), MkFile.class);
-                newFile.setId(null);
-                newFile.setCreateTime(null);
-                newFile.setUpdateTime(null);
-                fileService.add(newFile);
-                mkFile = newFile;
+                mkFile = fileService.cloneNewFile(fileService.getByPath(image.replace(baseFileUrl, "")));
             } else {
                 mkFile = fileService.uploadBase64(userId, image, Consts.FileType.IMAGE);
             }

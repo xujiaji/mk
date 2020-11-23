@@ -31,7 +31,7 @@ public class MkLog extends BaseEntity {
     private String content;
 
     /**
-     * 日志类型：1.访问；2.操作；3.错误；
+     * 日志类型
      */
     private Integer logType;
 

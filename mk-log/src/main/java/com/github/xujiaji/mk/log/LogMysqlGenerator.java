@@ -17,10 +17,14 @@ public class LogMysqlGenerator extends CommonMysqlGenerator {
         return "mk-log";
     }
 
+    @Override
+    protected String subPackageName() {
+        return "log";
+    }
 
     public static void main(String[] args) {
         new LogMysqlGenerator().runs(
-                "mk_log"
+//                "mk_log"
         );
     }
 }

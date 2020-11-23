@@ -1,7 +1,10 @@
 package com.github.xujiaji.mk.log.service;
 
+import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.log.entity.MkLog;
 import com.github.xujiaji.mk.common.base.BaseIService;
+
+import javax.annotation.Nullable;
 
 /**
  * <p>

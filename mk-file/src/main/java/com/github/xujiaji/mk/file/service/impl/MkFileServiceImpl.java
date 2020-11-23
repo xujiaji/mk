@@ -115,6 +115,9 @@ public class MkFileServiceImpl extends BaseServiceImpl<MkFileMapper, MkFile> imp
 
     @Override
     public String getPathById(Long id) {
+        if (id == null) {
+            return null;
+        }
         return baseMapper.getPathById(id);
     }
 

@@ -48,7 +48,7 @@ public class MkAuthUserController extends BaseController {
     private final MkFileServiceImpl fileService;
 
     private ApiResponse<LoginSuccessVO> loginSuccessHandle(MkUser mkUser, Integer loginType, HttpServletRequest hsr) {
-        UserVO mkUserView = BeanUtil.copyProperties(mkUser, UserVO.class);
+        LoginSuccessVO mkUserView = BeanUtil.copyProperties(mkUser, LoginSuccessVO.class);
         mkUserView.setPhone(commonUtil.hidePhone(mkUserView.getPhone()));
         mkUserView.setEmail(commonUtil.hideEmail(mkUserView.getEmail()));
         userLoginLogService.insertLog(mkUserView.getId(), loginType, hsr);
@@ -59,11 +59,10 @@ public class MkAuthUserController extends BaseController {
         SecurityContextHolder.getContext()
                 .setAuthentication(authentication);
         String jwt = jwtUtil.createJWT(authentication, true);
-        val successUser = BeanUtil.copyProperties(mkUserView, LoginSuccessVO.class);
-        successUser.setAvatar(fileService.getPathById(mkUserView.getId()));
-        successUser.setAuthorization(jwt);
-        successUser.setAuthorizationType("Bearer");
-        return success(successUser);
+        mkUserView.setAvatar(fileService.getPathById(mkUser.getAvatar()));
+        mkUserView.setAuthorization(jwt);
+        mkUserView.setAuthorizationType("Bearer");
+        return success(mkUserView);
     }
 
     /**

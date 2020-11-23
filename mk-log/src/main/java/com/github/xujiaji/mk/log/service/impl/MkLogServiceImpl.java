@@ -1,13 +1,14 @@
 package com.github.xujiaji.mk.log.service.impl;
 
-import com.github.xujiaji.mk.common.base.Consts;
+import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.json.JSONUtil;
+import com.github.xujiaji.mk.common.base.BaseServiceImpl;
 import com.github.xujiaji.mk.common.base.Status;
 import com.github.xujiaji.mk.common.service.ILogService;
 import com.github.xujiaji.mk.common.util.IPUtil;
 import com.github.xujiaji.mk.log.entity.MkLog;
 import com.github.xujiaji.mk.log.mapper.MkLogMapper;
 import com.github.xujiaji.mk.log.service.IMkLogService;
-import com.github.xujiaji.mk.common.base.BaseServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Service;
@@ -39,11 +40,19 @@ public class MkLogServiceImpl extends BaseServiceImpl<MkLogMapper, MkLog> implem
                 loginIp = loginIp.substring(0, loginIp.indexOf(":"));
             }
             sb
-                    .append(" IP：").append(loginIp).append("\n")
+                    .append("IP：").append(loginIp).append("\n")
                     .append("位置：").append(ipUtil.getCityInfo(loginIp)).append("\n")
-                    .append(" UA：").append(request.getHeader("User-Agent")).append("\n");
+                    .append("UA：").append(request.getHeader("User-Agent")).append("\n")
+                    .append("方式：").append(request.getMethod()).append("\n")
+                    .append("路径：").append(request.getRequestURI()).append("?").append(request.getQueryString()).append("\n")
+                    .append("头部：").append(JSONUtil.toJsonStr(ServletUtil.getHeaderMap(request))).append("\n")
+                    .append("参数：").append(JSONUtil.toJsonStr(ServletUtil.getParamMap(request))).append("\n");
         }
-        sb.append("内容：").append(content);
+        sb
+                .append("内容：")
+                .append("\n-------------------\n")
+                .append(content)
+                .append("\n-------------------");
         mkLog.setLogType(type.getCode());
         mkLog.setContent(sb.toString());
         mkLog.setUserId(userId);

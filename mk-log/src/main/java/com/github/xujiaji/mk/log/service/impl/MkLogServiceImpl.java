@@ -40,17 +40,14 @@ public class MkLogServiceImpl extends BaseServiceImpl<MkLogMapper, MkLog> implem
             if (loginIp != null && loginIp.contains(":")) {
                 loginIp = loginIp.substring(0, loginIp.indexOf(":"));
             }
-            sb
-                    .append("IP：").append(loginIp).append("，位置：").append(ipUtil.getCityInfo(loginIp)).append("\n")
-                    .append("UA：").append(request.getHeader("User-Agent")).append("\n")
-                    .append("方式：").append(request.getMethod()).append("\n")
-                    .append("路径：").append(request.getRequestURI());
+            sb.append("IP：").append(loginIp).append("，位置：").append(ipUtil.getCityInfo(loginIp)).append("，路径：").append(request.getRequestURI());
             val qs = request.getQueryString();
             if (StrUtil.isNotBlank(qs)) {
                 sb.append("?").append(qs);
             }
-            sb.append("\n");
-            sb.append("头部：").append(JSONUtil.toJsonStr(ServletUtil.getHeaderMap(request))).append("\n")
+            sb.append("\nUA：").append(request.getHeader("User-Agent")).append("\n")
+                    .append("方式：").append(request.getMethod()).append("\n")
+                    .append("头部：").append(JSONUtil.toJsonStr(ServletUtil.getHeaderMap(request))).append("\n")
                     .append("参数：").append(JSONUtil.toJsonStr(ServletUtil.getParamMap(request))).append("\n");
         }
         sb

@@ -18,8 +18,18 @@ public class DisabledExceptionHandler implements IExceptionHandler<DisabledExcep
 
     @Override
     public ApiResponse<?> handle(Exception e) {
-        log.error("【全局异常拦截】DisabledException: 错误信息 {}", e.getMessage());
-        return ApiResponse.ofStatus(Status.USER_DISABLED);
+        log.error(errMessage(e));
+        return ApiResponse.ofStatus(errStatus(e));
+    }
+
+    @Override
+    public Status errStatus(Exception e) {
+        return Status.USER_DISABLED;
+    }
+
+    @Override
+    public String errMessage(Exception e) {
+        return String.format("【全局异常拦截】DisabledException: 错误信息 %s", e.getMessage());
     }
 }
  

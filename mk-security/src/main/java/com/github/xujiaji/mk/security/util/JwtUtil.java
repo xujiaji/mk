@@ -214,11 +214,12 @@ public class JwtUtil {
      * @return 签名是否有效
      */
     private List<String> ignoreParams = Lists.newArrayList("file");
+    private final long DATE_EXPIRE = 3 * 60 * 1000; // 3分钟过期
     public boolean checkSign(String sign, String timestamp, HttpServletRequest request) {
         if (
                 !NumberUtil.isLong(timestamp)
                         || timestamp.length() < 10
-                        || DateUtil.date().between(new Date(Long.parseLong(timestamp)), DateUnit.SECOND) > 60) {
+                        || DateUtil.date().between(new Date(Long.parseLong(timestamp)), DateUnit.SECOND) > DATE_EXPIRE) {
             return false;
         }
         Map<String, String> params = ServletUtil.getParamMap(request);

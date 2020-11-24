@@ -17,8 +17,18 @@ public class NoHandlerFoundExceptionHandler implements IExceptionHandler<NoHandl
 
     @Override
     public ApiResponse<?> handle(Exception e) {
-        log.error("【全局异常拦截】NoHandlerFoundException: 请求方法 {}, 请求路径 {}", ((NoHandlerFoundException) e).getRequestURL(), ((NoHandlerFoundException) e).getHttpMethod());
-        return ApiResponse.ofStatus(Status.REQUEST_NOT_FOUND);
+        log.error(errMessage(e));
+        return ApiResponse.ofStatus(errStatus(e));
+    }
+
+    @Override
+    public Status errStatus(Exception e) {
+        return Status.REQUEST_NOT_FOUND;
+    }
+
+    @Override
+    public String errMessage(Exception e) {
+        return String.format("【全局异常拦截】NoHandlerFoundException: 请求方法 %s, 请求路径 %s", ((NoHandlerFoundException) e).getRequestURL(), ((NoHandlerFoundException) e).getHttpMethod());
     }
 }
  

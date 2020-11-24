@@ -35,5 +35,39 @@ public class MkLog extends BaseEntity {
      */
     private Integer type;
 
+    /**
+     * user-agent
+     */
+    private String ua;
+
+    /**
+     * ip地址
+     */
+    private String ip;
+
+    /**
+     * 请求方式
+     */
+    private String method;
+
+    /**
+     * 头部信息
+     */
+    private String header;
+
+    /**
+     * 参数
+     */
+    private String param;
+
+    /**
+     * 路径
+     */
+    private String path;
+
+    /**
+     * 位置
+     */
+    private String location;
 
 }

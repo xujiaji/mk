@@ -34,29 +34,25 @@ public class MkLogServiceImpl extends BaseServiceImpl<MkLogMapper, MkLog> implem
     @Override
     public void addLog(Status type, String content, @Nullable Long userId, @Nullable HttpServletRequest request) {
         val mkLog = new MkLog();
-        val sb = new StringBuilder();
         if (request != null) {
             String loginIp = ipUtil.getClientIpAddress(request);
             if (loginIp != null && loginIp.contains(":")) {
                 loginIp = loginIp.substring(0, loginIp.indexOf(":"));
             }
-            sb.append("IP：").append(loginIp).append("，位置：").append(ipUtil.getCityInfo(loginIp)).append("，路径：").append(request.getRequestURI());
+            mkLog.setIp(loginIp);
+            mkLog.setLocation(ipUtil.getCityInfo(loginIp));
+            mkLog.setPath(request.getRequestURI());
             val qs = request.getQueryString();
             if (StrUtil.isNotBlank(qs)) {
-                sb.append("?").append(qs);
+                mkLog.setPath(mkLog.getPath() + "?" + qs);
             }
-            sb.append("\nUA：").append(request.getHeader("User-Agent")).append("\n")
-                    .append("方式：").append(request.getMethod()).append("\n")
-                    .append("头部：").append(JSONUtil.toJsonStr(ServletUtil.getHeaderMap(request))).append("\n")
-                    .append("参数：").append(JSONUtil.toJsonStr(ServletUtil.getParamMap(request))).append("\n");
+            mkLog.setUa(request.getHeader("User-Agent"));
+            mkLog.setMethod(request.getMethod());
+            mkLog.setHeader(JSONUtil.toJsonStr(ServletUtil.getHeaderMap(request)));
+            mkLog.setParam(JSONUtil.toJsonStr(ServletUtil.getParamMap(request)));
         }
-        sb
-                .append("内容：")
-                .append("\n-------------------\n")
-                .append(content)
-                .append("\n-------------------");
+        mkLog.setContent(content);
         mkLog.setType(type.getCode());
-        mkLog.setContent(sb.toString());
         mkLog.setUserId(userId);
         add(mkLog);
     }

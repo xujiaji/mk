@@ -33,7 +33,7 @@ public class MkLog extends BaseEntity {
     /**
      * 日志类型
      */
-    private Integer logType;
+    private Integer type;
 
 
 }

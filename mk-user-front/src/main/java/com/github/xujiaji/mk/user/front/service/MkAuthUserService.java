@@ -4,13 +4,6 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
-import com.aliyuncs.CommonRequest;
-import com.aliyuncs.CommonResponse;
-import com.aliyuncs.DefaultAcsClient;
-import com.aliyuncs.IAcsClient;
-import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.http.MethodType;
-import com.aliyuncs.profile.DefaultProfile;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.base.Status;
@@ -22,8 +15,12 @@ import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
 import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.user.dto.ThirdBindStatusDTO;
 import com.github.xujiaji.mk.user.entity.MkSms;
-import com.github.xujiaji.mk.user.front.dto.*;
+import com.github.xujiaji.mk.user.front.dto.AppleKeys;
+import com.github.xujiaji.mk.user.front.dto.QQLoginDTO;
+import com.github.xujiaji.mk.user.front.dto.WXLoginDTO;
+import com.github.xujiaji.mk.user.front.dto.WXMiniLoginDTO;
 import com.github.xujiaji.mk.user.front.payload.*;
+import com.github.xujiaji.mk.user.front.util.Sms253Util;
 import com.github.xujiaji.mk.user.front.util.WXBizDataCrypt;
 import com.github.xujiaji.mk.user.service.impl.MkSmsServiceImpl;
 import com.github.xujiaji.mk.user.service.impl.MkUserIdNumberServiceImpl;
@@ -69,6 +66,7 @@ public class MkAuthUserService extends MkUserServiceImpl {
     private final MkCommonServiceImpl mkCommonService;
     private final RedisUtil redisUtil;
     private final MkSmsServiceImpl mkSmsService;
+    private final Sms253Util sms253Util;
 
     /**
      * 创建用户
@@ -377,66 +375,22 @@ public class MkAuthUserService extends MkUserServiceImpl {
     }
 
     public void sendSms(SmsCondition smsRequest) {
-        String templateCodeKey = null;
         switch (smsRequest.getType()) {
-            case Consts.Sms.NORMAL:
-                templateCodeKey = Consts.ConfigKey.smsTemplateNormal;
-                break;
             case Consts.Sms.REGISTER:
                 if (baseMapper.isExistMobile(smsRequest.getMobile())) {
                     throw new StatusException(Status.ERROR_PHONE_REGISTERED);
                 }
-                templateCodeKey = Consts.ConfigKey.smsTemplateRegister;
-                break;
-            case Consts.Sms.LOGIN:
-                templateCodeKey = Consts.ConfigKey.smsTemplateLogin;
-                break;
-            case Consts.Sms.MODIFY:
-                templateCodeKey = Consts.ConfigKey.smsTemplateModify;
                 break;
             case Consts.Sms.MODIFY_MOBILE:
                 if (baseMapper.isExistMobile(smsRequest.getMobile())) {
                     throw new StatusException(Status.ERROR_PHONE_BOUND);
                 }
-                templateCodeKey = Consts.ConfigKey.smsTemplateModifyPhone;
-                break;
-            default:
                 break;
         }
 
         // 生成验证码
         final String code = String.valueOf(new Random().nextInt(8999) + 1000);
-        DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", mkCommonService.valueByKey(Consts.ConfigKey.aliSmsKey), mkCommonService.valueByKey(Consts.ConfigKey.aliSmsSecret));
-        IAcsClient client = new DefaultAcsClient(profile);
-        CommonRequest request = new CommonRequest();
-        request.setSysMethod(MethodType.POST);
-        request.setSysDomain("dysmsapi.aliyuncs.com");
-        request.setSysVersion("2017-05-25");
-        request.setSysAction("SendSms");
-        request.putQueryParameter("RegionId", "cn-hangzhou");
-        request.putQueryParameter("PhoneNumbers", smsRequest.getMobile());
-        request.putQueryParameter("SignName", mkCommonService.valueByKey(Consts.ConfigKey.aliSmsSignName));
-        request.putQueryParameter("TemplateCode", mkCommonService.valueByKey(templateCodeKey));
-        request.putQueryParameter("TemplateParam",
-                String.format("{" +
-                                "\"phone\": \"%s\", " +
-                                "\"code\": \"%s\", " +
-                                "\"product\": \"dsd\"}",
-                        smsRequest.getMobile(), code));
-        request.putQueryParameter("SmsUpExtendCode", "1234567");
-        request.putQueryParameter("OutId", "yourOutId");
-        CommonResponse response = null;
-        try {
-            response = client.getCommonResponse(request);
-        } catch (ClientException e) {
-            e.printStackTrace();
-            throw new RequestActionException("验证码发送请求失败");
-        }
-        log.info("短信发送结果：{}", response.getData());
-        val aliSmsModel = JSONUtil.toBean(response.getData(), AliSmsDTO.class);
-        if (!"OK".equals(aliSmsModel.getCode())) {
-            throw new RequestActionException("验证码发送失败");
-        }
+        sms253Util.sendMsgCode(smsRequest.getType(), smsRequest.getMobile(), code);
         val mkSms = new MkSms();
         mkSms.setCode(Integer.valueOf(code));
         mkSms.setMobile(smsRequest.getMobile());

@@ -182,6 +182,26 @@ public interface Consts {
          * android包名
          */
         String androidBundleId = "androidBundleId";
+
+        /**
+         * 253短信平台配置密码
+         */
+        String sms253Account = "sms253Account";
+
+        /**
+         * 253短信平台给予的用于发送短信的请求
+         */
+        String sms253SendUrl = "sms253SendUrl";
+
+        /**
+         * 253短信平台配置密码
+         */
+        String sms253Password = "sms253Password";
+
+        /**
+         * 253短信平台名字签名
+         */
+        String sms253SignName = "sms253SignName";
     }
 
     /**

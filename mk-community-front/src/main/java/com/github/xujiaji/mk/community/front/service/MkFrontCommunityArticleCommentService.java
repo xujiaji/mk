@@ -37,7 +37,7 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
 
     public void commentAdd(Long userId, ArticleCommentAddCondition request) {
         val comment = new MkCommunityComment();
-        comment.setRootId(request.getArticleId());
+
         // 如果是回复
         MkCommunityComment replyComment = null;
         if (request.getReplyId() != null) {
@@ -48,6 +48,9 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
             }
             comment.setParentId(replyComment.getParentId());
             comment.setReplyId(request.getReplyId());
+            comment.setRootId(replyComment.getRootId());
+        } else {
+            comment.setRootId(request.getArticleId());
         }
         comment.setUserId(userId);
         comment.setContent(request.getContent());
@@ -56,10 +59,10 @@ public class MkFrontCommunityArticleCommentService extends MkCommunityArticleSer
         if (request.getReplyId() == null) {
             comment.setParentId(comment.getId());
             commentService.updateById(comment);
-            noticeService.addNotice(userId, articleMapper.selectAuthorIdByArticleId(request.getArticleId()), request.getArticleId(), comment.getId(), Consts.NoticeType.ARTICLE_COMMENT);
+            noticeService.addNotice(userId, articleMapper.selectAuthorIdByArticleId(comment.getRootId()), comment.getRootId(), comment.getId(), Consts.NoticeType.ARTICLE_COMMENT);
         } else {
             assert replyComment != null;
-            noticeService.addNotice(userId, replyComment.getUserId(), request.getArticleId(), comment.getId(), Consts.NoticeType.COMMENT_REPLY);
+            noticeService.addNotice(userId, replyComment.getUserId(), comment.getRootId(), comment.getId(), Consts.NoticeType.COMMENT_REPLY);
         }
     }
 

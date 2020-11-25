@@ -16,7 +16,6 @@ public class ArticleCommentAddCondition {
     /**
      * 评论的帖子id
      */
-    @NotNull(message = "评论的帖子id不能为空")
     private Long articleId;
 
     /**

@@ -15,13 +15,14 @@
             cc.content content,
             cn.to_user_id target_user_id,
             u2.nickname target_nickname,
-            IF(cn.type = 0,CONCAT('#', ca.title, '#', '\n',IF(ca.content IS NULL, '', ca.content)),cc.content) target_content
+            IF(cn.type = 0,CONCAT('#', ca.title, '#', '\n',IF(ca.content IS NULL, '', ca.content)),ccp.content) target_content
         FROM mk_community_notice cn
                  LEFT JOIN mk_user u ON cn.from_user_id = u.id
                  LEFT JOIN mk_user u2 ON cn.to_user_id = u2.id
                  LEFT JOIN mk_file f ON u.avatar = f.id
                  LEFT JOIN mk_community_article ca ON ca.id = cn.article_id
                  LEFT JOIN mk_community_comment cc ON cc.id = cn.comment_id
+                 LEFT JOIN mk_community_comment ccp ON ccp.id = cc.parent_id
         WHERE cn.to_user_id = ${userId} AND (cn.type = 0 OR cn.type = 1) ORDER BY cn.create_time DESC
     </select>
     <select id="selectCollectAndPraiseNotice"

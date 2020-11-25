@@ -4,6 +4,7 @@ package com.github.xujiaji.mk.community.front.controller;
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
 import com.github.xujiaji.mk.common.base.Consts;
+import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.community.dto.FrontArticleCommentDTO;
@@ -38,6 +39,9 @@ public class MkFrontCommunityArticleCommentController extends BaseController {
      */
     @PostMapping
     public ApiResponse<?> commentAdd(@RequestBody @Valid ArticleCommentAddCondition request) {
+        if (request.getArticleId() == null && request.getReplyId() == null) {
+            throw new RequestActionException("article id 和 reply id 必须要有一个");
+        }
         val userId = userUtil.currentUserIdNotNull();
         articleCommentService.commentAdd(userId, request);
         return successMessage("评论成功");

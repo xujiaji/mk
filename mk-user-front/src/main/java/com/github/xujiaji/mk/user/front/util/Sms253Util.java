@@ -23,17 +23,17 @@ public class Sms253Util {
         String content = null;
         switch (type) {
             case Consts.Sms.NORMAL:
-                content = "您的验证码：%s，请在10分钟内按提示输入验证码";
+                content = "请在10分钟内按提示输入验证码";
                 break;
             case Consts.Sms.REGISTER:
-                content = "验证码：%s，您正在注册成为新用户，感谢您的支持！";
+                content = "您正在注册成为新用户，感谢您的支持！";
                 break;
             case Consts.Sms.LOGIN:
-                content = "验证码：%s，您正在登录，若非本人操作，请勿泄露。";
+                content = "您正在登录，若非本人操作，请勿泄露。";
                 break;
             case Consts.Sms.MODIFY:
             case Consts.Sms.MODIFY_MOBILE:
-                content = "验证码：%s，您正在尝试变更重要信息，请妥善保管账户信息。";
+                content = "您正在尝试变更重要信息，请妥善保管账户信息。";
                 break;
             default:
                 break;
@@ -48,7 +48,7 @@ public class Sms253Util {
         val requestData = MapUtil.<String, Object>builder()
                 .put("account", commonService.valueByKey(Consts.ConfigKey.sms253Account))
                 .put("password", commonService.valueByKey(Consts.ConfigKey.sms253Password)) // 用户密码，必填
-                .put("msg", String.format("【%s】%s", commonService.valueByKey(Consts.ConfigKey.sms253SignName), content)) // 短信内容。长度不能超过536个字符，必填
+                .put("msg", String.format("【%s】您的验证码：%s，%s", commonService.valueByKey(Consts.ConfigKey.sms253SignName), code, content)) // 短信内容。长度不能超过536个字符，必填
                 .put("phone", mobile) // 机号码。多个手机号码使用英文逗号分隔，必填
                 .put("report", report) // 是否需要状态报告（默认false），选填
                 .build();

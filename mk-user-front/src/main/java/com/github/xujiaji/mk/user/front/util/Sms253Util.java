@@ -47,10 +47,18 @@ public class Sms253Util {
 
         val requestData = MapUtil.<String, Object>builder()
                 .put("account", commonService.valueByKey(Consts.ConfigKey.sms253Account))
-                .put("password", commonService.valueByKey(Consts.ConfigKey.sms253Password)) // 用户密码，必填
-                .put("msg", String.format("【%s】您的验证码：%s，%s", commonService.valueByKey(Consts.ConfigKey.sms253SignName), code, content)) // 短信内容。长度不能超过536个字符，必填
-                .put("phone", mobile) // 机号码。多个手机号码使用英文逗号分隔，必填
-                .put("report", report) // 是否需要状态报告（默认false），选填
+                // 用户密码，必填
+                .put("password", commonService.valueByKey(Consts.ConfigKey.sms253Password))
+                // 短信内容。长度不能超过536个字符，必填
+                .put("msg", String.format("【%s】您的验证码：%s，%s", commonService.valueByKey(Consts.ConfigKey.sms253SignName), code, content))
+                // 机号码。多个手机号码使用英文逗号分隔，必填
+                .put("phone", mobile)
+                // 定时发送短信时间。格式为yyyyMMddHHmm，值小于或等于当前时间则立即发送，默认立即发送，选填
+                .put("sendtime", null)
+                // 是否需要状态报告（默认false），选填
+                .put("report", report)
+                // 下发短信号码扩展码，纯数字，建议1-3位，选填
+                .put("extend", null)
                 .build();
 
 
@@ -58,7 +66,7 @@ public class Sms253Util {
 
         System.out.println("before request string is: " + requestJson);
 
-        String response = HttpUtil.post(smsSingleRequestServerUrl, requestData);
+        String response = HttpUtil.post(smsSingleRequestServerUrl, requestJson);
 
         System.out.println("response after request result is :" + response);
 

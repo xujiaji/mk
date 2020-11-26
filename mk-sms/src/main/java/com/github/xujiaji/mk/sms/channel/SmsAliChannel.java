@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.user.front.util;
+package com.github.xujiaji.mk.sms.channel;
 
 import cn.hutool.json.JSONUtil;
 import com.aliyuncs.CommonRequest;
@@ -11,21 +11,19 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
-import com.github.xujiaji.mk.user.front.dto.AliSmsDTO;
+import com.github.xujiaji.mk.sms.dto.AliSmsDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * @author jiajixu
  * @date 2020/11/25 11:10
  */
 @Slf4j
-@Component
-public class SmsAliUtil {
-    @Autowired
-    private MkCommonServiceImpl commonService;
+@RequiredArgsConstructor
+public class SmsAliChannel implements ISmsChannel {
+    private final MkCommonServiceImpl commonService;
 
     public void sendMsgCode(int type, String mobile, String code) {
 

@@ -1,11 +1,10 @@
-package com.github.xujiaji.mk.user.mapper;
+package com.github.xujiaji.mk.sms.mapper;
 
-import com.github.xujiaji.mk.user.entity.MkSms;
+import com.github.xujiaji.mk.common.entity.MkSms;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * <p>
@@ -13,7 +12,7 @@ import java.util.List;
  * </p>
  *
  * @author xujiaji
- * @since 2020-11-04
+ * @since 2020-11-26
  */
 public interface MkSmsMapper extends BaseMapper<MkSms> {
 

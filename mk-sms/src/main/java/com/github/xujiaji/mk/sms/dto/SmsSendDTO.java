@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.user.front.dto;
+package com.github.xujiaji.mk.sms.dto;
 
 import lombok.Data;
 import lombok.ToString;

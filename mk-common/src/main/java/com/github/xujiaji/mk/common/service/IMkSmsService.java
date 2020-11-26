@@ -1,7 +1,8 @@
-package com.github.xujiaji.mk.user.service;
+package com.github.xujiaji.mk.common.service;
 
-import com.github.xujiaji.mk.user.entity.MkSms;
+
 import com.github.xujiaji.mk.common.base.BaseIService;
+import com.github.xujiaji.mk.common.entity.MkSms;
 
 /**
  * <p>
@@ -9,7 +10,7 @@ import com.github.xujiaji.mk.common.base.BaseIService;
  * </p>
  *
  * @author xujiaji
- * @since 2020-11-04
+ * @since 2020-11-26
  */
 public interface IMkSmsService extends BaseIService<MkSms> {
 
@@ -21,4 +22,11 @@ public interface IMkSmsService extends BaseIService<MkSms> {
      * @return 是否过期
      */
     boolean isValid(String mobile, int type, int code);
+
+    /**
+     * 发送验证码
+     * @param mobile 手机号
+     * @param type 验证码类型
+     */
+    void sendSms(String mobile, int type);
 }

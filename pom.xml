@@ -45,6 +45,9 @@
 		<module>mk-log-admin</module>
 		<module>mk-log-front</module>
 
+		<module>mk-sms</module>
+		<module>mk-sms-admin</module>
+		<module>mk-sms-front</module>
 	</modules>
 
 

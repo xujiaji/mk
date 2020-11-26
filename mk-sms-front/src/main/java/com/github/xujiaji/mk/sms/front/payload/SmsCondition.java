@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.user.front.payload;
+package com.github.xujiaji.mk.sms.front.payload;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;

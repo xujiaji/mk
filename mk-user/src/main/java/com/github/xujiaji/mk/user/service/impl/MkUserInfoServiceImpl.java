@@ -11,7 +11,6 @@ import com.github.xujiaji.mk.user.mapper.MkUserLoginLogMapper;
 import com.github.xujiaji.mk.user.mapper.MkUserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -70,5 +69,10 @@ public class MkUserInfoServiceImpl implements IUserInfoService {
     @Override
     public MkUserLoginLog lastLoginLogBy(Long userId) {
         return mkUserLoginLogMapper.lastLoginLogBy(userId);
+    }
+
+    @Override
+    public boolean isExistMobile(String mobile) {
+        return mkUserMapper.isExistMobile(mobile);
     }
 }

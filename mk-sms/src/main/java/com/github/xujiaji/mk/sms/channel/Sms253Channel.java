@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.user.front.util;
+package com.github.xujiaji.mk.sms.channel;
 
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.http.HttpUtil;
@@ -6,17 +6,14 @@ import cn.hutool.json.JSONUtil;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
-import com.github.xujiaji.mk.user.front.dto.SmsSendDTO;
+import com.github.xujiaji.mk.sms.dto.SmsSendDTO;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-@Component
-public class Sms253Util {
+@RequiredArgsConstructor
+public class Sms253Channel implements ISmsChannel {
 
-    @Autowired
-    private MkCommonServiceImpl commonService;
-
+    private final MkCommonServiceImpl commonService;
 
     public void sendMsgCode(int type, String mobile, String code) {
         //短信内容

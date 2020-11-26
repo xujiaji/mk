@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.user.controller;
+package com.github.xujiaji.mk.sms.controller;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +12,7 @@ import com.github.xujiaji.mk.common.base.BaseController;
  * </p>
  *
  * @author xujiaji
- * @since 2020-11-04
+ * @since 2020-11-26
  */
 @RestController
 @RequestMapping("/mk-sms")

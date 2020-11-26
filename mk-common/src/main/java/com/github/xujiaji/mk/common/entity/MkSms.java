@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.user.entity;
+package com.github.xujiaji.mk.common.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.github.xujiaji.mk.common.entity.BaseEntity;
@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author xujiaji
- * @since 2020-11-04
+ * @since 2020-11-26
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

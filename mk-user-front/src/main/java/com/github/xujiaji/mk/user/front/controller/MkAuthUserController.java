@@ -17,7 +17,6 @@ import com.github.xujiaji.mk.user.dto.ThirdBindStatusDTO;
 import com.github.xujiaji.mk.user.front.payload.*;
 import com.github.xujiaji.mk.user.front.service.MkAuthUserService;
 import com.github.xujiaji.mk.user.front.vo.LoginSuccessVO;
-import com.github.xujiaji.mk.user.front.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -150,24 +149,6 @@ public class MkAuthUserController extends BaseController {
     public ApiResponse<?> unBindThirdLogin(@Pattern(regexp = "[126]", message = "没有这个类型") String type) {
         authUserService.unBindThirdLogin(type, userUtil.currentUserIdNotNull());
         return successMessage("解绑成功");
-    }
-
-    /**
-     * 发送验证码
-     */
-    @PostMapping("/sms/send")
-    public ApiResponse<?> sendSms(@RequestBody @Valid SmsCondition request) {
-        authUserService.sendSms(request);
-        return ApiResponse.ofSuccess();
-    }
-
-    /**
-     * 发送修改信息验证码
-     */
-    @PostMapping("/sms/send/modify")
-    public ApiResponse<?> sendSmsModify() {
-        authUserService.sendSmsModify(userUtil.currentUserIdNotNull());
-        return ApiResponse.ofSuccess();
     }
 
     /**

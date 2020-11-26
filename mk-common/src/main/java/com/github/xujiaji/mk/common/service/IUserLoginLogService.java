@@ -1,7 +1,5 @@
 package com.github.xujiaji.mk.common.service;
 
-import com.github.xujiaji.mk.common.entity.MkUser;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**

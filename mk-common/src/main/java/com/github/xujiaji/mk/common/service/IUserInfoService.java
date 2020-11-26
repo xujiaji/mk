@@ -56,4 +56,9 @@ public interface IUserInfoService {
      * @return
      */
     MkUserLoginLog lastLoginLogBy(Long userId);
+
+    /**
+     * 是否有人注册了这个手机号
+     */
+    boolean isExistMobile(String mobile);
 }

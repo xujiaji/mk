@@ -10,19 +10,17 @@ import com.github.xujiaji.mk.common.base.Status;
 import com.github.xujiaji.mk.common.entity.MkUser;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.exception.StatusException;
+import com.github.xujiaji.mk.common.service.IMkSmsService;
 import com.github.xujiaji.mk.common.service.IPasswordService;
 import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
 import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.user.dto.ThirdBindStatusDTO;
-import com.github.xujiaji.mk.user.entity.MkSms;
 import com.github.xujiaji.mk.user.front.dto.AppleKeys;
 import com.github.xujiaji.mk.user.front.dto.QQLoginDTO;
 import com.github.xujiaji.mk.user.front.dto.WXLoginDTO;
 import com.github.xujiaji.mk.user.front.dto.WXMiniLoginDTO;
 import com.github.xujiaji.mk.user.front.payload.*;
-import com.github.xujiaji.mk.user.front.util.Sms253Util;
 import com.github.xujiaji.mk.user.front.util.WXBizDataCrypt;
-import com.github.xujiaji.mk.user.service.impl.MkSmsServiceImpl;
 import com.github.xujiaji.mk.user.service.impl.MkUserIdNumberServiceImpl;
 import com.github.xujiaji.mk.user.service.impl.MkUserServiceImpl;
 import io.jsonwebtoken.*;
@@ -44,7 +42,6 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -65,8 +62,7 @@ public class MkAuthUserService extends MkUserServiceImpl {
     private final IPasswordService passwordService;
     private final MkCommonServiceImpl mkCommonService;
     private final RedisUtil redisUtil;
-    private final MkSmsServiceImpl mkSmsService;
-    private final Sms253Util sms253Util;
+    private final IMkSmsService mkSmsService;
 
     /**
      * 创建用户
@@ -364,38 +360,6 @@ public class MkAuthUserService extends MkUserServiceImpl {
                 throw new RuntimeException("没有这个登录类型");
         }
         editById(user);
-    }
-
-    public void sendSmsModify(Long userId) {
-        val user = getById(userId);
-        val smsCondition = new SmsCondition();
-        smsCondition.setMobile(user.getPhone());
-        smsCondition.setType(Consts.Sms.MODIFY);
-        sendSms(smsCondition);
-    }
-
-    public void sendSms(SmsCondition smsRequest) {
-        switch (smsRequest.getType()) {
-            case Consts.Sms.REGISTER:
-                if (baseMapper.isExistMobile(smsRequest.getMobile())) {
-                    throw new StatusException(Status.ERROR_PHONE_REGISTERED);
-                }
-                break;
-            case Consts.Sms.MODIFY_MOBILE:
-                if (baseMapper.isExistMobile(smsRequest.getMobile())) {
-                    throw new StatusException(Status.ERROR_PHONE_BOUND);
-                }
-                break;
-        }
-
-        // 生成验证码
-        final String code = String.valueOf(new Random().nextInt(8999) + 1000);
-        sms253Util.sendMsgCode(smsRequest.getType(), smsRequest.getMobile(), code);
-        val mkSms = new MkSms();
-        mkSms.setCode(Integer.valueOf(code));
-        mkSms.setMobile(smsRequest.getMobile());
-        mkSms.setType(smsRequest.getType());
-        mkSmsService.add(mkSms);
     }
 
     /**

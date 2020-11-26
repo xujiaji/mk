@@ -29,8 +29,10 @@ public class Sms253Channel implements ISmsChannel {
                 content = "您正在登录，若非本人操作，请勿泄露。";
                 break;
             case Consts.Sms.MODIFY:
-            case Consts.Sms.MODIFY_MOBILE:
                 content = "您正在尝试变更重要信息，请妥善保管账户信息。";
+                break;
+            case Consts.Sms.MODIFY_MOBILE:
+                content = "您正在尝试修改手机号，请妥善保管账户信息。";
                 break;
             default:
                 break;

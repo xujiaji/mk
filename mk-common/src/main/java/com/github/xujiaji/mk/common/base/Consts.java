@@ -63,6 +63,17 @@ public interface Consts {
      * 数据库中配置的key
      */
     interface ConfigKey {
+
+        /**
+         * api接口基础url
+         */
+        String baseApiUrl = "baseApiUrl";
+
+        /**
+         * 服务器ip地址
+         */
+        String serverIp = "serverIp";
+
         /**
          * 基础文件存放路径
          */
@@ -117,6 +128,11 @@ public interface Consts {
          * 微信小程序secret
          */
         String wxMiniSecret = "wxMiniSecret";
+
+        /**
+         * 微信商户好
+         */
+        String wxMerchant = "wxMerchant";
 
         /**
          * 短信模版-普通
@@ -202,6 +218,26 @@ public interface Consts {
          * 253短信平台名字签名
          */
         String sms253SignName = "sms253SignName";
+
+        /**
+         * 支付宝appid
+         */
+        String aliAppId = "aliAppId";
+
+        /**
+         * 支付宝私钥
+         */
+        String aliPrivateKey = "aliPrivateKey";
+
+        /**
+         * 支付宝公钥
+         */
+        String aliPublicKey = "aliPublicKey";
+
+        /**
+         * 支付宝网关
+         */
+        String aliGatewayUrl = "aliGatewayUrl";
     }
 
     /**
@@ -324,5 +360,51 @@ public interface Consts {
         int COMMENT_PRAISE = 3;
         int ARTICLE_COLLECT = 4;
         int COMMENT_COLLECT = 5;
+    }
+
+    /**
+     * 充值类型
+     */
+    interface Pay {
+        /**
+         * 支付类型1 QQ，2微信，3支付宝，4iOS
+         */
+        interface Type {
+            int QQ = 1;
+            int WX = 2;
+            int ALI = 3;
+            int IOS = 4;
+        }
+
+        /**
+         * 支付状态0未支付，1已支付，2已退款
+         */
+        interface State {
+            int UNPAID = 0;
+            int PAID = 1;
+            int REFUND = 2;
+        }
+
+        /**
+         * 交易类型1app，2h5，3快应用，4微信小程序
+         */
+        interface TradeType {
+            int APP = 1;
+            int H5 = 2;
+            int QUICK_APP = 3;
+            int WX_MINI_APP = 4;
+        }
+
+        interface Notify {
+            /**
+             * 支付宝支付成功回调地址
+             */
+            String ALI_URL_PATH = "/pay/ali/notify";
+
+            /**
+             * 微信支付成功回调地址
+             */
+            String WX_URL_PATH = "/pay/wx/notify";
+        }
     }
 }

@@ -7,6 +7,7 @@
 
     <select id="selectCommentNotice" resultType="com.github.xujiaji.mk.community.dto.FrontCommentNoticeDTO">
         SELECT
+            cc.parent_id comment_id,
             cn.*,
             cn.from_user_id user_id,
             IF(f.state = 0, f.path, NULL) avatar,

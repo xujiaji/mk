@@ -4,7 +4,6 @@ import cn.hutool.core.lang.Snowflake;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.entity.MkUser;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.service.impl.MkCommonServiceImpl;
@@ -72,6 +71,7 @@ public class MkIOSPay extends BaseMkPay {
             String transaction_id = currentTransaction.get("transaction_id").toString();
 
             val payId = snowflake.nextId();
+            // TODO: 12/1/20 iOS内购需要通过product_id查询对应产品
 //            createPay(payId, Consts.Pay.TradeType.APP, user.getId(), );
             paySuccess(String.valueOf(payId), null);
 

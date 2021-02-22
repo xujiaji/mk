@@ -64,7 +64,9 @@ public class GlobalExceptionHandler {
         String msg = "";
         Status status = null;
         try {
+            log.info("异常： " + e.getClass().getSimpleName());
             if (first.isPresent()) {
+                log.info("匹配到异常 first.isPresent()");
                 val handler = first.get();
                 msg = handler.errMessage(e);
                 status = handler.errStatus(e);

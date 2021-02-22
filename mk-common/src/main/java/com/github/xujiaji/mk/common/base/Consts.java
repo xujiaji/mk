@@ -399,12 +399,12 @@ public interface Consts {
             /**
              * 支付宝支付成功回调地址
              */
-            String ALI_URL_PATH = "/pay/ali/notify";
+            String ALI_URL_PATH = "/front/pay/ali/notify";
 
             /**
              * 微信支付成功回调地址
              */
-            String WX_URL_PATH = "/pay/wx/notify";
+            String WX_URL_PATH = "/front/pay/wx/notify";
         }
     }
 }

@@ -53,21 +53,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        if (mkSecurityConfig.getEnableApiVersion()) {
-            // 当前接口的版本号
-            final String version = jwtUtil.getVersion(request);
-
-            if (StrUtil.isBlank(version)) {
-                ResponseUtil.renderJson(response, Status.NOT_VERSION, null);
-                logService.addLog(
-                        Status.NOT_VERSION,
-                        Status.NOT_VERSION.getMessage(),
-                        request);
-                return;
-            }
-        }
-
         if (mkSecurityConfig.getEnableApiRequestEncrypt() && needCheckApiRequestEncrypt(request)) {
+            if (mkSecurityConfig.getEnableApiVersion()) {
+                // 当前接口的版本号
+                final String version = jwtUtil.getVersion(request);
+
+                if (StrUtil.isBlank(version)) {
+                    ResponseUtil.renderJson(response, Status.NOT_VERSION, null);
+                    logService.addLog(
+                            Status.NOT_VERSION,
+                            Status.NOT_VERSION.getMessage(),
+                            request);
+                    return;
+                }
+            }
+
             // 当前接口的请求时间戳
             final String timestamp = jwtUtil.getTimestamp(request);
             // 当前接口的请求签名
@@ -115,6 +115,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .setAuthentication(authentication);
                 filterChain.doFilter(request, response);
             } catch (SecurityException e) {
+
                 logService.addLog(
                         Status.fromCode(e.getCode()),
                         e.getMessage(),

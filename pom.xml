@@ -15,7 +15,15 @@
 	</parent>
 	<groupId>com.github.xujiaji.mk</groupId>
 	<artifactId>mk</artifactId>
-	<version>0.0.5-beta2</version>
+	<version>${revision}</version>
+
+	<properties>
+		<java.version>1.8</java.version>
+		<mybatis.plus.version>3.4.0</mybatis.plus.version>
+		<jjwt.version>0.9.1</jjwt.version>
+		<project.version>0.4.4</project.version>
+		<revision>0.0.5-beta3</revision>
+	</properties>
 
 	<modules>
 		<module>common</module>
@@ -49,14 +57,6 @@
 		<module>sms-admin</module>
 		<module>sms-front</module>
 	</modules>
-
-
-	<properties>
-		<java.version>1.8</java.version>
-		<mybatis.plus.version>3.4.0</mybatis.plus.version>
-		<jjwt.veersion>0.9.1</jjwt.veersion>
-        <project.version>0.4.4</project.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -138,7 +138,7 @@
 			<dependency>
 				<groupId>io.jsonwebtoken</groupId>
 				<artifactId>jjwt</artifactId>
-				<version>${jjwt.veersion}</version>
+				<version>${jjwt.version}</version>
 			</dependency>
 
 			<dependency>
@@ -167,6 +167,121 @@
 				<version>1.0.1</version>
 			</dependency>
 
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>common</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>common-admin</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>community</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>community-front</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>community-admin</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>file</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>file-front</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>file-admin</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>log</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>log-front</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>log-admin</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>pay</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>pay-front</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>pay-admin</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>security</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>security-front</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>security-admin</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>sms</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>sms-front</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>sms-admin</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>user</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>user-front</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>user-admin</artifactId>
+				<version>${revision}</version>
+			</dependency>
 		</dependencies>
 
 	</dependencyManagement>

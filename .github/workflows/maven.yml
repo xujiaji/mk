@@ -44,5 +44,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GIT_RELEASE_TOKEN_MK }}
       run: |
-        name=$(cat ./common/pom.xml | grep '<version>' | awk -F '>' '{print $2}' | awk -F '<' '{print $1}')
+        name=$(cat ./pom.xml | grep '<revision>' | awk -F '>' '{print $2}' | awk -F '<' '{print $1}')
         hub release create -m "$name" "$name"

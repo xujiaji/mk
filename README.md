@@ -11,7 +11,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>common</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -21,7 +21,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>common-admin</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 </details>
@@ -35,7 +35,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>security</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -45,7 +45,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>security-front</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -55,7 +55,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>security-admin</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 </details>
@@ -69,7 +69,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>user</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -79,7 +79,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>user-front</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -89,7 +89,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>user-admin</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ``` 
 </details>
@@ -103,7 +103,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>community</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -113,7 +113,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>community-front</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -123,7 +123,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>community-admin</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```  
 </details>
@@ -137,7 +137,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>file</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -147,7 +147,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>file-front</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -157,7 +157,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>file-admin</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```  
 </details>
@@ -171,7 +171,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>log</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -181,7 +181,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>log-front</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -191,7 +191,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>log-admin</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```  
 </details>
@@ -205,7 +205,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>pay</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -215,7 +215,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>pay-front</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```
 
@@ -225,7 +225,7 @@
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
   <artifactId>pay-admin</artifactId>
-  <version>0.0.5-beta2</version>
+  <version>${revision}</version>
 </dependency>
 ```  
 </details>

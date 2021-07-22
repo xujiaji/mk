@@ -5,22 +5,22 @@
 <details>
   <summary>常用模块（基础模块）common</summary>
 
-1. `mk-common`
+1. `common`
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-common</artifactId>
+  <artifactId>common</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-2. `mk-common-admin`常用模块管理控制
+2. `common-admin`常用模块管理控制
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-common-admin</artifactId>
+  <artifactId>common-admin</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
@@ -29,32 +29,32 @@
 <details>
     <summary>安全模块 security</summary>
 
-1. `mk-security`
+1. `security`
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-security</artifactId>
+  <artifactId>security</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-2. `mk-security-front`前端安全模块
+2. `security-front`前端安全模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-security-front</artifactId>
+  <artifactId>security-front</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-3. `mk-security-admin`安全管理模块
+3. `security-admin`安全管理模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-security-admin</artifactId>
+  <artifactId>security-admin</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
@@ -63,32 +63,32 @@
 <details>
     <summary>用户模块 user</summary>
     
-1. `mk-user`
+1. `user`
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-user</artifactId>
+  <artifactId>user</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-2. `mk-user-front`前端用户模块
+2. `user-front`前端用户模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-user-front</artifactId>
+  <artifactId>user-front</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-3. `mk-auth-admin`用户管理模块
+3. `auth-admin`用户管理模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-user-admin</artifactId>
+  <artifactId>user-admin</artifactId>
   <version>0.0.4</version>
 </dependency>
 ``` 
@@ -97,32 +97,32 @@
 <details>
     <summary>圈子动态模块 community</summary>
    
-1. `mk-community`
+1. `community`
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-community</artifactId>
+  <artifactId>community</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-2. `mk-community-front`前端圈子动态模块
+2. `community-front`前端圈子动态模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-community-front</artifactId>
+  <artifactId>community-front</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-3. `mk-community-admin`圈子动态管理模块
+3. `community-admin`圈子动态管理模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-community-admin</artifactId>
+  <artifactId>community-admin</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```  
@@ -131,32 +131,32 @@
 <details>
     <summary>文件模块 file</summary>
     
-1. `mk-file`
+1. `file`
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-file</artifactId>
+  <artifactId>file</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-2. `mk-file-front`前端文件模块
+2. `file-front`前端文件模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-file-front</artifactId>
+  <artifactId>file-front</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-3. `mk-file-admin`文件管理模块
+3. `file-admin`文件管理模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-file-admin</artifactId>
+  <artifactId>file-admin</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```  
@@ -165,32 +165,32 @@
 <details>
     <summary>日志模块 log</summary>
     
-1. `mk-log`
+1. `log`
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-log</artifactId>
+  <artifactId>log</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-2. `mk-log-front`前端日志模块
+2. `log-front`前端日志模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-log-front</artifactId>
+  <artifactId>log-front</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-3. `mk-log-admin`日志管理模块
+3. `log-admin`日志管理模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-log-admin</artifactId>
+  <artifactId>log-admin</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```  
@@ -199,32 +199,32 @@
 <details>
     <summary>支付模块 pay</summary>
     
-1. `mk-pay`
+1. `pay`
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-pay</artifactId>
+  <artifactId>pay</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-2. `mk-pay-front`前端支付模块
+2. `pay-front`前端支付模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-pay-front</artifactId>
+  <artifactId>pay-front</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```
 
-3. `mk-pay-admin`支付管理模块
+3. `pay-admin`支付管理模块
 
 ``` xml
 <dependency>
   <groupId>com.github.xujiaji.mk</groupId>
-  <artifactId>mk-pay-admin</artifactId>
+  <artifactId>pay-admin</artifactId>
   <version>0.0.4</version>
 </dependency>
 ```  

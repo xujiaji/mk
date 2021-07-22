@@ -18,36 +18,36 @@
 	<version>0.0.4</version>
 
 	<modules>
-		<module>mk-common</module>
-		<module>mk-common-admin</module>
+		<module>common</module>
+		<module>common-admin</module>
 
-		<module>mk-pay</module>
-		<module>mk-pay-admin</module>
-		<module>mk-pay-front</module>
+		<module>pay</module>
+		<module>pay-admin</module>
+		<module>pay-front</module>
 
-		<module>mk-security</module>
-		<module>mk-security-admin</module>
-		<module>mk-security-front</module>
+		<module>security</module>
+		<module>security-admin</module>
+		<module>security-front</module>
 
-		<module>mk-file</module>
-		<module>mk-file-admin</module>
-		<module>mk-file-front</module>
+		<module>file</module>
+		<module>file-admin</module>
+		<module>file-front</module>
 
-		<module>mk-user</module>
-		<module>mk-user-admin</module>
-		<module>mk-user-front</module>
+		<module>user</module>
+		<module>user-admin</module>
+		<module>user-front</module>
 
-		<module>mk-community</module>
-		<module>mk-community-admin</module>
-		<module>mk-community-front</module>
+		<module>community</module>
+		<module>community-admin</module>
+		<module>community-front</module>
 
-		<module>mk-log</module>
-		<module>mk-log-admin</module>
-		<module>mk-log-front</module>
+		<module>log</module>
+		<module>log-admin</module>
+		<module>log-front</module>
 
-		<module>mk-sms</module>
-		<module>mk-sms-admin</module>
-		<module>mk-sms-front</module>
+		<module>sms</module>
+		<module>sms-admin</module>
+		<module>sms-front</module>
 	</modules>
 
 
@@ -55,6 +55,7 @@
 		<java.version>1.8</java.version>
 		<mybatis.plus.version>3.4.0</mybatis.plus.version>
 		<jjwt.veersion>0.9.1</jjwt.veersion>
+        <project.version>0.4.4</project.version>
 	</properties>
 
 	<dependencies>

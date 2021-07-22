@@ -25,6 +25,14 @@ jobs:
         server-username: ${{ secrets.OSSRH_USER }}
         server-password: ${{ secrets.OSSRH_PASSWORD }}
         gpg-passphrase: ${{ secrets.GPG_PASSWORD }}
+    - name: Cache .m2
+      uses: actions/cache@v2
+      env:
+        cache-name: cache-m2-1
+      with:
+        path: |
+          ~/.m2
+        key: ${{ runner.os }}-build-${{ env.cache-name }}
     - name: Publish to Maven Central Repo
       uses: samuelmeuli/action-maven-publish@v1
       with:

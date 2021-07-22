@@ -1,6 +1,6 @@
-package com.github.xujiaji.mk.user.service;
+package com.github.xujiaji.mk.version.service;
 
-import com.github.xujiaji.mk.user.entity.MkAppVersion;
+import com.github.xujiaji.mk.version.entity.MkAppVersion;
 import com.github.xujiaji.mk.common.base.BaseIService;
 
 /**

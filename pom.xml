@@ -22,7 +22,7 @@
 		<mybatis.plus.version>3.4.0</mybatis.plus.version>
 		<jjwt.version>0.9.1</jjwt.version>
 		<project.version>0.4.4</project.version>
-		<revision>0.0.5-beta3</revision>
+		<revision>0.0.5-beta4</revision>
 	</properties>
 
 	<modules>
@@ -56,6 +56,10 @@
 		<module>sms</module>
 		<module>sms-admin</module>
 		<module>sms-front</module>
+
+		<module>version</module>
+		<module>version-admin</module>
+		<module>version-front</module>
 	</modules>
 
 	<dependencies>
@@ -280,6 +284,21 @@
 			<dependency>
 				<groupId>com.github.xujiaji.mk</groupId>
 				<artifactId>user-admin</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>version</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>version-front</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xujiaji.mk</groupId>
+				<artifactId>version-admin</artifactId>
 				<version>${revision}</version>
 			</dependency>
 		</dependencies>

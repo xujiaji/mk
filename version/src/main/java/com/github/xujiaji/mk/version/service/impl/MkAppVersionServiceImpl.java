@@ -1,8 +1,8 @@
-package com.github.xujiaji.mk.user.service.impl;
+package com.github.xujiaji.mk.version.service.impl;
 
-import com.github.xujiaji.mk.user.entity.MkAppVersion;
-import com.github.xujiaji.mk.user.mapper.MkAppVersionMapper;
-import com.github.xujiaji.mk.user.service.IMkAppVersionService;
+import com.github.xujiaji.mk.version.entity.MkAppVersion;
+import com.github.xujiaji.mk.version.mapper.MkAppVersionMapper;
+import com.github.xujiaji.mk.version.service.IMkAppVersionService;
 import com.github.xujiaji.mk.common.base.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.github.xujiaji.mk.user.admin.controller;
+package com.github.xujiaji.mk.version.admin.controller;
 
 
 import cn.hutool.core.bean.BeanUtil;
@@ -6,10 +6,10 @@ import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
 import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.vo.PageVO;
-import com.github.xujiaji.mk.user.admin.payload.AppVersionAddCondition;
-import com.github.xujiaji.mk.user.admin.payload.AppVersionEditCondition;
-import com.github.xujiaji.mk.user.entity.MkAppVersion;
-import com.github.xujiaji.mk.user.service.impl.MkAppVersionServiceImpl;
+import com.github.xujiaji.mk.version.admin.payload.AppVersionAddCondition;
+import com.github.xujiaji.mk.version.admin.payload.AppVersionEditCondition;
+import com.github.xujiaji.mk.version.entity.MkAppVersion;
+import com.github.xujiaji.mk.version.service.impl.MkAppVersionServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

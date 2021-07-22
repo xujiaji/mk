@@ -1,9 +1,9 @@
-package com.github.xujiaji.mk.user.front.controller;
+package com.github.xujiaji.mk.version.front.controller;
 
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.BaseController;
-import com.github.xujiaji.mk.user.entity.MkAppVersion;
-import com.github.xujiaji.mk.user.service.impl.MkAppVersionServiceImpl;
+import com.github.xujiaji.mk.version.entity.MkAppVersion;
+import com.github.xujiaji.mk.version.service.impl.MkAppVersionServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

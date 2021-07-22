@@ -1,6 +1,6 @@
-package com.github.xujiaji.mk.user.mapper;
+package com.github.xujiaji.mk.version.mapper;
 
-import com.github.xujiaji.mk.user.entity.MkAppVersion;
+import com.github.xujiaji.mk.version.entity.MkAppVersion;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

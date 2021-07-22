@@ -229,3 +229,38 @@
 </dependency>
 ```  
 </details>
+
+
+<details>
+    <summary>版本控制模块 version</summary>
+
+1. `version`
+
+``` xml
+<dependency>
+  <groupId>com.github.xujiaji.mk</groupId>
+  <artifactId>version</artifactId>
+  <version>${revision}</version>
+</dependency>
+```
+
+2. `version-front`前端获取版本模块
+
+``` xml
+<dependency>
+  <groupId>com.github.xujiaji.mk</groupId>
+  <artifactId>version-front</artifactId>
+  <version>${revision}</version>
+</dependency>
+```
+
+3. `version-admin`版本管理模块
+
+``` xml
+<dependency>
+  <groupId>com.github.xujiaji.mk</groupId>
+  <artifactId>version-admin</artifactId>
+  <version>${revision}</version>
+</dependency>
+```  
+</details>

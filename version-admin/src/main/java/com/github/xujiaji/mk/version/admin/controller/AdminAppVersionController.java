@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 /**
- * 后端管理-App版本信息
+ * @menu 后端管理-App版本信息
  * @author jiajixu
  * @date 2020/6/28 10:25
  */

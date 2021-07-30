@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScans;
 		value = {
 				@ComponentScan("com.github.xujiaji.mk.*.util"),
 				@ComponentScan("com.github.xujiaji.mk.*.config"),
-				@ComponentScan("com.github.xujiaji.mk.*.controller")
+				@ComponentScan("com.github.xujiaji.mk.**.controller")
 		}
 )
 public class MkVersionFrontApplication {

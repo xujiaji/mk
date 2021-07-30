@@ -36,6 +36,7 @@ public class MkSecAdminMonitorController {
     }
 
     /**
+     * 
      * 批量踢出在线用户
      *
      * @param names 用户名列表

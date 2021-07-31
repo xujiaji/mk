@@ -36,7 +36,7 @@ jobs:
     - name: Change revision to version
       run: |
         version=$(cat ./pom.xml | grep '<revision>' | awk -F '>' '{print $2}' | awk -F '<' '{print $1}')
-        sed -i '' "s/\${revision}/$version/g" ./*/pom.xml ./pom.xml
+        sed -i "s/\${revision}/$version/g" ./*/pom.xml ./pom.xml
     - name: Publish to Maven Central Repo
       uses: samuelmeuli/action-maven-publish@v1
       with:

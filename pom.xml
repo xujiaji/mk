@@ -21,46 +21,21 @@
 		<mybatis.plus.version>3.4.0</mybatis.plus.version>
 		<jjwt.version>0.9.1</jjwt.version>
 		<project.version>0.4.4</project.version>
-		<revision>1.0.0-beta2</revision>
+		<revision>1.0.0-beta3</revision>
 	</properties>
 
 	<version>${revision}</version>
 
 	<modules>
-		<module>common</module>
-		<module>common-admin</module>
-
-		<module>pay</module>
-		<module>pay-admin</module>
-		<module>pay-front</module>
-
-		<module>security</module>
-		<module>security-admin</module>
-		<module>security-front</module>
-
-		<module>file</module>
-		<module>file-admin</module>
-		<module>file-front</module>
-
-		<module>user</module>
-		<module>user-admin</module>
-		<module>user-front</module>
-
-		<module>community</module>
-		<module>community-admin</module>
-		<module>community-front</module>
-
-		<module>log</module>
-		<module>log-admin</module>
-		<module>log-front</module>
-
-		<module>sms</module>
-		<module>sms-admin</module>
-		<module>sms-front</module>
-
-		<module>version</module>
-		<module>version-admin</module>
-		<module>version-front</module>
+		<module>mk-common</module>
+		<module>mk-community</module>
+		<module>mk-file</module>
+		<module>mk-pay</module>
+		<module>mk-log</module>
+		<module>mk-security</module>
+		<module>mk-sms</module>
+		<module>mk-user</module>
+		<module>mk-version</module>
 	</modules>
 
 	<dependencies>

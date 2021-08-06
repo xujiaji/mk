@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>pay-front</artifactId>
+	<name>pay-front</name>
+
+	<parent>
+		<artifactId>mk-pay</artifactId>
+		<groupId>com.github.xujiaji.mk</groupId>
+		<version>${revision}</version>
+	</parent>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.github.xujiaji.mk</groupId>
+			<artifactId>common</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.xujiaji.mk</groupId>
+			<artifactId>pay</artifactId>
+		</dependency>
+
+		<!--微信支付-->
+		<dependency>
+			<groupId>com.github.wxpay</groupId>
+			<artifactId>wxpay-sdk</artifactId>
+		</dependency>
+
+		<!-- 支付宝支付 SDK  -->
+		<dependency>
+			<groupId>com.alipay.sdk</groupId>
+			<artifactId>alipay-sdk-java</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.joda</groupId>
+			<artifactId>joda-money</artifactId>
+		</dependency>
+
+	</dependencies>
+
+</project>

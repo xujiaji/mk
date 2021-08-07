@@ -34,7 +34,10 @@ jobs:
           ~/.m2
         key: ${{ runner.os }}-build-${{ env.cache-name }}
     - name: Package
-      run: mvn clean package
+      run: |
+        version=$(cat ./pom.xml | grep '<revision>' | awk -F '>' '{print $2}' | awk -F '<' '{print $1}')
+        sed -i "s/\${revision}/$version/g" ./pom.xml
+        mvn clean package
     - name: Publish to Maven Central Repo
       uses: samuelmeuli/action-maven-publish@v1
       with:

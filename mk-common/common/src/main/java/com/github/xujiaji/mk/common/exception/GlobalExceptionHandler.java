@@ -35,7 +35,6 @@ import java.util.List;
  * </p>
  *
  */
-@RequiredArgsConstructor
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -45,9 +44,13 @@ public class GlobalExceptionHandler {
     private List<IExceptionHandler<?>> exceptionHandlers;
     @Autowired(required = false)
     private ILogService logService;
-    private final UserUtil userUtil;
+    @Autowired(required = false)
+    private UserUtil userUtil;
 
     private void add2Log(Status status, String message) {
+        if (userUtil == null || logService == null) {
+            return;
+        }
         HttpServletRequest request = null;
         if (RequestContextHolder.getRequestAttributes() != null) {
             request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();

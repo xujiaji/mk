@@ -21,7 +21,7 @@
 		<mybatis.plus.version>3.4.0</mybatis.plus.version>
 		<jjwt.version>0.9.1</jjwt.version>
 		<project.version>0.4.4</project.version>
-		<revision>1.0.0-beta6</revision>
+		<revision>1.0.0-beta7</revision>
 	</properties>
 
 	<version>${revision}</version>

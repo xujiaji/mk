@@ -25,10 +25,18 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
     /**
      * 检查是否更新数据成功
      */
-    public void checkUpdateSuccess(int updateResult) {
-        if (updateResult == Consts.NEGATIVE) {
-            throw new DBUpdateException();
+    public void checkUpdateSuccess(boolean updateResult) {
+        if (updateResult) {
+            return;
         }
+        throw new DBUpdateException();
+    }
+
+    /**
+     * 检查是否更新数据成功
+     */
+    public void checkUpdateSuccess(int updateResult) {
+        checkUpdateSuccess(updateResult > Consts.NEGATIVE);
     }
 
     /**

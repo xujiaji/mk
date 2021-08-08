@@ -1,9 +1,6 @@
 package com.github.xujiaji.mk.security.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.base.BaseIService;
-import com.github.xujiaji.mk.common.vo.PageVO;
-import com.github.xujiaji.mk.security.entity.MkAdminUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.playload.AdminAddCondition;
 import com.github.xujiaji.mk.security.playload.AdminEditCondition;
@@ -21,12 +18,6 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2020-10-23
  */
 public interface IMkSecUserService extends BaseIService<MkSecUser> {
-
-    /**
-     * 管理员列表
-     */
-    PageVO<MkAdminUser> adminUserPage(Page<MkSecUser> mapPage);
-
     /**
      * 管理员添加
      */

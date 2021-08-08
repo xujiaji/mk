@@ -10,16 +10,15 @@ import com.github.xujiaji.mk.common.payload.AdminStatusChangeCondition;
 import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
-import com.github.xujiaji.mk.security.playload.AdminEditCondition;
-import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
-import com.github.xujiaji.mk.security.util.SecurityUtil;
-import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
+import com.github.xujiaji.mk.security.admin.vo.MkSecAdminUserPrincipal;
 import com.github.xujiaji.mk.security.admin.vo.VerifyVO;
-import com.github.xujiaji.mk.security.entity.MkAdminUser;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.playload.AdminAddCondition;
+import com.github.xujiaji.mk.security.playload.AdminEditCondition;
+import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
 import com.github.xujiaji.mk.security.service.impl.MkSecUserServiceImpl;
-import com.github.xujiaji.mk.security.vo.UserPrincipal;
+import com.github.xujiaji.mk.security.util.SecurityUtil;
+import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.web.bind.annotation.*;
@@ -77,16 +76,16 @@ public class MkSecAdminUserController extends BaseController {
      * 管理员信息
      */
     @GetMapping("/info")
-    public ApiResponse<UserPrincipal> info() {
-        return success(SecurityUtil.getCurrentUser());
+    public ApiResponse<MkSecAdminUserPrincipal> info() {
+        return success((MkSecAdminUserPrincipal) SecurityUtil.getCurrentUser());
     }
 
     /**
      * 管理员列表
      */
     @GetMapping("/page")
-    public ApiResponse<PageVO<MkAdminUser>> adminUserPage(@Valid PageCondition request) {
-        return success(secUserService.adminUserPage(mapPage(request)));
+    public ApiResponse<PageVO<MkSecUser>> adminUserPage(@Valid PageCondition request) {
+        return successPage(secUserService.page(mapPage(request)));
     }
 
     /**

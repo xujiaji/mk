@@ -15,18 +15,18 @@ public class UserUtilImpl implements UserUtil {
     @Override
     public Long currentUserIdNotNull() {
         val currentUser = SecurityUtil.getCurrentUser();
-        if (currentUser == null || currentUser.getUserId() == null) {
+        if (currentUser == null || currentUser.getId() == null) {
             throw new RequestActionException("没有得到用户信息");
         }
-        return currentUser.getUserId();
+        return currentUser.getId();
     }
 
     @Override
     public Long currentUserIdNullable() {
         val currentUser = SecurityUtil.getCurrentUser();
-        if (currentUser == null || currentUser.getUserId() == null) {
+        if (currentUser == null || currentUser.getId() == null) {
             return null;
         }
-        return currentUser.getUserId();
+        return currentUser.getId();
     }
 }

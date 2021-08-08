@@ -49,7 +49,7 @@ public class MkSecAdminPermissionController extends BaseController {
      */
     @GetMapping("/user/tree")
     public ApiResponse<List<Map<String, Object>>> userTree() {
-        val currentSecUserId = SecurityUtil.getCurrentSecUserId();
+        val currentSecUserId = SecurityUtil.getCurrentUserId();
         val permissions = permissionService.userPermissions(currentSecUserId).stream().map(m -> {
             PermissionVO pv = BeanUtil.copyProperties(m, PermissionVO.class);
             pv.setMeta(PermissionMetaVO.builder()

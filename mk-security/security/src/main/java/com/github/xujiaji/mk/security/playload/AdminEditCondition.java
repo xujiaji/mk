@@ -13,9 +13,14 @@ import javax.validation.constraints.NotNull;
 public class AdminEditCondition {
 
     /**
+     * 管理员id
+     */
+    @NotNull(message = "要编辑的管理员id不能为空")
+    private Long id;
+
+    /**
      * 用户名
      */
-    @NotNull(message = "用户名不能为空")
     private String username;
 
     /**
@@ -26,7 +31,6 @@ public class AdminEditCondition {
     /**
      * 角色ID
      */
-    @NotNull(message = "角色不能为空")
     private Long roleId;
 
     /**

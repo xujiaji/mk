@@ -7,7 +7,7 @@ import com.github.xujiaji.mk.security.entity.MkSecPermission;
 import com.github.xujiaji.mk.security.entity.MkSecRole;
 import com.github.xujiaji.mk.security.mapper.MkSecPermissionMapper;
 import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
-import com.github.xujiaji.mk.security.vo.UserPrincipal;
+import com.github.xujiaji.mk.security.admin.vo.MkSecAdminUserPrincipal;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import lombok.RequiredArgsConstructor;
@@ -50,9 +50,8 @@ public class RbacAuthorityService {
         boolean hasPermission = false;
 
         if (userInfo instanceof UserDetails) {
-            UserPrincipal principal = (UserPrincipal) userInfo;
-            Long secUserId = principal.getSecUserId();
-            List<MkSecRole> roles = mkSecRoleMapper.selectBySecUserId(secUserId);
+            MkSecAdminUserPrincipal principal = (MkSecAdminUserPrincipal) userInfo;
+            List<MkSecRole> roles = mkSecRoleMapper.selectBySecUserId(principal.getId());
             List<Long> roleIds = roles.stream()
                     .map(MkSecRole::getId)
                     .collect(Collectors.toList());

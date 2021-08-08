@@ -12,5 +12,5 @@ import lombok.Data;
 public class AdminLoginSuccessVO {
     private String authorization;
     private String authorizationType;
-    private UserPrincipal user;
+    private MkSecUserDetails user;
 }

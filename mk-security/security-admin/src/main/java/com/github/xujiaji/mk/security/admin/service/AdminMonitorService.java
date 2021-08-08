@@ -6,12 +6,10 @@ import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.service.IUserInfoService;
 import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
-import com.github.xujiaji.mk.security.admin.vo.OnlineUser;
 import com.github.xujiaji.mk.security.config.JwtConfig;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
-import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,7 +37,7 @@ public class AdminMonitorService {
      * @param pageCondition 分页参数
      * @return 在线用户分页列表
      */
-    public PageVO<OnlineUser> onlineUser(PageCondition pageCondition) {
+    public PageVO<MkSecUser> onlineUser(PageCondition pageCondition) {
         PageVO<String> keys = redisUtil.findKeysForPage(jwtConfig.getRedisJwtKeyPrefix() + Consts.SYMBOL_STAR, pageCondition.getPage(), pageCondition.getSize());
         List<String> rows = keys.getList();
 
@@ -50,10 +48,12 @@ public class AdminMonitorService {
         // 根据用户名查询用户信息
         List<MkSecUser> userList = mkSecUserMapper.selectBatchIds(usernameList);
 
-        // 封装在线用户信息
-        List<OnlineUser> onlineUserList = Lists.newArrayList();
-        userList.forEach(user -> onlineUserList.add(OnlineUser.create(user, userInfoService.getUserDetails(user.getUserId()))));
-        return PageVO.create(onlineUserList, pageCondition.getPage(), pageCondition.getSize(), keys.getTotal());
+        userList.forEach(user -> {
+            user.setPhone(StrUtil.hide(user.getPhone(), 3, 7));
+            user.setEmail(StrUtil.hide(user.getEmail(), 1, StrUtil.indexOfIgnoreCase(user.getEmail(), Consts.SYMBOL_EMAIL)));
+            user.setPassword(null);
+        });
+        return PageVO.create(userList, pageCondition.getPage(), pageCondition.getSize(), keys.getTotal());
     }
 
     /**

@@ -3,7 +3,6 @@ package com.github.xujiaji.mk.security.admin.service;
 import cn.hutool.core.util.StrUtil;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.payload.PageCondition;
-import com.github.xujiaji.mk.common.service.IUserInfoService;
 import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.config.JwtConfig;
@@ -28,7 +27,6 @@ import java.util.stream.Collectors;
 public class AdminMonitorService {
     private final RedisUtil redisUtil;
     private final MkSecUserMapper mkSecUserMapper;
-    private final IUserInfoService userInfoService;
     private final JwtConfig jwtConfig;
 
     /**

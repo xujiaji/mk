@@ -12,6 +12,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class OtherTests {
     @Test
     public void testPassword() {
-        log.info("密码：{}", new BCryptPasswordEncoder().encode("security-password-key" + "123123"));
+        log.info("密码：{}", new BCryptPasswordEncoder().encode("mk-security-password-key-example-admin" + "123456"));
     }
 }

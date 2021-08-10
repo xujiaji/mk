@@ -11,6 +11,7 @@ import com.github.xujiaji.mk.security.admin.vo.MkSecAdminUserPrincipal;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,6 +35,7 @@ import com.github.xujiaji.mk.security.exception.SecurityException;
  * 动态路由认证
  * </p>
  */
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class RbacAuthorityService {
@@ -91,6 +93,7 @@ public class RbacAuthorityService {
      * @param request 请求
      */
     private void checkRequest(HttpServletRequest request) {
+        log.info(request.getRequestURI());
         // 获取当前 request 的方法
         String currentMethod = request.getMethod();
         Multimap<String, String> urlMapping = allUrlMapping();

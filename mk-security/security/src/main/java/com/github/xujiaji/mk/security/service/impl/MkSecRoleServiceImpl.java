@@ -37,12 +37,8 @@ public class MkSecRoleServiceImpl extends BaseServiceImpl<MkSecRoleMapper, MkSec
     }
 
     @Override
-    public void deleteRoleById(Long id) {
-        val count = secUserRoleMapper.selectCount(new QueryWrapper<MkSecUserRole>().eq("role_id", id));
-        if (count > 0) {
-            throw new RequestActionException("有管理员处于这个角色，无法删除！请先修改对应管理员角色");
-        }
-        deleteById(id);
+    public void deleteRoleByIds(List<Long> ids) {
+        baseMapper.deleteBatchIds(ids);
     }
 
     @Override

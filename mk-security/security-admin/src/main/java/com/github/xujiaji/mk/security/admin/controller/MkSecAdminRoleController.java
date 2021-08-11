@@ -15,7 +15,7 @@ import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -67,11 +67,11 @@ public class MkSecAdminRoleController extends BaseController {
 
     /**
      * 角色删除
-     * @param id 角色id
+     * @param ids 角色id列表
      */
     @DeleteMapping
-    public ApiResponse<?> roleDelete(@NotNull(message = "角色ID不能为空") Long id) {
-        secRoleService.deleteRoleById(id);
+    public ApiResponse<?> roleDelete(@NotEmpty(message = "角色ID列表不能为空") @RequestParam List<Long> ids) {
+        secRoleService.deleteRoleByIds(ids);
         return successDelete();
     }
 

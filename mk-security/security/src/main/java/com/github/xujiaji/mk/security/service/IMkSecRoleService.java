@@ -27,9 +27,9 @@ public interface IMkSecRoleService extends BaseIService<MkSecRole> {
 
     /**
      * 通过id删除角色
-     * @param id 角色ID
+     * @param ids 角色ID列表
      */
-    void deleteRoleById(Long id);
+    void deleteRoleByIds(List<Long> ids);
 
     IPage<RoleDTO> rolePage(Page<RoleDTO> page);
 }

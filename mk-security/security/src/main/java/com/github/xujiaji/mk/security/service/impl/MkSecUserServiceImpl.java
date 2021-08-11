@@ -1,5 +1,6 @@
 package com.github.xujiaji.mk.security.service.impl;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.xujiaji.mk.common.base.BaseServiceImpl;
@@ -57,9 +58,8 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void adminAdd(AdminAddCondition request) {
-        // 判断是否有这个角色
-        val mkSecRole = secRoleMapper.selectById(request.getRoleId());
-        if (mkSecRole == null) {
+        // 判断是否有这些角色
+        if (secRoleMapper.countRoleByRoleIds(request.getRoleIds()) == request.getRoleIds().size()) {
             throw new RequestActionException("没有这个角色！你选的啥哦～");
         }
 
@@ -73,7 +73,9 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
         mkSecUser.setPassword(passwordService.encode(request.getPassword()));
         checkInsertSuccess(baseMapper.insert(mkSecUser));
 
-        checkInsertSuccess(secUserRoleMapper.addSecUserRole(mkSecUser.getId(), request.getRoleId()));
+        for (Long roleId : request.getRoleIds()) {
+            checkInsertSuccess(secUserRoleMapper.addSecUserRole(mkSecUser.getId(), roleId));
+        }
     }
 
     @Override
@@ -85,16 +87,18 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
             throw new RequestActionException("没有这个管理员无法编辑");
         }
 
-        if (request.getRoleId() != null) {
-            // 判断是否有这个角色
-            val mkSecRole = secRoleMapper.selectById(request.getRoleId());
-            if (mkSecRole == null) {
+
+        if (CollectionUtil.isNotEmpty(request.getRoleIds())) {
+            // 判断是否有这些角色
+            if (secRoleMapper.countRoleByRoleIds(request.getRoleIds()) == request.getRoleIds().size()) {
                 throw new RequestActionException("没有这个角色！你选的啥哦～");
             }
             // 先删除之前的角色
             checkDeleteSuccess(secUserRoleMapper.deleteBySecUserId(mkSecUser.getId()));
             // 再添加现在的角色
-            checkInsertSuccess(secUserRoleMapper.addSecUserRole(mkSecUser.getId(), request.getRoleId()));
+            for (Long roleId : request.getRoleIds()) {
+                checkInsertSuccess(secUserRoleMapper.addSecUserRole(mkSecUser.getId(), roleId));
+            }
         }
 
         if (StrUtil.isNotBlank(request.getUsername())) {

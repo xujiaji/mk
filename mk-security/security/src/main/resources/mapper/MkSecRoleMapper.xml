@@ -20,4 +20,15 @@
     <select id="rolePage" resultType="com.github.xujiaji.mk.security.dto.RoleDTO">
         SELECT * FROM mk_sec_role
     </select>
+
+    <select id="countRoleByRoleIds" resultType="java.lang.Integer">
+        SELECT
+               COUNT(*)
+        FROM mk_sec_role
+        WHERE id IN
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            id
+        </foreach>
+    </select>
+
 </mapper>

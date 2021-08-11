@@ -24,4 +24,6 @@ public interface MkSecRoleMapper extends BaseMapper<MkSecRole> {
     int roleSetPermissions(@Param("id") Long id, @Param("permissionIds") List<Long> permissionIds);
 
     IPage<RoleDTO> rolePage(Page<RoleDTO> page);
+
+    int countRoleByRoleIds(@Param("ids") List<Long> ids);
 }

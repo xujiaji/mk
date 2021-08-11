@@ -3,6 +3,7 @@ package com.github.xujiaji.mk.security.playload;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 管理员添加
@@ -29,9 +30,9 @@ public class AdminEditCondition {
     private String nickname;
 
     /**
-     * 角色ID
+     * 角色ID列表
      */
-    private Long roleId;
+    private List<Long> roleIds;
 
     /**
      * 头像文件id

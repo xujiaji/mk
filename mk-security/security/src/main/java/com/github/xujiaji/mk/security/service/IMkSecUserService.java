@@ -1,6 +1,9 @@
 package com.github.xujiaji.mk.security.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.base.BaseIService;
+import com.github.xujiaji.mk.security.dto.MkSecUserDTO;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.playload.AdminAddCondition;
 import com.github.xujiaji.mk.security.playload.AdminEditCondition;
@@ -25,6 +28,11 @@ public interface IMkSecUserService extends BaseIService<MkSecUser> {
     void adminAdd(AdminAddCondition request);
 
     void adminEdit(AdminEditCondition request);
+
+    /**
+     * 管理员列表页
+     */
+    IPage<MkSecUserDTO> adminUserPage(Page<MkSecUserDTO> page);
 
     /**
      * 管理员删除

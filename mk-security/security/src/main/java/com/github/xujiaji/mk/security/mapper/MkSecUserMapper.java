@@ -1,7 +1,10 @@
 package com.github.xujiaji.mk.security.mapper;
 
-import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.xujiaji.mk.security.dto.MkSecUserDTO;
+import com.github.xujiaji.mk.security.entity.MkSecUser;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MkSecUserMapper extends BaseMapper<MkSecUser> {
 
+    IPage<MkSecUserDTO> selectUserPage(Page<MkSecUserDTO> page);
 }

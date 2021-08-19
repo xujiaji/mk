@@ -3,12 +3,16 @@ package com.github.xujiaji.mk.security.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.base.BaseServiceImpl;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.service.IUserLoginLogService;
 import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.file.service.impl.MkFileServiceImpl;
+import com.github.xujiaji.mk.security.dto.MkSecUserDTO;
+import com.github.xujiaji.mk.security.dto.RoleDTO;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.entity.MkSecUserRole;
 import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
@@ -118,6 +122,11 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
             mkSecUser.setPassword(passwordService.encode(request.getPassword()));
         }
         checkUpdateSuccess(updateById(mkSecUser));
+    }
+
+    @Override
+    public IPage<MkSecUserDTO> adminUserPage(Page<MkSecUserDTO> page) {
+        return baseMapper.selectUserPage(page);
     }
 
     @Override

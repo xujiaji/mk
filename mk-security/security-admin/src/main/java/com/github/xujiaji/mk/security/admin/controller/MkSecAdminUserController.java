@@ -12,6 +12,7 @@ import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.admin.vo.MkSecAdminUserPrincipal;
 import com.github.xujiaji.mk.security.admin.vo.VerifyVO;
+import com.github.xujiaji.mk.security.dto.MkSecUserDTO;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.playload.AdminAddCondition;
 import com.github.xujiaji.mk.security.playload.AdminEditCondition;
@@ -85,8 +86,8 @@ public class MkSecAdminUserController extends BaseController {
      * 管理员列表
      */
     @GetMapping("/page")
-    public ApiResponse<PageVO<MkSecUser>> adminUserPage(@Valid PageCondition request) {
-        return successPage(secUserService.page(mapPage(request)));
+    public ApiResponse<PageVO<MkSecUserDTO>> adminUserPage(@Valid PageCondition request) {
+        return successPage(secUserService.adminUserPage(mapPage(request)));
     }
 
     /**

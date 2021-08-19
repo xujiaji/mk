@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.security.mapper.MkSecUserMapper">
+    <resultMap id="userPageMap" type="com.github.xujiaji.mk.security.dto.MkSecUserDTO">
+        <collection property="roles" columnPrefix="sr_"
+                    javaType="com.github.xujiaji.mk.security.entity.MkSecRole">
+        </collection>
+    </resultMap>
 
+    <select id="selectUserPage" resultMap="userPageMap">
+        SELECT
+               su.*,
+               sr.id sr_id,
+               sr.name sr_name,
+               sr.description sr_description
+        FROM mk_sec_user su
+            JOIN mk_sec_user_role sur ON su.id = sur.sec_user_id
+            LEFT JOIN mk_sec_role sr ON sr.id = sur.role_id
+    </select>
 </mapper>

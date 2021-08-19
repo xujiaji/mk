@@ -13,9 +13,16 @@
         </foreach>
     </select>
 
-    <select id="countByParentId" resultType="java.lang.Integer">
-        SELECT COUNT(*) FROM mk_sec_permission WHERE parent_id = ${parentId}
-    </select>
+    <delete id="deleteByIdsParentIds">
+        DELETE FROM mk_sec_permission WHERE id IN
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        OR parent_id IN
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
 
     <select id="selectPermissionsBySecUserId"
             resultType="com.github.xujiaji.mk.security.entity.MkSecPermission">

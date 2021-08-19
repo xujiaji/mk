@@ -18,7 +18,7 @@ import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -92,8 +92,8 @@ public class MkSecAdminPermissionController extends BaseController {
      * 删除权限
      */
     @DeleteMapping("/del")
-    public ApiResponse<?> permissionDelete(@NotNull(message = "权限ID不能为空") Long id) {
-        permissionService.deletePermission(id);
+    public ApiResponse<?> permissionDelete(@NotEmpty(message = "权限ID不能为空") @RequestParam List<Long> ids) {
+        permissionService.deletePermissions(ids);
         return successDelete();
     }
 

@@ -25,7 +25,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * @menu 权限-管理员管理
@@ -120,12 +121,12 @@ public class MkSecAdminUserController extends BaseController {
 
     /**
      * 管理员删除
-     * @param secUserId 管理员secUserId
+     * @param ids 管理员id列表
      */
     @DeleteMapping
-    public ApiResponse<?> delete(@NotNull(message = "管理员secUserId不能为空")
-                                             Long secUserId) {
-        secUserService.deleteAdminUserBySecUserId(secUserId);
+    public ApiResponse<?> delete(@NotEmpty(message = "管理员secUserId不能为空")
+                                     @RequestParam List<Long> ids) {
+        secUserService.deleteAdminUserBySecUserIdList(ids);
         return successDelete();
     }
 }

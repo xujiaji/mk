@@ -8,6 +8,7 @@ import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
 import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -27,9 +28,9 @@ public interface IMkSecUserService extends BaseIService<MkSecUser> {
 
     /**
      * 管理员删除
-     * @param secUserId 管理员secUserId
+     * @param ids 管理员id列表
      */
-    void deleteAdminUserBySecUserId(Long secUserId);
+    void deleteAdminUserBySecUserIdList(List<Long> ids);
 
     /**
      * 管理员登录

@@ -10,6 +10,7 @@ import com.github.xujiaji.mk.common.service.IUserLoginLogService;
 import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.file.service.impl.MkFileServiceImpl;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
+import com.github.xujiaji.mk.security.entity.MkSecUserRole;
 import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;
 import com.github.xujiaji.mk.security.mapper.MkSecUserMapper;
 import com.github.xujiaji.mk.security.mapper.MkSecUserRoleMapper;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -70,6 +72,7 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
         val mkSecUser = new MkSecUser();
         mkSecUser.setStatus(Consts.ENABLE);
         mkSecUser.setUsername(request.getUsername());
+        mkSecUser.setNickname(request.getNickname());
         mkSecUser.setPassword(passwordService.encode(request.getPassword()));
         checkInsertSuccess(baseMapper.insert(mkSecUser));
 
@@ -119,9 +122,9 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void deleteAdminUserBySecUserId(Long secUserId) {
-        deleteById(secUserId);
-        checkDeleteSuccess(secUserRoleMapper.deleteBySecUserId(secUserId));
+    public void deleteAdminUserBySecUserIdList(List<Long> ids) {
+        baseMapper.deleteBatchIds(ids);
+        checkDeleteSuccess(secUserRoleMapper.delete(new QueryWrapper<MkSecUserRole>().in("sec_user_id", ids)));
     }
 
     @Override

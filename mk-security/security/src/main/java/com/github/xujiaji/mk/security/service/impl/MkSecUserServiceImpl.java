@@ -12,7 +12,6 @@ import com.github.xujiaji.mk.common.service.IUserLoginLogService;
 import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.file.service.impl.MkFileServiceImpl;
 import com.github.xujiaji.mk.security.dto.MkSecUserDTO;
-import com.github.xujiaji.mk.security.dto.RoleDTO;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.entity.MkSecUserRole;
 import com.github.xujiaji.mk.security.mapper.MkSecRoleMapper;

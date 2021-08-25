@@ -108,7 +108,7 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
         }
 
         if (StrUtil.isNotBlank(request.getUsername())) {
-            if (baseMapper.selectCount(new QueryWrapper<MkSecUser>().eq("username", request.getUsername())) > 0) {
+            if (baseMapper.selectCount(new QueryWrapper<MkSecUser>().ne("id", request.getId()).eq("username", request.getUsername())) > 0) {
                 throw new RequestActionException("该用户名已被占用");
             }
             mkSecUser.setUsername(request.getUsername());
@@ -125,7 +125,11 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
 
     @Override
     public IPage<MkSecUserDTO> adminUserPage(Page<MkSecUserDTO> page) {
-        return baseMapper.selectUserPage(page);
+        IPage<MkSecUserDTO> result = baseMapper.selectUserPage(page);
+        for (MkSecUserDTO record : result.getRecords()) {
+            record.setRoles(secUserRoleMapper.selectSecRoleBySecUserId(record.getId()));
+        }
+        return result;
     }
 
     @Override

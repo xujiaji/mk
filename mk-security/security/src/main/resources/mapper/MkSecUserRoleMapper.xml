@@ -10,4 +10,12 @@
     <delete id="deleteBySecUserId">
         DELETE FROM mk_sec_user_role WHERE sec_user_id = ${secUserId}
     </delete>
+
+    <select id="selectSecRoleBySecUserId" resultType="com.github.xujiaji.mk.security.entity.MkSecRole">
+        SELECT
+            sr.*
+        FROM mk_sec_user_role sur
+            LEFT JOIN mk_sec_role sr ON sr.id = sur.role_id
+        WHERE sur.sec_user_id = #{secUserId}
+    </select>
 </mapper>

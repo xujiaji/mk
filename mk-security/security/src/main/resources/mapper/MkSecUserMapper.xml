@@ -1,35 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.xujiaji.mk.security.mapper.MkSecUserMapper">
-    <resultMap id="userPageMap" type="com.github.xujiaji.mk.security.dto.MkSecUserDTO">
-        <result column="id" property="id" />
-        <result column="create_time" property="createTime" />
-        <result column="update_time" property="updateTime" />
-        <result column="username" property="username" />
-        <result column="password" property="password" />
-        <result column="nickname" property="nickname" />
-        <result column="avatar" property="avatar" />
-        <result column="phone" property="phone" />
-        <result column="email" property="email" />
-        <result column="birthday" property="birthday" />
-        <result column="sex" property="sex" />
-        <result column="status" property="status" />
-        <collection property="roles" columnPrefix="sr_"
-                    ofType="com.github.xujiaji.mk.security.entity.MkSecRole">
-            <result column="id" property="id" />
-            <result column="name" property="name" />
-            <result column="description" property="description" />
-        </collection>
-    </resultMap>
 
-    <select id="selectUserPage" resultMap="userPageMap">
-        SELECT
-               su.*,
-               sr.id sr_id,
-               sr.name sr_name,
-               sr.description sr_description
-        FROM mk_sec_user su
-            JOIN mk_sec_user_role sur ON su.id = sur.sec_user_id
-            LEFT JOIN mk_sec_role sr ON sr.id = sur.role_id
+    <select id="selectUserPage" resultType="com.github.xujiaji.mk.security.dto.MkSecUserDTO">
+        SELECT * FROM mk_sec_user
     </select>
 </mapper>

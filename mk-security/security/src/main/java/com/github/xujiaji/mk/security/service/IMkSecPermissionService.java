@@ -17,9 +17,9 @@ public interface IMkSecPermissionService extends BaseIService<MkSecPermission> {
 
     /**
      * 删除权限
-     * @param id 权限ID
+     * @param ids 权限ID列表
      */
-    void deletePermission(Long id);
+    void deletePermissions(List<Long> ids);
 
     /**
      * 用户的所有权限

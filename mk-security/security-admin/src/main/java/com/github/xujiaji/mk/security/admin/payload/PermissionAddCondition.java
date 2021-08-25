@@ -24,7 +24,7 @@ public class PermissionAddCondition {
     private Long parentId;
 
     /**
-     * 权限类型，页面-1，按钮-2
+     * 权限类型，目录-0，页面-1，按钮-2
      */
     @NotNull(message = "类型不能为空")
     private Integer type;

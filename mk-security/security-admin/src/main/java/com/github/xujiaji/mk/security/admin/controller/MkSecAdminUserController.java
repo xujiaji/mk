@@ -10,23 +10,24 @@ import com.github.xujiaji.mk.common.payload.AdminStatusChangeCondition;
 import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.vo.PageVO;
-import com.github.xujiaji.mk.security.playload.AdminEditCondition;
-import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
-import com.github.xujiaji.mk.security.util.SecurityUtil;
-import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
+import com.github.xujiaji.mk.security.admin.vo.MkSecAdminUserPrincipal;
 import com.github.xujiaji.mk.security.admin.vo.VerifyVO;
-import com.github.xujiaji.mk.security.entity.MkAdminUser;
+import com.github.xujiaji.mk.security.dto.MkSecUserDTO;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.playload.AdminAddCondition;
+import com.github.xujiaji.mk.security.playload.AdminEditCondition;
+import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
 import com.github.xujiaji.mk.security.service.impl.MkSecUserServiceImpl;
-import com.github.xujiaji.mk.security.vo.UserPrincipal;
+import com.github.xujiaji.mk.security.util.SecurityUtil;
+import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 /**
  * @menu 权限-管理员管理
@@ -77,16 +78,16 @@ public class MkSecAdminUserController extends BaseController {
      * 管理员信息
      */
     @GetMapping("/info")
-    public ApiResponse<UserPrincipal> info() {
-        return success(SecurityUtil.getCurrentUser());
+    public ApiResponse<MkSecAdminUserPrincipal> info() {
+        return success((MkSecAdminUserPrincipal) SecurityUtil.getCurrentUser());
     }
 
     /**
      * 管理员列表
      */
     @GetMapping("/page")
-    public ApiResponse<PageVO<MkAdminUser>> adminUserPage(@Valid PageCondition request) {
-        return success(secUserService.adminUserPage(mapPage(request)));
+    public ApiResponse<PageVO<MkSecUserDTO>> adminUserPage(@Valid PageCondition request) {
+        return successPage(secUserService.adminUserPage(mapPage(request)));
     }
 
     /**
@@ -121,12 +122,12 @@ public class MkSecAdminUserController extends BaseController {
 
     /**
      * 管理员删除
-     * @param secUserId 管理员secUserId
+     * @param ids 管理员id列表
      */
     @DeleteMapping
-    public ApiResponse<?> delete(@NotNull(message = "管理员secUserId不能为空")
-                                             Long secUserId) {
-        secUserService.deleteAdminUserBySecUserId(secUserId);
+    public ApiResponse<?> delete(@NotEmpty(message = "管理员secUserId不能为空")
+                                     @RequestParam List<Long> ids) {
+        secUserService.deleteAdminUserBySecUserIdList(ids);
         return successDelete();
     }
 }

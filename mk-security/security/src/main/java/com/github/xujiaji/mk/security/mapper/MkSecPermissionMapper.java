@@ -18,7 +18,7 @@ public interface MkSecPermissionMapper extends BaseMapper<MkSecPermission> {
 
     List<MkSecPermission> selectByRoleIdList(@Param("roleIds") List<Long> roleIds);
 
-    int countByParentId(@Param("parentId") Long parentId);
+    void deleteByIdsParentIds(@Param("ids") List<Long> ids);
 
     List<MkSecPermission> selectPermissionsBySecUserId(@Param("secUserId") Long secUserId);
 }

@@ -1,9 +1,9 @@
 package com.github.xujiaji.mk.security.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.xujiaji.mk.common.base.BaseIService;
-import com.github.xujiaji.mk.common.vo.PageVO;
-import com.github.xujiaji.mk.security.entity.MkAdminUser;
+import com.github.xujiaji.mk.security.dto.MkSecUserDTO;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.playload.AdminAddCondition;
 import com.github.xujiaji.mk.security.playload.AdminEditCondition;
@@ -11,6 +11,7 @@ import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
 import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <p>
@@ -21,12 +22,6 @@ import javax.servlet.http.HttpServletRequest;
  * @since 2020-10-23
  */
 public interface IMkSecUserService extends BaseIService<MkSecUser> {
-
-    /**
-     * 管理员列表
-     */
-    PageVO<MkAdminUser> adminUserPage(Page<MkSecUser> mapPage);
-
     /**
      * 管理员添加
      */
@@ -35,10 +30,15 @@ public interface IMkSecUserService extends BaseIService<MkSecUser> {
     void adminEdit(AdminEditCondition request);
 
     /**
-     * 管理员删除
-     * @param secUserId 管理员secUserId
+     * 管理员列表页
      */
-    void deleteAdminUserBySecUserId(Long secUserId);
+    IPage<MkSecUserDTO> adminUserPage(Page<MkSecUserDTO> page);
+
+    /**
+     * 管理员删除
+     * @param ids 管理员id列表
+     */
+    void deleteAdminUserBySecUserIdList(List<Long> ids);
 
     /**
      * 管理员登录

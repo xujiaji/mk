@@ -3,6 +3,7 @@ package com.github.xujiaji.mk.security.playload;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 管理员添加
@@ -13,9 +14,14 @@ import javax.validation.constraints.NotNull;
 public class AdminEditCondition {
 
     /**
+     * 管理员id
+     */
+    @NotNull(message = "要编辑的管理员id不能为空")
+    private Long id;
+
+    /**
      * 用户名
      */
-    @NotNull(message = "用户名不能为空")
     private String username;
 
     /**
@@ -24,10 +30,9 @@ public class AdminEditCondition {
     private String nickname;
 
     /**
-     * 角色ID
+     * 角色ID列表
      */
-    @NotNull(message = "角色不能为空")
-    private Long roleId;
+    private List<Long> roleIds;
 
     /**
      * 头像文件id

@@ -9,7 +9,7 @@ import cn.hutool.extra.servlet.ServletUtil;
 import com.github.xujiaji.mk.common.base.Status;
 import com.github.xujiaji.mk.security.config.JwtConfig;
 import com.github.xujiaji.mk.security.exception.SecurityException;
-import com.github.xujiaji.mk.security.vo.UserPrincipal;
+import com.github.xujiaji.mk.security.vo.MkSecUserDetails;
 import com.google.common.collect.Lists;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
@@ -80,8 +80,8 @@ public class JwtUtil {
      * @return JWT
      */
     public String createJWT(Authentication authentication, Boolean rememberMe) {
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        return createJWT(rememberMe, userPrincipal.getUserId(), userPrincipal.getUsername(), userPrincipal.getRoles(), userPrincipal.getAuthorities());
+        MkSecUserDetails userPrincipal = (MkSecUserDetails) authentication.getPrincipal();
+        return createJWT(rememberMe, userPrincipal.getId(), userPrincipal.getUsername(), userPrincipal.getRoles(), userPrincipal.getAuthorities());
     }
 
     /**

@@ -53,18 +53,12 @@ public abstract class MysqlGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/" + moduleName() + "/src/main/java");
-        gc.setAuthor("xujiaji");
+        gc.setAuthor(authorName());
         gc.setOpen(false);
+        gc.setFileOverride(isFileOverride());
         mpg.setGlobalConfig(gc);
 
-        // 数据源配置
-        DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://127.0.0.1:3306/" + dbName() + "?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&serverTimezone=GMT%2B8");
-        // dsc.setSchemaName("public");
-        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-        dsc.setUsername(dbUsername());
-        dsc.setPassword(dbPassword());
-        mpg.setDataSource(dsc);
+        mpg.setDataSource(getDataSourceConfig());
 
         // 包配置
         PackageConfig pc = new PackageConfig();
@@ -116,28 +110,22 @@ public abstract class MysqlGenerator {
     }
 
     /**
+     * 作者名
+     * @return 作者名
+     */
+    protected abstract String authorName();
+
+    /**
      * 主包名
      * @return 父包名
      */
     protected abstract String parentPackage();
 
     /**
-     * 数据库名
-     * @return 数据库名
+     * 链接数据库的配置
+     * @return 返回配置
      */
-    protected abstract String dbName();
-
-    /**
-     * 数据库用户名
-     * @return 用户名
-     */
-    protected abstract String dbUsername();
-
-    /**
-     * 数据库密码
-     * @return 密码
-     */
-    protected abstract String dbPassword();
+    protected abstract DataSourceConfig getDataSourceConfig();
 
     /**
      * 表前缀
@@ -156,5 +144,9 @@ public abstract class MysqlGenerator {
      */
     protected String subPackageName() {
         return null;
+    }
+
+    protected boolean isFileOverride() {
+        return false;
     }
 }

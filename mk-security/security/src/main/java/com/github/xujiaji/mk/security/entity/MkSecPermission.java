@@ -36,7 +36,7 @@ public class MkSecPermission extends BaseEntity {
     private String component;
 
     /**
-     * 权限类型，页面-1，按钮-2
+     * 权限类型，目录-0，页面-1，按钮-2
      */
     private Integer type;
 

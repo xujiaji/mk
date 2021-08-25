@@ -4,10 +4,9 @@ import cn.hutool.core.util.ObjectUtil;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.base.Status;
 import com.github.xujiaji.mk.common.exception.StatusException;
-import com.github.xujiaji.mk.security.vo.UserPrincipal;
+import com.github.xujiaji.mk.security.vo.MkSecUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * Spring Security工具类
@@ -19,7 +18,7 @@ public class SecurityUtil {
      * @return 当前登录用户用户名
      */
     public static String getCurrentUsername() {
-        UserPrincipal currentUser = getCurrentUser();
+        MkSecUserDetails currentUser = getCurrentUser();
         return ObjectUtil.isNull(currentUser) ? Consts.ANONYMOUS_NAME : currentUser.getUsername();
     }
 
@@ -27,12 +26,12 @@ public class SecurityUtil {
      * 获取当前登录用户Sec ID
      * @return 当前用户Sec ID
      */
-    public static Long getCurrentSecUserId() {
-        UserPrincipal currentUser = getCurrentUser();
+    public static Long getCurrentUserId() {
+        MkSecUserDetails currentUser = getCurrentUser();
         if (currentUser == null) {
             throw new StatusException(Status.UNAUTHORIZED);
         }
-        return currentUser.getSecUserId();
+        return currentUser.getId();
     }
 
     /**
@@ -40,15 +39,15 @@ public class SecurityUtil {
      *
      * @return 当前登录用户信息，匿名登录时，为null
      */
-    public static UserPrincipal getCurrentUser() {
+    public static MkSecUserDetails getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
         if (authentication == null) {
             return null;
         }
         Object userInfo = authentication.getPrincipal();
-        if (userInfo instanceof UserDetails) {
-            return (UserPrincipal) userInfo;
+        if (userInfo instanceof MkSecUserDetails) {
+            return (MkSecUserDetails) userInfo;
         }
         return null;
     }

@@ -6,7 +6,7 @@ import com.github.xujiaji.mk.common.base.Status;
 import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.vo.PageVO;
 import com.github.xujiaji.mk.security.admin.service.AdminMonitorService;
-import com.github.xujiaji.mk.security.admin.vo.OnlineUser;
+import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.exception.SecurityException;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -31,12 +31,12 @@ public class MkSecAdminMonitorController {
      * @param pageCondition 分页参数
      */
     @GetMapping("/online/user")
-    public ApiResponse<PageVO<OnlineUser>> onlineUser(@Valid PageCondition pageCondition) {
+    public ApiResponse<PageVO<MkSecUser>> onlineUser(@Valid PageCondition pageCondition) {
         return ApiResponse.ofSuccess(adminMonitorService.onlineUser(pageCondition));
     }
 
     /**
-     * 
+     *
      * 批量踢出在线用户
      *
      * @param names 用户名列表

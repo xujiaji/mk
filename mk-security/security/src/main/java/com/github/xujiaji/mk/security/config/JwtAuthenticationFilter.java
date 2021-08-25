@@ -60,10 +60,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 if (StrUtil.isBlank(version)) {
                     ResponseUtil.renderJson(response, Status.NOT_VERSION, null);
-                    logService.addLog(
-                            Status.NOT_VERSION,
-                            Status.NOT_VERSION.getMessage(),
-                            request);
+                    if (logService != null) {
+                        logService.addLog(
+                                Status.NOT_VERSION,
+                                Status.NOT_VERSION.getMessage(),
+                                request);
+                    }
                     return;
                 }
             }
@@ -75,28 +77,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (StrUtil.isBlank(timestamp)) {
                 ResponseUtil.renderJson(response, Status.NOT_TIMESTAMP, null);
-                logService.addLog(
-                        Status.NOT_TIMESTAMP,
-                        Status.NOT_TIMESTAMP.getMessage(),
-                        request);
+                if (logService != null) {
+                    logService.addLog(
+                            Status.NOT_TIMESTAMP,
+                            Status.NOT_TIMESTAMP.getMessage(),
+                            request);
 
+                }
                 return;
             }
 
             if (StrUtil.isBlank(sign)) {
                 ResponseUtil.renderJson(response, Status.NOT_SIGN, null);
-                logService.addLog(
-                        Status.NOT_SIGN,
-                        Status.NOT_SIGN.getMessage(),
-                        request);
+                if (logService != null) {
+                    logService.addLog(
+                            Status.NOT_SIGN,
+                            Status.NOT_SIGN.getMessage(),
+                            request);
+                }
                 return;
             }
 
             if (!jwtUtil.checkSign(sign, timestamp, request)) {
-                logService.addLog(
-                        Status.REQUEST_INVALID,
-                        String.format("签名：%s\n时间：%s", sign, timestamp),
-                        request);
+                if (logService != null) {
+                    logService.addLog(
+                            Status.REQUEST_INVALID,
+                            String.format("签名：%s\n时间：%s", sign, timestamp),
+                            request);
+                }
                 ResponseUtil.renderJson(response, Status.REQUEST_INVALID, null);
                 return;
             }
@@ -115,11 +123,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .setAuthentication(authentication);
                 filterChain.doFilter(request, response);
             } catch (SecurityException e) {
-
-                logService.addLog(
-                        Status.fromCode(e.getCode()),
-                        e.getMessage(),
-                        request);
+                if (logService != null) {
+                    logService.addLog(
+                            Status.fromCode(e.getCode()),
+                            e.getMessage(),
+                            request);
+                }
                 ResponseUtil.renderJson(response, e);
             }
         } else {

@@ -58,6 +58,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     private static final String STR_ID = "id";
 
+    private static final String STR_PASSWORD = "password";
+
     @Autowired(required = false)
     private List<IFileUrlService> fileUrlServices;
 
@@ -116,22 +118,35 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                             gen.writeString(value.toString());
                                         }
                                     });
-                                } else if (javaType.isTypeOrSubTypeOf(String.class) && fileUrlServices != null) { // 将是图片的字段id转为图片全路径
-                                    for (IFileUrlService fileUrlService : fileUrlServices) {
-                                        if (fileUrlService.isEnableUrlAutoFull(key)) {
-                                            beanPropertyWriter.assignSerializer(new JsonSerializer<Object>() {
-                                                @Override
-                                                public void serialize(Object value, JsonGenerator gen, SerializerProvider serializerProvider) throws IOException {
-                                                    if (value == null) {
-                                                        return;
-                                                    }
-                                                    val url = fileUrlService.getUrlBy(value);
-                                                    if (url != null) {
-                                                        gen.writeString(url);
-                                                    }
+                                } else if (javaType.isTypeOrSubTypeOf(String.class)) { // 将是图片的字段id转为图片全路径
+                                    if (key.contains(STR_PASSWORD)) {
+                                        beanPropertyWriter.assignSerializer(new JsonSerializer<Object>() {
+
+                                            @Override
+                                            public void serialize(Object value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+                                                if (value == null) {
+                                                    return;
                                                 }
-                                            });
-                                            break;
+                                                gen.writeString("******");
+                                            }
+                                        });
+                                    } else if (fileUrlServices != null) {
+                                        for (IFileUrlService fileUrlService : fileUrlServices) {
+                                            if (fileUrlService.isEnableUrlAutoFull(key)) {
+                                                beanPropertyWriter.assignSerializer(new JsonSerializer<Object>() {
+                                                    @Override
+                                                    public void serialize(Object value, JsonGenerator gen, SerializerProvider serializerProvider) throws IOException {
+                                                        if (value == null) {
+                                                            return;
+                                                        }
+                                                        val url = fileUrlService.getUrlBy(value);
+                                                        if (url != null) {
+                                                            gen.writeString(url);
+                                                        }
+                                                    }
+                                                });
+                                                break;
+                                            }
                                         }
                                     }
                                 }

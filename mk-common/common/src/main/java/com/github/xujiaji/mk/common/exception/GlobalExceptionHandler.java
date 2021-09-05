@@ -8,7 +8,6 @@ import com.github.xujiaji.mk.common.base.BaseException;
 import com.github.xujiaji.mk.common.base.Status;
 import com.github.xujiaji.mk.common.service.ILogService;
 import com.github.xujiaji.mk.common.util.UserUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,7 @@
 package com.github.xujiaji.mk.security.admin.service;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.util.RedisUtil;
@@ -44,7 +45,7 @@ public class AdminMonitorService {
                 .map(s -> StrUtil.subAfter(s, jwtConfig.getRedisJwtKeyPrefix(), true))
                 .collect(Collectors.toList());
         // 根据用户名查询用户信息
-        List<MkSecUser> userList = mkSecUserMapper.selectBatchIds(usernameList);
+        List<MkSecUser> userList = mkSecUserMapper.selectList(new QueryWrapper<MkSecUser>().in("username", usernameList));
 
         userList.forEach(user -> {
             user.setPhone(StrUtil.hide(user.getPhone(), 3, 7));

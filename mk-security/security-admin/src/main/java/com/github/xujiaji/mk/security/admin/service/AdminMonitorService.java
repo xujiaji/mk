@@ -58,10 +58,11 @@ public class AdminMonitorService {
     /**
      * 踢出在线用户
      *
-     * @param names 用户名列表
+     * @param ids 用户名id列表
      */
-    public void kickout(List<String> names) {
-        // 清除 Redis 中的 JWT 信息
+    public void kickout(List<Long> ids) {
+        List<String> names = mkSecUserMapper.selectBatchIds(ids).stream().map(MkSecUser::getUsername).collect(Collectors.toList());
+        // 清除 Redis 中的 SJWT 信息
         List<String> redisKeys = names.parallelStream()
                 .map(s -> jwtConfig.getRedisJwtKeyPrefix() + s)
                 .collect(Collectors.toList());

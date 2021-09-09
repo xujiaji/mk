@@ -44,4 +44,8 @@ public interface IMkSecUserService extends BaseIService<MkSecUser> {
      * 管理员登录
      */
     AdminLoginSuccessVO login(AdminLoginCondition request, HttpServletRequest hsr);
+
+    void logout();
+
+    AdminLoginSuccessVO tokenRefresh();
 }

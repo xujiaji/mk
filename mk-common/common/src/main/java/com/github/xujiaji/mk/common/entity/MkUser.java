@@ -91,5 +91,8 @@ public class MkUser extends BaseEntity {
      */
     private String iosId;
 
-
+    /**
+     * 启用状态，1启用，0禁用
+     */
+    private Integer enableStatus;
 }

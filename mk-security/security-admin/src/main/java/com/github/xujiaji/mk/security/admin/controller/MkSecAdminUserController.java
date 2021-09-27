@@ -75,6 +75,23 @@ public class MkSecAdminUserController extends BaseController {
     }
 
     /**
+     * 登出
+     */
+    @PostMapping("/logout")
+    public ApiResponse<?> logout() {
+        secUserService.logout();
+        return ApiResponse.ofSuccess();
+    }
+
+    /**
+     * 刷新用户token
+     */
+    @GetMapping("/token/refresh")
+    public ApiResponse<AdminLoginSuccessVO> tokenRefresh() {
+        return ApiResponse.ofSuccess(secUserService.tokenRefresh());
+    }
+
+    /**
      * 管理员信息
      */
     @GetMapping("/info")

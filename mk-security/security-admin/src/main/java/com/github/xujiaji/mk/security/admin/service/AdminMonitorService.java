@@ -1,6 +1,7 @@
 package com.github.xujiaji.mk.security.admin.service;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.payload.PageCondition;
 import com.github.xujiaji.mk.common.util.RedisUtil;
@@ -44,7 +45,7 @@ public class AdminMonitorService {
                 .map(s -> StrUtil.subAfter(s, jwtConfig.getRedisJwtKeyPrefix(), true))
                 .collect(Collectors.toList());
         // 根据用户名查询用户信息
-        List<MkSecUser> userList = mkSecUserMapper.selectBatchIds(usernameList);
+        List<MkSecUser> userList = mkSecUserMapper.selectList(new QueryWrapper<MkSecUser>().in("username", usernameList));
 
         userList.forEach(user -> {
             user.setPhone(StrUtil.hide(user.getPhone(), 3, 7));
@@ -57,10 +58,11 @@ public class AdminMonitorService {
     /**
      * 踢出在线用户
      *
-     * @param names 用户名列表
+     * @param ids 用户名id列表
      */
-    public void kickout(List<String> names) {
-        // 清除 Redis 中的 JWT 信息
+    public void kickout(List<Long> ids) {
+        List<String> names = mkSecUserMapper.selectBatchIds(ids).stream().map(MkSecUser::getUsername).collect(Collectors.toList());
+        // 清除 Redis 中的 SJWT 信息
         List<String> redisKeys = names.parallelStream()
                 .map(s -> jwtConfig.getRedisJwtKeyPrefix() + s)
                 .collect(Collectors.toList());

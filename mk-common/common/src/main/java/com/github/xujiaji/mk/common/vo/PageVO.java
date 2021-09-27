@@ -41,7 +41,7 @@ public class PageVO<T> {
         pv.setList(data);
         pv.setTotal(total);
         pv.setPage(page);
-        pv.setSize((long) (data == null ? 0 : data.size()));
+        pv.setSize(size);
         pv.setPages((long) ((total + 0.5F) / size));
         return pv;
     }

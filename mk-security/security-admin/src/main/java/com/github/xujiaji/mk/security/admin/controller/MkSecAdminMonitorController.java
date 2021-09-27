@@ -1,6 +1,5 @@
 package com.github.xujiaji.mk.security.admin.controller;
 
-import cn.hutool.core.collection.CollUtil;
 import com.github.xujiaji.mk.common.base.ApiResponse;
 import com.github.xujiaji.mk.common.base.Status;
 import com.github.xujiaji.mk.common.payload.PageCondition;
@@ -11,9 +10,11 @@ import com.github.xujiaji.mk.security.exception.SecurityException;
 import com.github.xujiaji.mk.security.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -39,17 +40,15 @@ public class MkSecAdminMonitorController {
      *
      * 批量踢出在线用户
      *
-     * @param names 用户名列表
+     * @param ids 用户id列表
      */
     @DeleteMapping("/online/user/kickout")
-    public ApiResponse<?> kickoutOnlineUser(@RequestBody List<String> names) {
-        if (CollUtil.isEmpty(names)) {
-            throw new SecurityException(Status.PARAM_NOT_NULL);
-        }
-        if (names.contains(SecurityUtil.getCurrentUsername())){
+    public ApiResponse<?> kickoutOnlineUser(@NotEmpty(message = "ids不能为空") @RequestParam List<Long> ids) {
+        val currentUserId = SecurityUtil.getCurrentUserId();
+        if (ids.stream().anyMatch(it -> it.equals(currentUserId))){
             throw new SecurityException(Status.KICKOUT_SELF);
         }
-        adminMonitorService.kickout(names);
+        adminMonitorService.kickout(ids);
         return ApiResponse.ofSuccess();
     }
 }

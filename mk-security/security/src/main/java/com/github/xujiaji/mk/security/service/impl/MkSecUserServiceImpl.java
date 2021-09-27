@@ -9,8 +9,10 @@ import com.github.xujiaji.mk.common.base.BaseServiceImpl;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.exception.RequestActionException;
 import com.github.xujiaji.mk.common.service.IUserLoginLogService;
+import com.github.xujiaji.mk.common.util.RedisUtil;
 import com.github.xujiaji.mk.common.util.UserUtil;
 import com.github.xujiaji.mk.file.service.impl.MkFileServiceImpl;
+import com.github.xujiaji.mk.security.config.JwtConfig;
 import com.github.xujiaji.mk.security.dto.MkSecUserDTO;
 import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.entity.MkSecUserRole;
@@ -22,6 +24,7 @@ import com.github.xujiaji.mk.security.playload.AdminEditCondition;
 import com.github.xujiaji.mk.security.playload.AdminLoginCondition;
 import com.github.xujiaji.mk.security.service.IMkSecUserService;
 import com.github.xujiaji.mk.security.util.JwtUtil;
+import com.github.xujiaji.mk.security.util.SecurityUtil;
 import com.github.xujiaji.mk.security.vo.AdminLoginSuccessVO;
 import com.github.xujiaji.mk.security.vo.MkSecUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +39,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -56,6 +60,8 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
     private final MkFileServiceImpl fileService;
     private final JwtUtil jwtUtil;
     private final UserUtil userUtil;
+    private final RedisUtil redisUtil;
+    private final JwtConfig jwtConfig;
 
     @Autowired(required = false)
     private IUserLoginLogService userLoginLogService;
@@ -158,6 +164,21 @@ public class MkSecUserServiceImpl extends BaseServiceImpl<MkSecUserMapper, MkSec
                 .authorization(jwt)
                 .authorizationType("Bearer")
                 .user(principal)
+                .build();
+    }
+
+    @Override
+    public void logout() {
+        redisUtil.delete(jwtConfig.getRedisJwtKeyPrefix() + SecurityUtil.getCurrentUsername());
+    }
+
+    @Override
+    public AdminLoginSuccessVO tokenRefresh() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String jwt = jwtUtil.createJWT(authentication, true);
+        return AdminLoginSuccessVO.builder()
+                .authorization(jwt)
+                .authorizationType("Bearer")
                 .build();
     }
 }

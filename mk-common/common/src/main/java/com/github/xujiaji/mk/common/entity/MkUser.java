@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  * </p>
  *
  * @author xujiaji
- * @since 2020-10-30
+ * @since 2020-10-3MkUserFrontUserPrincipal0
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -95,4 +95,9 @@ public class MkUser extends BaseEntity {
      * 启用状态，1启用，0禁用
      */
     private Integer enableStatus;
+
+    /**
+     * 会员类型- 1普通用户 默认值1
+     */
+    private Integer type;
 }

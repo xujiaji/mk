@@ -1,14 +1,10 @@
-package com.github.xujiaji.mk.user.front.vo;
+package com.github.xujiaji.mk.security.front.vo;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.ListUtil;
-import cn.hutool.core.util.StrUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.github.xujiaji.mk.common.base.Consts;
 import com.github.xujiaji.mk.common.entity.MkUser;
-import com.github.xujiaji.mk.security.entity.MkSecPermission;
-import com.github.xujiaji.mk.security.entity.MkSecRole;
-import com.github.xujiaji.mk.security.entity.MkSecUser;
 import com.github.xujiaji.mk.security.vo.MkSecUserDetails;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -29,7 +24,7 @@ import java.util.stream.Collectors;
  */
 @Getter
 @Setter
-public class MkUserPrincipal extends MkUser implements UserDetails {
+public class MkUserPrincipal extends MkUser implements MkSecUserDetails {
 
     /**
      * 用户权限列表
@@ -50,6 +45,11 @@ public class MkUserPrincipal extends MkUser implements UserDetails {
     @Override
     public Long getId() {
         return super.getId();
+    }
+
+    @Override
+    public List<String> getRoles() {
+        return ListUtil.empty();
     }
 
     @JsonIgnore

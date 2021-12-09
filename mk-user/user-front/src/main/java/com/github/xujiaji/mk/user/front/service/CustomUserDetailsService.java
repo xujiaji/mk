@@ -2,7 +2,7 @@ package com.github.xujiaji.mk.user.front.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.xujiaji.mk.common.entity.MkUser;
-import com.github.xujiaji.mk.user.front.vo.MkUserPrincipal;
+import com.github.xujiaji.mk.security.front.vo.MkUserPrincipal;
 import com.github.xujiaji.mk.user.mapper.MkUserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.val;

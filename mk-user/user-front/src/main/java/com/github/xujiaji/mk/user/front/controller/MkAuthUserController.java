@@ -16,7 +16,7 @@ import com.github.xujiaji.mk.user.dto.ThirdBindStatusDTO;
 import com.github.xujiaji.mk.user.front.payload.*;
 import com.github.xujiaji.mk.user.front.service.MkAuthUserService;
 import com.github.xujiaji.mk.user.front.vo.LoginSuccessVO;
-import com.github.xujiaji.mk.user.front.vo.MkUserFrontUserPrincipal;
+import com.github.xujiaji.mk.security.front.vo.MkUserPrincipal;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,7 +52,7 @@ public class MkAuthUserController extends BaseController {
         mkUserView.setEmail(commonUtil.hideEmail(mkUserView.getEmail()));
         userLoginLogService.insertLog(mkUserView.getId(), loginType, hsr);
 
-        UserDetails userDetails = BeanUtil.copyProperties(mkUser, MkUserFrontUserPrincipal.class);
+        UserDetails userDetails = BeanUtil.copyProperties(mkUser, MkUserPrincipal.class);
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(hsr));
         SecurityContextHolder.getContext()

@@ -90,6 +90,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(DEFAULT_TIME_PATTERN)));
         objectMapper.registerModule(javaTimeModule);
 
+        // 前端添加多余字段时忽略
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
         converter.setObjectMapper(objectMapper);
         return converter;
     }

